@@ -6,12 +6,28 @@
       <script type="text/javascript" src="./js/jquery/jquery-ui.js"></script>
       <script type="text/javascript">
         $(function(){
-          
+          $("#send_json").click(function(){
+             $.ajax({
+              type: "GET",
+              url: "/login",
+            }).done(function() {
+              $("#messageDialog span").text("success");
+              $("#messageDialog").dialog({
+                modal: true
+              });
+            }).fail(function() {
+              aleart("error");
+            });
+          });
         });
       </script>
     </head>
     <body>
-      
-      Sample
+      <a id="send_json" href="#">Sample</a>
+      <div id="messageDialog">
+        <span style="color:red">
+
+        </span>
+      </div>
     </body>
 </html>
