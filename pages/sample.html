@@ -23,9 +23,10 @@
             };
             $.ajax({
               type: "GET",
-              data : sendData,
-              dataType : "JSON",
-              contentType: "JSON",
+              data: sendData,
+              dataType: "JSON",
+              charset: "UTF-8",
+              contentType: "application/JSON",
               url: "/login",
             // ********************
             // 通信成功
@@ -69,6 +70,6 @@
           <span id="loader-bar"></span>
         </div>
       </div>
-      
+
     </body>
 </html>

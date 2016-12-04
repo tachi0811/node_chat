@@ -2,7 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/getUser', function(req, res, next) {
+  var email = req.query.email;
+  var password = req.query.password;
+
+
+
   res.send(true);
 });
 
