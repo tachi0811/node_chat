@@ -6,11 +6,18 @@
       <script type="text/javascript" src="./js/jquery/jquery-ui.js"></script>
       <script type="text/javascript">
         $(function(){
-          $("#send_json").click(function(){
-             $.ajax({
+          $("#login").click(function(){
+            var sendData = {
+              "email" : $("#email").val(),
+              "password" : $("#password").val()
+            };
+            $.ajax({
               type: "GET",
+              data : sendData,
+              dataType : "JSON",
+              contentType: "JSON",
               url: "/login",
-            }).done(function() {
+            }).done(function(res) {
               $("#messageDialog span").text("success");
               $("#messageDialog").dialog({
                 modal: true
@@ -23,10 +30,16 @@
       </script>
     </head>
     <body>
-      <a id="send_json" href="#">Sample</a>
+      <div title="xxxxSystem - Login">
+      </div>
+      <div class="main">
+        <input type="text" id="email" required　class="input " />
+        <input type="text" id="password" class="input" />
+      </div>
+      <input type="button" id="login" value="ログイン" />
+
       <div id="messageDialog">
         <span style="color:red">
-
         </span>
       </div>
     </body>
