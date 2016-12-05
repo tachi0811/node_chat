@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var db = require('../db/login.js');
+
 /* GET users listing. */
 router.get('/getUser', function(req, res, next) {
   var email = req.query.email;
