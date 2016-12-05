@@ -5,10 +5,9 @@ var router = express.Router();
 router.get('/getUser', function(req, res, next) {
   var email = req.query.email;
   var password = req.query.password;
-
-
-
-  res.send(true);
+  var responseData = {"data": email, "password": password};
+  res.contentType("application/JSON");
+  res.send(JSON.stringify(responseData));
 });
 
 router.post('/', function(req, res, next){
