@@ -1,0 +1,6 @@
+postgres://
+username: umrxisczycwgga
+password: fJtbYmlAOXFTtpP-llgUC2u2sZ
+host: ec2-174-129-223-193.compute-1.amazonaws.com
+port: 5432
+database: dbut7118d16299
