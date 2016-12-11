@@ -3,7 +3,7 @@ var router = express.Router();
 // var models = require('../models');
 
 var sequelize = require('sequelize');
-var sequelize = new sequelize('sampleDB', 'postgres', 'password', {host: "localhost", port: "5432", dialect: "postgres"} );
+var sequelize = new sequelize('sampleDB', 'sampleUser', 'password', {host: "localhost", port: "5432", dialect: "postgres"} );
 
 sequelize.sync();
 
@@ -17,7 +17,8 @@ router.get('/getUser', function(req, res, next) {
 
   sequelize.query('select * from \"Users\"', { type: sequelize.QueryTypes.SELECT}).
   then(function(data){
-    console.log(data);
+    res.send(JSON.stringify(data));
+//    console.log(data);
   });
 
   // sequelize.query('insert into sample values select max(id) + 1, \'sample\' from sample').spread(function(result, metadata) {
