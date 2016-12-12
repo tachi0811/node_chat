@@ -16,17 +16,37 @@
   </head>
   <body>
 
-  <form id="loginform" method="GET" action="send.cgi">
     <!-- input items -->
-    <div id="form">
+  <div id="logindiv" class="form login">
+    <form id="loginform" >
       <p class="form-title">Login</p>
       <p>Email</p>
-      <p class="mail"><input type="email" id="email" class="email validate[required]" name="email" /></p>
+      <p class="mail"><input type="email" id="email" class="input validate[required]" /></p>
       <p>Password</p>
-      <p class="pass"><input type="password" id="password" class="password validate[required]" name="pass" /></p>
-      <p class="button"><input type="button" id="login" class="login" value="Login" /></p>
-    </div>
-  </form>
+      <p class="pass"><input type="password" id="password" class="input validate[required]" /></p>
+      <p class="button">
+        <input type="button" id="login" class=" " value="Login" />
+        <input type="button" id="createUser" class=" " value="CreateUser" />
+      </p>
+    </form>
+  </div>
+
+  <div id="creatediv" class="create" style="display:none">
+    <form id="createform" >
+      <p class="form-title">Create User</p>
+      <p>Email</p>
+      <p class="mail"><input type="email" id="cre_email" class="input validate[required]" data-prompt-position="topLeft"/></p>
+      <p>nama</p>
+      <p class="name"><input type="text" id="cre_name" class="input validate[required]" data-prompt-position="topLeft"/></p>
+      <p>Password</p>
+      <p class="pass"><input type="password" id="cre_password" class="input validate[required]" data-prompt-position="topLeft"/></p>
+      <p class="button">
+        <input type="button" id="create" class=" " value="Create" />
+        <input type="button" id="cancel" class=" " value="Cancel" />
+      </p>
+    </form>
+  </div>
+
     <!-- message dialog -->
     <div id="messageDialog">
       <span class="label message">

@@ -3,6 +3,76 @@
 // ******************************
 $(function(){
   $("#loginform").validationEngine();
+  $("#createform").validationEngine();
+
+  // ******************************
+  // create button click
+  // ******************************
+  $("#createUser").click(function(e) {
+
+    $("#creatediv").dialog({
+      modal: true,
+      width: 500,
+      dialogClass: 'noTitle'
+    });
+
+  });
+
+  // ******************************
+  // cancel button click
+  // ******************************
+  $("#cancel").click(function(e) {
+    $("#creatediv").dialog('close');
+  });
+
+  // ******************************
+  // create button click
+  // ******************************
+  $("#create").click(function(e) {
+
+    if (!$("#createform").validationEngine('validate')) {
+      return false;
+    }
+
+    var sendData = {
+      "email" : $("#cre_email").val(),
+      "name" : $("#cre_name").val(),
+      "password" : $("#cre_password").val()
+    };
+    $.ajax({
+      type: "POST",
+      data: sendData,
+      dataType: "JSON",
+      charset: "UTF-8",
+      url: "/login/createUser",
+      timeout: 3000,
+    // ===============
+    // 通信成功
+    // ===============
+    }).done(function(res, status, xhr) {
+      
+      $("#messageDialog span").text("success");
+      $("#messageDialog").dialog({
+        modal: true
+      });
+    // ===============
+    // 通信失敗
+    // ===============
+    }).fail(function(xhr, status, thrown) {
+      $("#messageDialog span").text("error");
+      $("#messageDialog").dialog({
+        title: "メッセージ",
+        modal: true
+      });
+    // ===============
+    // その他
+    // ===============
+    }).always(function(xhr, status){
+      title: "メッセージ",
+      hideLoading();
+    });
+
+  });
 
   // ******************************
   // login button click
@@ -13,8 +83,6 @@ $(function(){
     if (!$("#loginform").validationEngine('validate')) {
       return false;
     }
-
-    showLoading();
 
     var sendData = {
       "email" : $("#email").val(),
@@ -28,21 +96,22 @@ $(function(){
       contentType: "application/JSON",
       url: "/login/getUser",
       timeout: 3000,
-    // ********************
+    // ===============
     // 通信成功
-    // ********************
+    // ===============
     }).done(function(res, status, xhr) {
-      
       $("#messageDialog span").text("success");
       $("#messageDialog").dialog({
+        title: "メッセージ",
         modal: true
       });
-    // ********************
+    // ===============
     // 通信失敗
-    // ********************
+    // ===============
     }).fail(function(xhr, status, thrown) {
       $("#messageDialog span").text("error");
       $("#messageDialog").dialog({
+        title: "メッセージ",
         modal: true
       });
     // ********************

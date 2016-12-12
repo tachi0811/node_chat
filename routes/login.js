@@ -28,6 +28,16 @@ router.get('/getUser', function(req, res, next) {
   }
 });
 
+/*
+  
+ */
+router.post('/createUser', function(req, res, next) {
+  //res.contentType("application/JSON");
+  var data = {result : "1", message: "正常終了しました。"};
+  res.send(JSON.stringify(data));
+  
+});
+
 router.post('/', function(req, res, next){
   res.send('data');
 });

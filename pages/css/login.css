@@ -1,49 +1,50 @@
 /* layout */
+/* jquery dialog title 非表示 */
+.noTitle .ui-dialog-titlebar{
+  display :none;
+}
+
 body,p,form,input{margin: 0}
-#form{
+.form{
   width: 400px;
   margin: 30px auto;
   padding: 20px;
   border: 1px solid #555;
   }
 
-form p{
-    font-size: 14px;
-    }
-
 .form-title{
   text-align: center;
   }
 
-.mail,.pass{
+.input {
   margin-bottom: 20px;
-  }
-
-input[type="email"],
-input[type="password"] {
-  width: 386px;
+  width: 384px;
   padding: 4px;
   font-size: 14px;
   }
-    
+
 .button{
-  text-align: right;
+   text-align: right;
   }
 
 /* font */
-#form p{
+p{
   color: #077685;
   font-weight: bold;
+  font-size: 14px;
   }
 
-#form .form-title{
+.form-title{
   font-family: Arial;
   font-size: 30px;
   color: #4eb4c2;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #4eb4c2;
+  margin-bottom: 20px;
   }
 
 /* skin */
-#form{
+.form{
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -52,12 +53,6 @@ input[type="password"] {
   box-shadow: 0px 1px 10px #488a9e;
   border: solid #4eb4c2 1px;
   background: #fafafa;
-  }
-
-#form .form-title{
-  padding-bottom: 6px;
-  border-bottom: 2px solid #4eb4c2;
-  margin-bottom: 20px;
   }
 
 .button input{
