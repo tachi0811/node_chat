@@ -2,7 +2,15 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models');
 
-/* GET users listing. */
+/* 
+GET users listing.
+res
+  query
+    email
+    password
+req
+  user json
+*/
 router.get('/getUser', function(req, res, next) {
   res.contentType("application/JSON");
 
@@ -29,10 +37,14 @@ router.get('/getUser', function(req, res, next) {
 });
 
 /* ******************************
-  データ登録
-res.query.email
-res.query.name
-res.query.password
+post
+  req
+    query
+      email
+      name
+      password
+  res
+    json
 ****************************** */
 router.post('/createUser', function(req, res, next) {
   res.contentType("application/JSON");
@@ -46,7 +58,7 @@ router.post('/createUser', function(req, res, next) {
       if (data.length != 0) {
         res.send({ result : "1", message : "Exist Mail Address"});
       }
-      
+
     });
   } catch(err) {  
     var data = {result : "1", message: "DB Access Error"};
