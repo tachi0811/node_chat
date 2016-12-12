@@ -51,14 +51,15 @@ router.post('/createUser', function(req, res, next) {
   try {
     db.User.findOne({
       where : {
-        email : req.query.email
+        email : req.body.email
       }
     })
     .then(function(data){
-      if (data.length != 0) {
+      if (data != null) {
         res.send({ result : "1", message : "Exist Mail Address"});
+      } else {
+        
       }
-
     });
   } catch(err) {  
     var data = {result : "1", message: "DB Access Error"};
