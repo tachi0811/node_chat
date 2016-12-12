@@ -50,7 +50,6 @@ $(function(){
     // 通信成功
     // ===============
     }).done(function(res, status, xhr) {
-      
       $("#messageDialog span").text("success");
       $("#messageDialog").dialog({
         modal: true
@@ -68,7 +67,7 @@ $(function(){
     // その他
     // ===============
     }).always(function(xhr, status){
-      title: "メッセージ",
+      
       hideLoading();
     });
 

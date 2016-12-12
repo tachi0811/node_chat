@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models');
 
-/* 
+/* ******************************
 GET users listing.
 res
   query
@@ -10,7 +10,7 @@ res
     password
 req
   user json
-*/
+****************************** */
 router.get('/getUser', function(req, res, next) {
   res.contentType("application/JSON");
 
@@ -37,7 +37,7 @@ router.get('/getUser', function(req, res, next) {
 });
 
 /* ******************************
-post
+post/createUser
   req
     query
       email
