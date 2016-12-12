@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-      <meta charset="utf-8">
-      <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.css">
-      <link rel="stylesheet" type="text/css" href="css/loader.css">
-      <link rel="stylesheet" type="text/css" href="css/login.css" media="all" />
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery/validationEngine.jquery.css">
+    <link rel="stylesheet" type="text/css" href="css/loader.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css" media="all" />
 
-      <script type="text/javascript" src="js/jquery/jquery.js"></script>
-      <script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
-      <script type="text/javascript" src="js/common.js"></script>
-      <script type="text/javascript" src="js/login.js"></script>
-    </head>
-    <body>
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.validationEngine-ja.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+  </head>
+  <body>
 
-      <!-- input items -->
-      <div id="form">
-          <p class="form-title">Login</p>
-          <p>Email</p>
-          <p class="mail"><input type="email" id="email" class="email" name="email" /></p>
-          <p>Password</p>
-          <p class="pass"><input type="password" id="password" class="password" name="pass" /></p>
-          <p class="button"><input type="button" id="login" class="login" value="Login" /></p>
-      </div>
-
-      <!-- message dialog -->
-      <div id="messageDialog">
-        <span class="label message">
-          
-        </span>
-      </div>
-      
-      <!-- loading -->
-      <div id="loader" style="display:none;">  
-      </div>
-      <div id="loader_animation"style="display:none;">
-        loading...
-      </div>
-      
-    </body>
+  <form id="loginform" method="GET" action="send.cgi">
+    <!-- input items -->
+    <div id="form">
+      <p class="form-title">Login</p>
+      <p>Email</p>
+      <p class="mail"><input type="email" id="email" class="email validate[required]" name="email" /></p>
+      <p>Password</p>
+      <p class="pass"><input type="password" id="password" class="password validate[required]" name="pass" /></p>
+      <p class="button"><input type="button" id="login" class="login" value="Login" /></p>
+    </div>
+  </form>
+    <!-- message dialog -->
+    <div id="messageDialog">
+      <span class="label message">
+        
+      </span>
+    </div>
+    
+    <!-- loading -->
+    <div id="loader" style="display:none;">  
+    </div>
+    <div id="loader_animation"style="display:none;">
+      loading...
+    </div>
+    
+  </body>
 </html>
