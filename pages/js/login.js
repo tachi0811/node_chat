@@ -64,7 +64,10 @@ $(function(){
         $("#messageDialog span").text(res.message);
         $("#messageDialog").dialog({
           title: "Error",
-          modal: true
+          modal: true,
+          close: function() {
+            // 処理なし(処理がある時のために敢えて記述する)
+          }
         });
       }
     // ===============
@@ -74,7 +77,10 @@ $(function(){
       $("#messageDialog span").text("error");
       $("#messageDialog").dialog({
         title: "メッセージ",
-        modal: true
+        modal: true,
+        close: function() {
+          // 処理なし(処理がある時のために敢えて記述する)
+        }
       });
     // ===============
     // その他
@@ -112,19 +118,38 @@ $(function(){
     // 通信成功
     // ===============
     }).done(function(res, status, xhr) {
-      $("#messageDialog span").text("success");
-      $("#messageDialog").dialog({
-        title: "メッセージ",
-        modal: true
-      });
+      if (res.result == "0") {
+        // main 画面へ
+        $("#messageDialog span").text("success");
+        $("#messageDialog").dialog({
+          title: "Success",
+          modal: true,
+          close: function() {
+            // 処理なし(処理がある時のために敢えて記述する)
+          }
+        });
+      } else {
+        $("#messageDialog span").text(res.message);
+        $("#messageDialog").dialog({
+          title: "Success",
+          modal: true,
+          close: function() {
+            // 処理なし(処理がある時のために敢えて記述する)
+          }
+        });
+      }
+      
     // ===============
     // 通信失敗
     // ===============
     }).fail(function(xhr, status, thrown) {
       $("#messageDialog span").text("error");
       $("#messageDialog").dialog({
-        title: "メッセージ",
-        modal: true
+        title: "Error",
+        modal: true,
+        close: function() {
+          /// 処理なし(処理がある時のために敢えて記述する)
+        }
       });
     // ********************
     // その他

@@ -46,6 +46,8 @@
       <p class="name"><input type="text" id="cre_name" class="input validate[required]" data-prompt-position="topLeft"/></p>
       <p>Password</p>
       <p class="pass"><input type="password" id="cre_password" class="input validate[required]" data-prompt-position="topLeft"/></p>
+      <p>Password（確認）</p>
+      <p class="pass"><input type="password" id="re_password" class="input validate[required, equals[cre_password]]" data-prompt-position="topLeft"/></p>
       <p class="button">
         <input type="button" id="cancel" class="button " value="Cancel" />
         <input type="button" id="create" class="button " value="Create" />

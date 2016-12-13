@@ -22,13 +22,17 @@ router.get('/getUser', function(req, res, next) {
   //    res.send(JSON.stringify(data));
   //  });
 
-  db.user.findAll({
+  db.user.findOne({
     where : {
       email : req.query.email,
       password : req.query.password
   }})
   .then(function(data){
-    res.send(JSON.stringify(data));
+    if (data != null) {
+      res.send({ result: "0", data: JSON.stringify(data) });
+    } else {
+      res.send({ result: "1", message : "ユーザーが存在しません" });
+    }
   })
   .catch(function(err){
     res.send({ result: "1", message : err.message });
