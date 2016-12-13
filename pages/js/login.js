@@ -45,15 +45,28 @@ $(function(){
       dataType: "JSON",
       charset: "UTF-8",
       url: "/login/createUser",
-      timeout: 3000,
+      // timeout: 3000,
     // ===============
     // 通信成功
     // ===============
     }).done(function(res, status, xhr) {
-      $("#messageDialog span").text("success");
-      $("#messageDialog").dialog({
-        modal: true
-      });
+      if (res.result == "0") {
+        $("#messageDialog span").text("登録しました。");
+        $("#messageDialog").dialog({
+          title: "Success",
+          modal: true,
+          close: function() {
+            $("#createform .input").val("");
+            $("#creatediv").dialog('close');
+          }
+        });
+      } else if (res.result == "1") {
+        $("#messageDialog span").text(res.message);
+        $("#messageDialog").dialog({
+          title: "Error",
+          modal: true
+        });
+      }
     // ===============
     // 通信失敗
     // ===============
@@ -94,7 +107,7 @@ $(function(){
       charset: "UTF-8",
       contentType: "application/JSON",
       url: "/login/getUser",
-      timeout: 3000,
+      // timeout: 3000,
     // ===============
     // 通信成功
     // ===============

@@ -21,19 +21,18 @@ router.get('/getUser', function(req, res, next) {
   //  .then(function(data){
   //    res.send(JSON.stringify(data));
   //  });
-  try {
+  
     db.User.findAll({
       where : {
         email : req.query.email,
         password : req.query.password
     }})
     .then(function(data){
-      res.send(data)
+      res.send(JSON.stringify(data));
+    })
+    .catch(function(err){
+      res.send({ error : "1" });
     });
-  } catch (err) {
-    res.send("error");
-    throw(err);
-  }
 });
 
 /* ******************************
@@ -48,23 +47,33 @@ post/createUser
 ****************************** */
 router.post('/createUser', function(req, res, next) {
   res.contentType("application/JSON");
-  try {
-    db.User.findOne({
-      where : {
-        email : req.body.email
-      }
-    })
-    .then(function(data){
-      if (data != null) {
-        res.send({ result : "1", message : "Exist Mail Address"});
-      } else {
-        
-      }
-    });
-  } catch(err) {  
-    var data = {result : "1", message: "DB Access Error"};
-    res.send(JSON.stringify(data));
-  }  
+  
+  db.User.findOne({
+    where : {
+      email : req.body.email
+    }
+  })
+  .then(function(data){
+    if (data != null) {
+      res.send({ result : "1", message : "Exist Mail Address"});
+    } else {
+      // データの登録
+      db.User.create({
+        email: req.body.email,
+        name: req.body.name,
+        password: req.body.password
+      })
+      .then(function(data){
+        res.send({result: "0", message: "success"});
+      })
+      .catch(function(err){
+        res.send({ result : "1", message : err.message});
+      });
+    }
+  })
+  .catch(function(err){
+    res.send({ result : "1", message : err.message});
+  });
 });
 
 router.post('/', function(req, res, next){

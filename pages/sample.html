@@ -17,28 +17,26 @@
   <body>
 
   <!-- input button -->
-
   <div id="" class="">
     <p class="button">
       <input type="button" id="createUser" class=" " value="CreateUser" />
     </p>
   </div>
 
-    <!-- input items -->
+  <!-- input items -->
   <div id="logindiv" class="form login">
     <form id="loginform" >
       <p class="form-title">Login</p>
       <p>Email</p>
-      <p class="mail"><input type="email" id="email" class="input validate[required]" /></p>
+      <p class="mail"><input type="email" id="email" class="input validate[required, custom[email]]" data-prompt-position="topLeft"/></p>
       <p>Password</p>
-      <p class="pass"><input type="password" id="password" class="input validate[required]" /></p>
+      <p class="pass"><input type="password" id="password" class="input validate[required]" data-prompt-position="topLeft"/></p>
       <p class="button">
         <input type="button" id="login" class=" " value="Login" />
         
       </p>
     </form>
   </div>
-
 
   <div id="creatediv" class="create" style="display:none;">
     <form id="createform" >
@@ -50,8 +48,8 @@
       <p>Password</p>
       <p class="pass"><input type="password" id="cre_password" class="input validate[required]" data-prompt-position="topLeft"/></p>
       <p class="button">
-        <input type="button" id="cancel" class=" " value="Cancel" />
-        <input type="button" id="create" class=" " value="Create" />
+        <input type="button" id="cancel" class="button " value="Cancel" />
+        <input type="button" id="create" class="button " value="Create" />
       </p>
     </form>
   </div>
@@ -62,7 +60,7 @@
         
       </span>
     </div>
-    
+
     <!-- loading -->
     <div id="loader" style="display:none;">  
     </div>
