@@ -51,7 +51,7 @@ $(function(){
     // ===============
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
-        $("#messageDialog span").text("登録しました。");
+        $("#messageDialog span").text("登録しました");
         $("#messageDialog").dialog({
           title: "Success",
           modal: true,
