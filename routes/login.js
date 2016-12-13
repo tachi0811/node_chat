@@ -57,7 +57,9 @@ router.post('/createUser', function(req, res, next) {
     if (data != null) {
       res.send({ result : "1", message : "メールアドレスは既に登録されています"});
     } else {
+      // 
       // データの登録
+      // user & group myChat
       db.sequelize.transaction(function(t){
         return db.user.create({
           email: req.body.email,
