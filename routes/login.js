@@ -106,8 +106,35 @@ router.post('/createUser', function(req, res, next) {
   });
 });
 
+/* ******************************
+POST users listing.
+res
+  query
+    email
+    password
+req
+  user json
+****************************** */
 router.post('/', function(req, res, next){
-  res.send('data');
+  // res.send('data');
+  res.contentType("application/JSON");
+
+  db.user.findOne({
+    where : {
+      email : req.body.email,
+      password : req.body.password
+  }})
+  .then(function(data){
+    if (data != null) {
+      res.send({ result: "0", data: JSON.stringify(data) });
+    } else {
+      res.send({ result: "1", message : "ユーザーが存在しません" });
+    }
+  })
+  .catch(function(err){
+    res.send({ result: "1", message : err.message });
+  });
+
 });
 
 module.exports = router;

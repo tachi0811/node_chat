@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes');
 var users = require('./routes/users');
 var login = require('./routes/login');
+var main = require('./routes/main');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/main', main);
 app.use('/pages', express.static('pages')); // <-- html 参照するので、追加
 
 // catch 404 and forward to error handler

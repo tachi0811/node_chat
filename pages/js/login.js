@@ -107,12 +107,12 @@ $(function(){
       "password" : $("#password").val()
     };
     $.ajax({
-      type: "GET",
+      type: "POST",
       data: sendData,
       dataType: "JSON",
       charset: "UTF-8",
-      contentType: "application/JSON",
-      url: "/login/getUser",
+      // contentType: "application/JSON",
+      url: "/login/",
       // timeout: 3000,
     // ===============
     // 通信成功
@@ -120,14 +120,7 @@ $(function(){
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
         // main 画面へ
-        $("#messageDialog span").text("success");
-        $("#messageDialog").dialog({
-          title: "Success",
-          modal: true,
-          close: function() {
-            // 処理なし(処理がある時のために敢えて記述する)
-          }
-        });
+        window.location.href = "./main.html";
       } else {
         $("#messageDialog span").text(res.message);
         $("#messageDialog").dialog({
