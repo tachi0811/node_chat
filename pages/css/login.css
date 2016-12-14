@@ -4,6 +4,15 @@
   display :none;
 }
 
+#createUser{
+  position: relative;
+  float: right;
+  margin-right: 15px;
+  padding: 9px 10px;
+  margin-top: 13px;
+  margin-bottom: 13px;
+}
+
 body,p,form,input{margin: 0}
 .form{
   width: 400px;
