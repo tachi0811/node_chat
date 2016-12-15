@@ -2,11 +2,13 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
+    
     <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.css">
+    
     <link rel="stylesheet" type="text/css" href="css/jquery/validationEngine.jquery.css">
     <link rel="stylesheet" type="text/css" href="css/loader.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap_flatly.css"/>
-    <link rel="stylesheet" type="text/css" href="css/login.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
     
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
@@ -17,53 +19,125 @@
   </head>
   <body>
 
-<div class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="#" class="navbar-brand">simple chat</a>
-      <a href="#" class="btn btn-info" id="createUser">
-        新規登録
-      </a>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">simple chat</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <a href="#" class="btn btn-info nav navbar-nav navbar-right" id="createUser">
+            新規登録
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-  <!-- input items -->
-  <div id="logindiv" class="form login">
-    <form id="loginform" >
-      <p class="form-title">Login</p>
-      <p>Email</p>
-      <p class="mail"><input type="email" id="email" class="input validate[required, custom[email]]" data-prompt-position="topLeft"/></p>
-      <p>Password</p>
-      <p class="pass"><input type="password" id="password" class="input validate[required]" data-prompt-position="topLeft"/></p>
-      <p class="button">
-        <input type="button" id="login" class=" " value="Login" />
-      </p>
-    </form>
-  </div>
+    <div class="page-header">
+    </div>
 
-  <div id="creatediv" class="create" style="display:none;">
-    <form id="createform" >
-      <p class="form-title">Create User</p>
-      <p>Email</p>
-      <p class="mail"><input type="email" id="cre_email" class="input validate[required, custom[email]]" data-prompt-position="topLeft"/></p>
-      <p>name</p>
-      <p class="name"><input type="text" id="cre_name" class="input validate[required]" data-prompt-position="topLeft"/></p>
-      <p>Password</p>
-      <p class="pass"><input type="password" id="cre_password" class="input validate[required]" data-prompt-position="topLeft"/></p>
-      <p>Password（Re-Enter）</p>
-      <p class="pass"><input type="password" id="re_password" class="input validate[required, equals[cre_password]]" data-prompt-position="topLeft"/></p>
-      <p class="button">
-        <input type="button" id="cancel" class="button " value="Cancel" />
-        <input type="button" id="create" class="button " value="Create" />
-      </p>
-    </form>
-  </div>
+    <!-- input items -->
+    <div id="logindiv" class="container">
+      <div class="well bs-component">
+
+        <form id="loginform" class="form-horizontal">
+
+          <legend>Login</legend>
+
+          <div class="form-group">
+            <label for="email" class="col-lg-2 control-label">
+              Email
+            </label>
+            <div class="col-lg-10">
+              <input type="email" id="email" class="form-control input validate[required, custom[email]]" data-prompt-position="topLeft"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="col-lg-2 control-label">
+              Password
+            </label>
+            <div class="col-lg-10">
+              <input type="password" id="password" class="form-control input validate[required]" data-prompt-position="topLeft"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+              <a href="#" class="btn btn-primary" id="login">Login</a>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+    <div id="creatediv" class="container" style="display:none;">
+      <div class="well bs-component">
+        <form id="createform" class="form-horizontal">
+          <legend>Create User</legend>
+
+          <div class="form-group">
+            <label for="cre_email" class="col-lg-2 control-label">
+              Email
+            </label>
+            <div class="col-lg-10">
+              <input type="email" id="cre_email" class="form-control input validate[required, custom[email]]" data-prompt-position="topLeft"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cre_password" class="col-lg-2 control-label">
+              Password
+            </label>
+            <div class="col-lg-10">
+              <input type="password" id="cre_password" class="form-control input validate[required]" data-prompt-position="topLeft"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cre_name" class="col-lg-2 control-label">
+              Name
+            </label>
+            <div class="col-lg-10">
+              <input type="text" id="cre_name" class="form-control input validate[required]" data-prompt-position="topLeft"/>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="cre_name" class="col-lg-2 control-label">
+              Password
+            </label>
+            <div class="col-lg-10">
+              <input type="password" id="cre_password" class="form-control input validate[required]" data-prompt-position="topLeft"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cre_name" class="col-lg-2 control-label">
+              Password（Re-Enter）
+            </label>
+            <div class="col-lg-10">
+              <input type="password" id="re_password" class="form-control input validate[required, equals[cre_password]]" data-prompt-position="topLeft"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+              <input type="reset"  class="btn btn-default" id="cancel" value="Cancel" />
+              <input type="button" class="btn btn-primary" id="create" value="Create" />
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
 
     <!-- message dialog -->
     <div id="messageDialog">
-      <span class="label message">
-        
+      <h4>
+        <span class="label message text-primary">
+      </h4>
       </span>
     </div>
 
