@@ -10,11 +10,8 @@ $(function(){
   // ******************************
   $("#createUser").click(function(e) {
 
-    $("#creatediv").dialog({
-      modal: true,
-      width: 500,
-      dialogClass: 'noTitle'
-    });
+    $("#logindiv").hide();
+    $("#creatediv").show();
 
   });
 
@@ -22,7 +19,7 @@ $(function(){
   // cancel button click
   // ******************************
   $("#cancel").click(function(e) {
-    $("#creatediv").dialog('close');
+    clickCancel(e);
   });
 
   // ******************************
@@ -56,8 +53,7 @@ $(function(){
           title: "Success",
           modal: true,
           close: function() {
-            $("#createform .input").val("");
-            $("#creatediv").dialog('close');
+            clickCancel(null);
           }
         });
       } else if (res.result == "1") {
@@ -152,3 +148,10 @@ $(function(){
     });
   });
 });
+
+function clickCancel(e) {
+  $("#createform .input").val("");
+  $("#logindiv").show();
+  $("#creatediv").hide();
+  $("#createform").validationEngine('hide')
+}

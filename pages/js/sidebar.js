@@ -4,13 +4,11 @@ function createSideBar(data) {
   var targetSideBar = $("#groupListItems");
   for (i = 0; i < dataLength; i++) {
     var d = data[i];
-    var div = $("<div gid='" + d["id"] + "' class='groupItem'>");
-    var li = $("<li class=''>");
-    var div_nm = $("<div class='group_name'>").append($("<p>").text(d["group_name"]));
-
+    // var div = $("<div gid='" + d["id"] + "' class='groupItem'>");
+    var li = $("<li>");
+    var div_nm = $("<a herf='#' gid='" + d["id"] + "' class='groupItem'>").text(d["group_name"]);
     li.append(div_nm);
-    div.append(li);
-    targetSideBar.append(div);
+    targetSideBar.append(li);
 
   }
 }

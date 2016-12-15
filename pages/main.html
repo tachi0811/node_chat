@@ -5,41 +5,51 @@
     <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="css/jquery/validationEngine.jquery.css">
     <link rel="stylesheet" type="text/css" href="css/loader.css">
-    <link rel="stylesheet" type="text/css" href="css/login.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap_flatly.css"/>
+    <link rel="stylesheet" type="text/css" href="css/simple-sidebar.css"/>
 
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
+    
     <script type="text/javascript" src="js/jquery/jquery.validationEngine.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.validationEngine-ja.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
   </head>
   <body>
 
-    <div id="topbar">
-      <div id="logo">
-      </div>
-      <div id="userinfo">
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">simple chat</a>
+        </div>
       </div>
     </div>
-    <div id="sidebar">
-      <div id="groupListArea">
-        <ui id="groupListItems">
 
+    <div class="page-header">
+    </div>
+
+    <div id="wrapper">
+      <div id="sidebar-wrapper">
+        <ui id="groupListItems" class="sidebar-nav">
+          <li id="user_name" class="sidebar-brand">
+            SampleUser
+          </li>
         </ui>
       </div>
     </div>
-    <div id="chat">
-      <div id="chatlist">
-      </div>
-    </div>
 
-    <!-- message dialog -->
-    <div id="messageDialog">
-      <span class="label message">
-        
-      </span>
+    <!-- input items -->
+    <div id="page-content-wrapper">
+      <div class="">
+        <div id="chat">
+          <div id="chatlist">
+            <h4>俺はここだ俺はここだ</h4>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- loading -->
