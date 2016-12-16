@@ -25,8 +25,8 @@
           <a href="#" class="navbar-brand">simple chat</a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
-          <a href="#" class="btn btn-info nav navbar-nav navbar-right" id="createUser">
-            CreateUser
+          <a href="#" class="btn btn-info nav navbar-nav navbar-right" id="createAccount">
+            Add account
           </a>
         </div>
       </div>
@@ -75,7 +75,7 @@
     <div id="creatediv" class="container" style="display:none;">
       <div class="well bs-component">
         <form id="createform" class="form-horizontal">
-          <legend>Create User</legend>
+          <legend>Add account</legend>
 
           <div class="form-group">
             <label for="cre_email" class="col-lg-2 control-label">
@@ -106,7 +106,7 @@
 
           <div class="form-group">
             <label for="cre_name" class="col-lg-2 control-label">
-              Password（Re-Enter）
+              <nobr>Password（Re-Enter）</nobr>
             </label>
             <div class="col-lg-10">
               <input type="password" id="re_password" class="form-control input validate[required, equals[cre_password]]" data-prompt-position="topLeft"/>
@@ -116,7 +116,7 @@
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
               <input type="reset"  class="btn btn-default" id="cancel" value="Cancel" />
-              <input type="button" class="btn btn-primary" id="create" value="Create" />
+              <input type="button" class="btn btn-primary" id="create" value="Add" />
             </div>
           </div>
 

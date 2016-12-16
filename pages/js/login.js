@@ -8,7 +8,7 @@ $(function(){
   // ******************************
   // create button click
   // ******************************
-  $("#createUser").click(function(e) {
+  $("#createAccount").click(function(e) {
 
     $("#logindiv").hide();
     $("#creatediv").show();
@@ -41,7 +41,7 @@ $(function(){
       data: sendData,
       dataType: "JSON",
       charset: "UTF-8",
-      url: "/login/createUser",
+      url: "/login/createAccount",
       // timeout: 3000,
     // ===============
     // 通信成功
