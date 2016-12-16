@@ -126,6 +126,7 @@ router.post('/', function(req, res, next){
   }})
   .then(function(data){
     if (data != null) {
+      req.session.user = { name: data.name, id:data.id };
       res.send({ result: "0", data: JSON.stringify(data) });
     } else {
       res.send({ result: "1", message : "ユーザーが存在しません" });
