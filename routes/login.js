@@ -49,7 +49,7 @@ post/createUser
   res
     json
 ****************************** */
-router.post('/createUser', function(req, res, next) {
+router.post('/createAccount', function(req, res, next) {
   res.contentType("application/JSON");
   
   db.user.findOne({
