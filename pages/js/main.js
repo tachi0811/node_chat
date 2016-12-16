@@ -34,7 +34,6 @@ function setUser() {
     // timeout: 3000,
   // ===============
   // 通信成功
-  // ===============
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
       $("#user_name").text(res.data.name);
@@ -43,12 +42,10 @@ function setUser() {
     }
   // ===============
   // 通信失敗
-  // ===============
   }).fail(function(xhr, status, thrown) {
     window.location.href = "./sample.html";
   // ===============
   // その他
-  // ===============
   }).always(function(xhr, status){
     
   });
@@ -65,7 +62,6 @@ function setGroup() {
     // timeout: 3000,
   // ===============
   // 通信成功
-  // ===============
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
       createSideBar(JSON.parse(res.data));
@@ -74,12 +70,10 @@ function setGroup() {
     }
   // ===============
   // 通信失敗
-  // ===============
   }).fail(function(xhr, status, thrown) {
     window.location.href = "./sample.html";
   // ===============
   // その他
-  // ===============
   }).always(function(xhr, status){
     
   });
@@ -97,7 +91,6 @@ function getChat(id) {
     // timeout: 3000,
   // ===============
   // 通信成功
-  // ===============
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
       createSideBar(JSON.parse(res.data));
@@ -106,12 +99,10 @@ function getChat(id) {
     }
   // ===============
   // 通信失敗
-  // ===============
   }).fail(function(xhr, status, thrown) {
     window.location.href = "./sample.html";
   // ===============
   // その他
-  // ===============
   }).always(function(xhr, status){
     hideLoading();
   });
