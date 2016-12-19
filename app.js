@@ -23,7 +23,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-// var app = express();
+app.engine('html', require('jade').renderFile)
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -64,22 +64,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var server = require('http').createServer(app).listen(function() {
-  console.log('listening!!!');
-});
+var http = require("http").Server(app);
+var io = require("socket.io")(http);
 
-var io = require('socket.io').listen(server);
-
-io.on('connection', function(socket) {
-  console.log('connect on');
-  socket.on('message', function(data) {
-    console.log('message add');
-    io.sockets.emt('message', { value: data.value });
-  });
-
-  socket.on('disconnect', function() {
-    console.log('disconnect ');
-  });
+io.on('connction', function(socket) {
+  console.log('a user connect');
 });
 
 module.exports = app;

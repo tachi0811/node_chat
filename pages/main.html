@@ -17,21 +17,24 @@
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
-    <script type="text/javascript" src="js/lib/socket.io.js"></script>
+    <!--
+      <script type="text/javascript" src="js/lib/socket.io.js"></script>
+    -->
+    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type="text/javascript">
       $(function(){
-        var sio = io.connect('http://localhost:3030/');
-        socket.on('connect', function() {
-          alert("socket.io connection");
+        var sio = io.connect('/');
+        sio.on('connect', function() {
+          console.log("connected");
         });
-        socket.on("message", function(msg) {
-          alert('戻って来た');
+        sio.on("message", function(msg) {
+          console.log("send message");
         });
         
       });
       // 送信
       $("#send").click(function(e) {
-        socket.emit('message', { value: 'メッセージ' });
+        sio.emit('message', { value: 'メッセージ' });
       }); 
     </script>
   </head>
