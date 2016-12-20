@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <!--
+      <script type="text/javascript" src="js/lib/socket.io.js"></script>
+    -->
+    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script type="text/javascript">
+      
+        var sio = io.connect();
+        sio.on('connect', function() {
+          console.log("connected");
+        });
+        sio.on("message", function(msg) {
+          console.log("send message");
+        });
+        
+      
+       
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>

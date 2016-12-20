@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/lib/jquery/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/jquery/validationEngine.jquery.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap_flatly.css"/>
+    <link rel="stylesheet" type="text/css" href="css/lib/simple-sidebar.css"/>
+    <link rel="stylesheet" type="text/css" href="css/loader.css">
+
+    <script type="text/javascript" src="js/lib/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/lib/jquery/jquery-ui.js"></script>
+    
+    <script type="text/javascript" src="js/lib/jquery/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="js/lib/jquery/jquery.validationEngine-ja.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/sidebar.js"></script>
+    <!--
+      <script type="text/javascript" src="js/lib/socket.io.js"></script>
+    -->
+    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        var sio = io.connect('http://localhost:8080');
+        sio.on('connect', function() {
+          console.log("connected");
+        });
+        sio.on("message", function(msg) {
+          console.log("send message");
+        });
+        
+      });
+      // 送信
+      $("#send").click(function(e) {
+        sio.emit('message', { value: 'メッセージ' });
+      }); 
+    </script>
+  </head>
+  <body>
+
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">simple chat</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+    </div>
+
+    <div id="wrapper">
+      <div id="sidebar-wrapper">
+        <ui id="groupListItems" class="sidebar-nav">
+          <li id="user_name" class="sidebar-brand">
+            
+          </li>
+        </ui>
+      </div>
+
+      <!-- input items -->
+      <div id="page-content-wrapper">
+        <div class="page-container-fluid">
+          <div id="chat">
+            <div id="chatlist">
+                <div class="chat-box">
+                  <div class="chat-face">
+
+                  <div>
+                  <div class="chat-area">
+                    <input type="button" id="send" value="送信" />
+                    <div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- loading -->
+    <div id="loader" style="display:none;">  
+    </div>
+    <div id="loader_animation"style="display:none;">
+    </div>
+  </body>
+</html>
