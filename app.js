@@ -8,21 +8,24 @@ var session = require('express-session');
 
 var index = require('./routes/index');
 var login = require('./routes/login');
+var main = require('./routes/main');
 
 var app = express();
-//app.get('/', function(req, res, next) {
-//  next;
-//  res.sendFile(__dirname + '/index.html');
-//});
+
+// session
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 30 * 60 * 1000
+  }
+}));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.engine('html', require('jade').renderFile);
-
-//app.get('/', function(req, res, next) {
-  // res.sendFile(__dirname + '/views/index.html');
-//});
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
+//app.engine('html', require('jade').renderFile);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -31,20 +34,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'views')));
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use('/pages', express.static('pages')); 
 
 app.use('/', index);
 app.use('/login', login);
-
-// session
-app.use(session({
-  secret: 'hogehoge',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 30 * 60 * 1000
-  }
-}));
+app.use('/main', main);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -66,7 +61,6 @@ app.use(function(err, req, res, next) {
 
 // var app = require('app');
 
-
 // var port = process.env.PORT || 3000;
 // 
 // var http = require('http').createServer(app);
@@ -80,7 +74,4 @@ app.use(function(err, req, res, next) {
 //   console.log('listening on');
 // })
  
-
-
-
 module.exports = app;
