@@ -5,8 +5,6 @@ var db = require('../models');
 var http = require('http');
 
 
-
-
 /* ******************************
 GET groups listing.
 res

@@ -64,17 +64,23 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var port = process.env.PORT || 3000;
+// var app = require('app');
 
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
 
-io.on('connection', function(socket) {
-  console.log('a user connected');
-});
+// var port = process.env.PORT || 3000;
+// 
+// var http = require('http').createServer(app);
+// var io = require('socket.io')(http);
+// 
+// io.on('connection', function(socket) {
+//   console.log('a user connected');
+// });
+// 
+// http.listen(3030, function(){
+//   console.log('listening on');
+// })
+ 
 
-http.listen(port, function(){
-  console.log('listening on');
-})
+
 
 module.exports = app;
