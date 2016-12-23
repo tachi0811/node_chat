@@ -5,6 +5,14 @@ $(function(){
   // ローディング画面表示
   showLoading();
 
+  var sio = io.connect();
+  sio.on('connect', function() {
+    console.log("connected");
+  });
+  sio.on("recieve_message", function(data) {
+    console.log("send message");
+  });
+
   // 複数の非同期を制御
   $.when(
     setUser(),
@@ -15,7 +23,44 @@ $(function(){
     
   }).always(function(){
     hideLoading();
-  });  
+  });
+
+  // 送信ボタンクリック
+  $("#send").click(function(e) {
+    var chat = $("#chatText").val();
+    var data = { "group_id" : 1, "chat" : chat };
+    $.ajax({
+      type: "POST",
+      charset: "UTF-8",
+      data: data,
+      dataType: "JSON",
+      // contentType: "application/JSON",
+      url: "/main/insertChat/",
+    // timeout: 3000,
+    }).done(function(res, status, xhr) {
+      if (res.result == "0") {
+        sio.emit('send_message', { value: res });
+      }
+       else if (res.result == "1") {
+        window.location.href = "./sample.html";
+      }
+    }).fail(function(xhr, status, thrown) {
+
+    }).always(function(xhr, status) {
+
+    });  
+  });
+
+  // 削除
+  $("#delete").click(function(e) {
+
+  });
+
+  // 編集
+  $("#regit").click(function(e) {
+
+  });
+
 });
 
 // 初期画面表示で全タスクが修了したら入る

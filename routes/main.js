@@ -83,4 +83,33 @@ router.get('/loginUser', function(req, res, next){
   }
 });
 
+/* ******************************
+POST
+res
+  body
+    group_id
+    chat
+req
+  resut = 0 : success
+        = 1 : error
+  message   : string
+****************************** */
+router.post('/insertChat', function(req, res, next) {
+
+  if (!req.session.user) {
+    res.send({ result: "1", message: "goto login"});
+  } else {
+    db.chat.create({
+      group_id : req.body.group_id,
+      user_id : req.session.user.id,
+      chat : req.body.chat
+    }).then(function(result){
+      res.send({ result: "0", data: result.dataValues });
+    }).catch(function(err){
+      res.send({ result: "1", message: err.message});
+    });     
+  }
+
+});
+
 module.exports = router;

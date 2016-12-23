@@ -22,22 +22,6 @@
     -->
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type="text/javascript">
-      $(function(){
-        var sio = io.connect();
-        sio.on('connect', function() {
-          console.log("connected");
-        });
-        sio.on("message", function(msg) {
-          console.log("send message");
-        });
-      });
-      // 送信
-      $("#send").click(function(e) {
-
-
-
-        sio.emit('message', { value: 'メッセージ' });
-      }); 
     </script>
   </head>
   <body>
@@ -63,30 +47,19 @@
       </div>
 
       <!-- input items -->
-      <div id="page-content-wrapper">
-        <div class="page-container-fluid">
+      <div class="container">
+        <div class="well bs-component">
           <div id="chat">
             <div id="chatlist">
-              <div class="chat-box">
-                <div class="chat-face">
-                  <pre>
-                    aaaaaa
-                  </pre>
-                </div>
-              </div>
-              <div class="chat-box">
-                <div class="chat-face">
-                  <pre>
-                    aaaaaa
-                  </pre>
-                </div>
-              </div>
+
             </div>
             <div class="col-lg-6">
               <div class="well bs-component">
                 <div class="form-horizontal">
                   <div class="form-group chat-area">
                     <textarea class="form-control" id="chatText"></textarea>
+                  </div>
+                  <div class="form-group">
                     <input class="btn btn-default" type="button" id="delete" value="削除" />
                     <input class="btn btn-default" type="button" id="regit" value="編集" />
                     <input class="btn btn-default" type="button" id="send" value="送信" />

@@ -1,14 +1,22 @@
+//
+// chat area 作成
+//
 function createChat(data) {
 
   var dataLength = data.length;
-  var targetSideBar = $("#groupListItems");
+
+
   for (i = 0; i < dataLength; i++) {
     var d = data[i];
-    // var div = $("<div gid='" + d["id"] + "' class='groupItem'>");
-    var li = $("<li>");
-    var div_nm = $("<a herf='#' gid='" + d["id"] + "' class='groupItem'>").text(d["group_name"]);
-    li.append(div_nm);
-    targetSideBar.append(li);
-
+    addChat(d);
   }
+
+}
+
+function addChat(d) {
+  var chatlist = $("#chatlist");
+  var div = $("<div gid='" + d["group_id"] + "' uid='" + d["user_id"] + "' cid='" + d["id"] + "' class='chat-box'>").append("<div class='chat-face'>");
+  var div_nm = $("<pre class='chatItem'>").text(d["chat"]);
+  div.append(div_nm);
+  chatlist.append(div_nm);
 }
