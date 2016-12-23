@@ -30,10 +30,12 @@
         sio.on("message", function(msg) {
           console.log("send message");
         });
-        
       });
       // 送信
       $("#send").click(function(e) {
+
+
+
         sio.emit('message', { value: 'メッセージ' });
       }); 
     </script>
@@ -65,15 +67,36 @@
         <div class="page-container-fluid">
           <div id="chat">
             <div id="chatlist">
-                <div class="chat-box">
-                  <div class="chat-face">
-
-                  <div>
-                  <div class="chat-area">
-                    <input type="button" id="send" value="送信" />
-                    <div>
+              <div class="chat-box">
+                <div class="chat-face">
+                  <pre>
+                    aaaaaa
+                  </pre>
                 </div>
+              </div>
+              <div class="chat-box">
+                <div class="chat-face">
+                  <pre>
+                    aaaaaa
+                  </pre>
+                </div>
+              </div>
             </div>
+            <div class="col-lg-6">
+              <div class="well bs-component">
+                <div class="form-horizontal">
+                  <div class="form-group chat-area">
+                    <textarea class="form-control" id="chatText"></textarea>
+                    <input class="btn btn-default" type="button" id="delete" value="削除" />
+                    <input class="btn btn-default" type="button" id="regit" value="編集" />
+                    <input class="btn btn-default" type="button" id="send" value="送信" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+
           </div>
         </div>
       </div>
