@@ -71,9 +71,12 @@ router.post('/createAccount', function(req, res, next) {
           password: req.body.password
         }, {transaction: t })
         .then(function(user){
+          req.session.user = { name: user.dataValues.name, id:user.dataValues.id };
           return db.group.create({
             user_id: user.id,
             group_name: "myChat",
+            permission: 1,
+            is_my_chat: true,
           },{ transaction: t });
         });
       })

@@ -16,7 +16,7 @@ function sio(server) {
 			// ブロードキャスト
 			// socket.broadcast.emit('recieve', {
 			sio.emit('recieve_message', {
-				data : data
+				data : data.value
 			});
 		});
 

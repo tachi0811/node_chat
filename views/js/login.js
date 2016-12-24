@@ -48,14 +48,16 @@ $(function(){
     // ===============
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
-        $("#messageDialog span").text("登録しました");
-        $("#messageDialog").dialog({
-          title: "Success",
-          modal: true,
-          close: function() {
-            clickCancel(null);
-          }
-        });
+        // main 画面へ
+        window.location.href = "./main.html";
+        //$("#messageDialog span").text("登録しました");
+        //$("#messageDialog").dialog({
+        //  title: "Success",
+        //  modal: true,
+        //  close: function() {
+        //    clickCancel(null);
+        //  }
+        //});
       } else if (res.result == "1") {
         $("#messageDialog span").text(res.message);
         $("#messageDialog").dialog({

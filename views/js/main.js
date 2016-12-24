@@ -9,8 +9,8 @@ $(function(){
   sio.on('connect', function() {
     console.log("connected");
   });
-  sio.on("recieve_message", function(data) {
-    console.log("send message");
+  sio.on("recieve_message", function(res) {
+    addChat(res.data);
   });
 
   // 複数の非同期を制御
@@ -27,28 +27,31 @@ $(function(){
 
   // 送信ボタンクリック
   $("#send").click(function(e) {
-    var chat = $("#chatText").val();
-    var data = { "group_id" : 1, "chat" : chat };
-    $.ajax({
-      type: "POST",
-      charset: "UTF-8",
-      data: data,
-      dataType: "JSON",
-      // contentType: "application/JSON",
-      url: "/main/insertChat/",
-    // timeout: 3000,
-    }).done(function(res, status, xhr) {
-      if (res.result == "0") {
-        sio.emit('send_message', { value: res });
-      }
-       else if (res.result == "1") {
-        window.location.href = "./sample.html";
-      }
-    }).fail(function(xhr, status, thrown) {
+    var chat = $("#chatText").val().trim();
+    if (chat != "") {
+      var data = { "group_id" : 1, "chat" : chat };
+      $.ajax({
+        type: "POST",
+        charset: "UTF-8",
+        data: data,
+        dataType: "JSON",
+        // contentType: "application/JSON",
+        url: "/main/insertChat/",
+      // timeout: 3000,
+      }).done(function(res, status, xhr) {
+        if (res.result == "0") {
+          sio.emit('send_message', { value: res.data });
+        }
+        else if (res.result == "1") {
+          window.location.href = "./sample.html";
+        }
+      }).fail(function(xhr, status, thrown) {
 
-    }).always(function(xhr, status) {
+      }).always(function(xhr, status) {
 
-    });  
+      });
+    }
+  
   });
 
   // 削除
