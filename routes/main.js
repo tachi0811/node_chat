@@ -47,7 +47,7 @@ res
     user_id
     group_name
 req
-  group json
+  group_id : string
  ****************************** */
 router.get('/chats', function(req, res, next) {
   if (!req.session.user) {
