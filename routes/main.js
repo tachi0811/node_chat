@@ -1,9 +1,6 @@
 var express = require('express');
-var socket = require('socket.io');
 var router = express.Router();
 var db = require('../models');
-var http = require('http');
-
 
 /* ******************************
 GET groups listing.

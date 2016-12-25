@@ -71,6 +71,9 @@ function initAllDone() {
   hideLoading();
 }
 
+/*
+login 情報取得
+*/
 function setUser() {
   $.ajax({
     type: "GET",
@@ -99,6 +102,9 @@ function setUser() {
   });
 }
 
+/*
+ group情報取得
+*/
 function setGroup() {
   $.ajax({
     type: "GET",
@@ -127,6 +133,9 @@ function setGroup() {
   });
 }
 
+/*
+chat 情報取得
+*/
 function getChat(id) {
 
   $.ajax({
