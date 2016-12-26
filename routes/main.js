@@ -73,10 +73,19 @@ req
   group json
 ****************************** */
 router.get('/loginUser', function(req, res, next){
-  if (!req.session.user) {
-    res.send({ result: "1", message: "goto login"});
+  if (req.session.user) {
+    db.group.findOne({
+      where: {
+        user_id: req.session.user.id,
+        is_my_chat: true,
+      }
+    }).then(function(data) {
+      res.send({ result: "0", data: { user_id: req.session.user.id, user_name: req.session.user.user_name, my_chat_group_id: data.dataValues.id }})
+    }).catch(function(err) {
+      res.send({ result: "1", message: err.message })
+    });
   } else {
-    res.send({ result: "0", data: req.session.user });
+    res.send({ result: "1", message: "goto login" });
   }
 });
 
@@ -96,17 +105,30 @@ router.post('/insertChat', function(req, res, next) {
   if (!req.session.user) {
     res.send({ result: "1", message: "goto login"});
   } else {
-    db.chat.create({
-      group_id : req.body.group_id,
-      user_id : req.session.user.id,
-      chat : req.body.chat
-    }).then(function(result){
-      res.send({ result: "0", data: result.dataValues });
-    }).catch(function(err){
-      res.send({ result: "1", message: err.message});
-    });     
-  }
 
+    db.chat.max(
+      'id', {
+         where: {
+            group_id: req.body.group_id 
+          }
+    }).then(function(max){
+      if (isNaN(max)) {
+        max = 0;
+      }
+      db.chat.create({
+        id: max + 1,
+        group_id: req.body.group_id,
+        user_id: req.session.user.id,
+        chat: req.body.chat
+      }).then(function(result){
+        res.send({ result: "0", data: result.dataValues });
+      }).catch(function(err){
+        res.send({ result: "1", message: err.message});
+      });
+    }).catch(function(e) {
+      res.send({ result: "1", data: result.dataValues });
+    });
+  }
 });
 
 module.exports = router;

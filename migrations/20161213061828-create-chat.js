@@ -4,11 +4,12 @@ module.exports = {
     return queryInterface.createTable('chats', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       group_id: {
+        allowNull: false,
+        primaryKey: true,
         type: Sequelize.INTEGER
       },
       user_id: {
