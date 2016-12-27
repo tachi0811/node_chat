@@ -2,7 +2,17 @@
 // jquery windows.ready と同じ
 // ******************************
 var sio;
+
+
+function chatResize(){
+  var h = $(window).height();
+  $(".panel-body").height(h- 170);
+}
+
+var timer = false;
+
 $(function(){
+
   // --------------------
   // ローディング画面表示
   // --------------------
@@ -46,8 +56,9 @@ $(function(){
   // --------------------
   $("#send").click(function(e) {
     var chat = $("#chatText").val().trim();
+    var group_id = $("#group_id").val();
     if (chat != "") {
-      var data = { "group_id" : 1, "chat" : chat };
+      var data = { "group_id" : group_id, "chat" : chat };
       $.ajax({
         type: "POST",
         charset: "UTF-8",
@@ -70,19 +81,20 @@ $(function(){
       });
     }
   });
-  // --------------------
-  // 削除
-  // --------------------
-  $(".del").click(function(e) {
-    var a = 21;
+
+  // チャットの高さのリサイズ
+  chatResize();
+
+  $(window).resize(function() {
+    if (timer != false) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(function() {
+      console.log('window resize');
+      chatResize();
+    });
   });
 
-  // --------------------
-  // 編集
-  // --------------------
-  $(".edit").click(function(e) {
-    var a = 21;
-  });
 });
 
 // ----------------------------------------
