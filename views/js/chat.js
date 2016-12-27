@@ -33,12 +33,19 @@ function addChat(d) {
   $("#chat").append($(chatText));
 }
 
+function delChat(user_id, group_id, chat_id) {
+  $("li[uid='" + user_id + "'][gid='" + group_id + "'][cid='" + chat_id + "']").remove();
+}
+
+function updChat(){
+
+}
+
 // 編集処理
 function editClick(user_id, group_id, chat_id) {
   
 }
 
-// 削除処理
-function deleteClick(user_id, group_id, chat_id) {
 
-}
+
+

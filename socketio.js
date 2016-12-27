@@ -10,13 +10,24 @@ function sio(server) {
 	// 接続時
 	sio.on('connection', function(socket) {
 		// 通知受信
-		socket.on('send_message', function(data) {
+		socket.on('send_insChat', function(data) {
 			console.log(data);
 			// すべてのクライアントへ通知を送信
 			// ブロードキャスト
 			// socket.broadcast.emit('recieve', {
-			sio.emit('recieve_message', {
-				data : data.value
+			sio.emit('recv_insChat', {
+				data : data
+			});
+		});
+
+		// 通知受信
+		socket.on('send_delChat', function(data) {
+			console.log(data);
+			// すべてのクライアントへ通知を送信
+			// ブロードキャスト
+			// socket.broadcast.emit('recieve', {
+			sio.emit('recv_delChat', {
+				data : data
 			});
 		});
 

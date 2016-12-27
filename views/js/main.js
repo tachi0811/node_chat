@@ -1,21 +1,30 @@
 // ******************************
 // jquery windows.ready と同じ
 // ******************************
+var sio;
 $(function(){
   // --------------------
   // ローディング画面表示
   // --------------------
   showLoading();
-
   // --------------------
   // socket.io 
   // --------------------
-  var sio = io.connect();
+  sio = io.connect()
   sio.on('connect', function() {
     console.log("connected");
   });
-  sio.on("recieve_message", function(res) {
+  // 登録
+  sio.on("recv_insChat", function(res) {
     addChat(res.data);
+  });
+  // 削除
+  sio.on("recv_delChat", function(res) {
+    delChat(res.data.user_id, res.data.group_id, res.data.chat_id);
+  });
+  // 更新
+  sio.on("recv_delChat", function(res) {
+    delChat(res.data.user_id, res.data.group_id, res.data.chat_id);
   });
 
   // --------------------
@@ -49,7 +58,7 @@ $(function(){
       // timeout: 3000,
       }).done(function(res, status, xhr) {
         if (res.result == "0") {
-          sio.emit('send_message', { value: res.data });
+          sio.emit('send_insChat', res.data );
         }
         else if (res.result == "1") {
           window.location.href = "./sample.html";
@@ -60,7 +69,6 @@ $(function(){
         // 
       });
     }
-  
   });
   // --------------------
   // 削除
@@ -192,5 +200,41 @@ function setChat(id) {
   // --------------------
   }).always(function(xhr, status){
     hideLoading();
+  });
+}
+
+/* ****************************************
+chat 情報削除
+**************************************** */
+function deleteClick(user_id, group_id, chat_id) {
+  var data = {"chat_id": chat_id, "group_id": group_id, "user_id": user_id};
+  $.ajax({
+    type: "POST",
+    charset: "UTF-8",
+    data: data,
+    dataType: "JSON",
+    url: "/main/deleteChat",
+    // timeout: 3000,
+  // --------------------
+  // 通信成功
+  // --------------------
+  }).done(function(res, status, xhr) {
+    if (res.result == "0") {
+      // 削除成功
+      sio.emit('send_delChat', data);
+    } else if (res.result == "1") {
+      // 削除失敗
+
+    }
+  // --------------------
+  // 通信失敗
+  // --------------------
+  }).fail(function(xhr, status, thrown) {
+    window.location.href = "./sample.html";
+  // --------------------
+  // その他
+  // --------------------
+  }).always(function(xhr, status){
+    
   });
 }

@@ -126,9 +126,48 @@ router.post('/insertChat', function(req, res, next) {
         res.send({ result: "1", message: err.message});
       });
     }).catch(function(e) {
-      res.send({ result: "1", data: result.dataValues });
+      res.send({ result: "1", message: e.message });
     });
   }
 });
 
+/* ******************************
+POST
+res
+  body
+    group_id
+    chat_id
+req
+  resut = 0 : success
+        = 1 : error
+  message   : string
+****************************** */
+router.post('/deleteChat', function(req, res, next) {
+  db.chat.destroy({
+    where : {
+      group_id : req.body.group_id,
+      id : req.body.chat_id 
+    }
+  }).then(function(data){
+    res.send({result: "0", data: data});
+  }).catch(function(err){
+    res.send({result: "0", message: err.message});
+  });
+});
+
+/* ******************************
+POST
+res
+  body
+    group_id
+    chat_id
+    chat
+req
+  resut = 0 : success
+        = 1 : error
+  message   : string
+****************************** */
+router.post('/updateChat', function(req, res, next) {
+
+});
 module.exports = router;
