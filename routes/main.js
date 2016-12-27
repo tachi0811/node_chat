@@ -80,7 +80,7 @@ router.get('/loginUser', function(req, res, next){
         chat_type: 0,
       }
     }).then(function(data) {
-      res.send({ result: "0", data: { user_id: req.session.user.id, user_name: req.session.user.user_name, my_chat_group_id: data.dataValues.id }})
+      res.send({ result: "0", data: { user_id: req.session.user.id, user_name: req.session.user.user_name, my_chat_group_id: data.dataValues.id, my_chat_group_name: data.dataValues.group_name }})
     }).catch(function(err) {
       res.send({ result: "1", message: err.message })
     });

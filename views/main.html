@@ -4,18 +4,19 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/lib/jquery/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="css/lib/jquery/validationEngine.jquery.css">
-    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap_flatly.css"/>
-    <link rel="stylesheet" type="text/css" href="css/lib/simple-sidebar.css"/>
+    
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-flatly.css"/>
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-chat.css"/>
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-stickyfooter.css"/>
     <link rel="stylesheet" type="text/css" href="css/loader.css">
 
     <script type="text/javascript" src="js/lib/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/lib/jquery/jquery-ui.js"></script>
-    
+    <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery/jquery.validationEngine.js"></script>
     <script type="text/javascript" src="js/lib/jquery/jquery.validationEngine-ja.js"></script>
-    <script type="text/javascript" src="js/lib/bootstrap.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/sidebar.js"></script>
+    <script type="text/javascript" src="js/group.js"></script>
     <script type="text/javascript" src="js/chat.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <!--
@@ -29,111 +30,115 @@
     <input type="hidden" id="user_id" value="">
     <input type="hidden" id="group_id" value="">
     <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../" class="navbar-brand">Bootswatch</a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
-              <ul class="dropdown-menu" aria-labelledby="themes">
-                <li><a href="../default/">Default</a></li>
-                <li class="divider"></li>
-                <li><a href="../cerulean/">Cerulean</a></li>
-                <li><a href="../cosmo/">Cosmo</a></li>
-                <li><a href="../cyborg/">Cyborg</a></li>
-                <li><a href="../darkly/">Darkly</a></li>
-                <li><a href="../flatly/">Flatly</a></li>
-                <li><a href="../journal/">Journal</a></li>
-                <li><a href="../lumen/">Lumen</a></li>
-                <li><a href="../paper/">Paper</a></li>
-                <li><a href="../readable/">Readable</a></li>
-                <li><a href="../sandstone/">Sandstone</a></li>
-                <li><a href="../simplex/">Simplex</a></li>
-                <li><a href="../slate/">Slate</a></li>
-                <li><a href="../spacelab/">Spacelab</a></li>
-                <li><a href="../superhero/">Superhero</a></li>
-                <li><a href="../united/">United</a></li>
-                <li><a href="../yeti/">Yeti</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="../help/">Help</a>
-            </li>
-            <li>
-              <a href="http://news.bootswatch.com">Blog</a>
-            </li>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Flatly <span class="caret"></span></a>
-              <ul class="dropdown-menu" aria-labelledby="download">
-                <li><a href="http://jsfiddle.net/bootswatch/jmg3gykg/">Open Sandbox</a></li>
-                <li class="divider"></li>
-                <li><a href="./bootstrap.min.css">bootstrap.min.css</a></li>
-                <li><a href="./bootstrap.css">bootstrap.css</a></li>
-                <li class="divider"></li>
-                <li><a href="./variables.less">variables.less</a></li>
-                <li><a href="./bootswatch.less">bootswatch.less</a></li>
-                <li class="divider"></li>
-                <li><a href="./_variables.scss">_variables.scss</a></li>
-                <li><a href="./_bootswatch.scss">_bootswatch.scss</a></li>
-              </ul>
-            </li>
-          </ul>
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">SimpleChat</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li>
+            <a id="user_name" href="#"></a>
+          </li>
+          <li>
+            <a id="group_name" href="#"></a>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="groups">Groups<span class="caret"></span></a>
+            <ul id="groupListItems" class="dropdown-menu" aria-labelledby="groups">
+              
+            </ul>
+          </li>
+        <!--</ul>
 
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a></li>
-            <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a></li>
-          </ul>
-
-        </div>
+        <ul class="nav navbar-nav navbar-right"> -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="settings">Settings<span class="caret"></span></a>
+            <ul id="groupListItems" class="dropdown-menu" aria-labelledby="settings">
+              <li><a href="#" id="">add Contact</a></li>
+              <li><a href="#" id="">add Group</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
 
     <div class="page-header">
     </div>
 
-    <div id="wrapper">
-      <div id="sidebar-wrapper">
-        <ui id="groupListItems" class="sidebar-nav">
-          <li id="user_name" class="sidebar-brand">
-            
-          </li>
-        </ui>
-      </div>
+      <div class="panel-body">
+        <ul id="chat" class="chat">
 
-      <!-- input items -->
-      <div class="container">
-        <div class="well bs-component">
-          <div id="chat">
-            <div id="chatlist">
-
+          <li class="left clearfix">
+            <span class="chat-img pull-right">
+              <image src="./img/edit.svg" height="40px" width="40px" ></image>
+              <image src="./img/del.svg" height="40px" width="40px" ></image>
+            </span>
+            <span class="chat-img pull-left">
+              <img src="http://placehold.it/50/55C1E7/fff&text=立" alt="User Avatar" class="img-circle" />
+            </span>
+            <div class="chat-body clearfix">
+              <div class="header">
+                <strong class="primary-font">
+                  Jack Sparrow
+                </strong> 
+                <small class="pull-right text-muted">
+                  <span class="glyphicon glyphicon-time">
+                  </span>
+                    12 mins ago
+                </small>
+              </div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                dolor, quis ullamcorper ligula sodales.
+              </p>
             </div>
-            <div class="col-lg-6">
-              <div class="well bs-component">
-                <div class="form-horizontal">
-                  <div class="form-group chat-area">
-                    <textarea class="form-control" id="chatText"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <input class="btn btn-default" type="button" id="send" value="送信" />
-                  </div>
+          </li>
+
+         
+
+        </ul>
+        
+      </div>
+      <footer class="footer">
+        <div class="input-group">
+            <input id="chatText" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+            <span class="input-group-btn">
+                <button class="btn btn-warning btn-sm" id="send">
+                    Send</button>
+            </span>
+        </div>
+      </footer>
+    <!-- input items -->
+    <!--
+    <div id="creatediv" class="container">
+      <div class="well bs-component">
+        <div id="chat">
+          <div id="chatlist">
+
+          </div>
+          <div class="col-lg-6">
+            <div class="well bs-component">
+              <div class="form-horizontal">
+                <div class="form-group chat-area">
+                  <textarea class="form-control" id="chatText"></textarea>
+                </div>
+                <div class="form-group">
+                  <input class="btn btn-default" type="button" id="send" value="送信" />
                 </div>
               </div>
             </div>
-
-            </div>
+          </div>
 
           </div>
+
         </div>
       </div>
-
     </div>
+
 
     <!-- loading -->
     <div id="loader" style="display:none;">  

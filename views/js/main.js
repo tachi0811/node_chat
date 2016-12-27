@@ -104,7 +104,8 @@ function setUser() {
   // --------------------
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
-      $("#user_name").text(res.data.user_ame);
+      $("#user_name").text(res.data.user_name);
+      $("#group_name").text(res.data.my_chat_group_name);
       $("#user_id").val(res.data.user_id);
       // 選択中の group_id を設定する
       $("#group_id").val(res.data.my_chat_group_id);
