@@ -77,7 +77,7 @@ router.get('/loginUser', function(req, res, next){
     db.group.findOne({
       where: {
         user_id: req.session.user.id,
-        is_my_chat: true,
+        chat_type: 0,
       }
     }).then(function(data) {
       res.send({ result: "0", data: { user_id: req.session.user.id, user_name: req.session.user.user_name, my_chat_group_id: data.dataValues.id }})
