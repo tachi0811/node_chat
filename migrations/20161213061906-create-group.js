@@ -16,8 +16,8 @@ module.exports = {
       group_name: {
         type: Sequelize.STRING
       },
-      is_my_chat: {
-        type: Sequelize.BOOLEAN
+      chat_type: {
+        type: Sequelize.INTEGER
       },
       permission: {
         type: Sequelize.INTEGER

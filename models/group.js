@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var group = sequelize.define('group', {
     user_id: DataTypes.INTEGER,
     group_name: DataTypes.STRING,
-    is_my_chat: DataTypes.BOOLEAN,
+    chat_type: DataTypes.INTEGER,
     permission: DataTypes.INTEGER
   }, {
     classMethods: {
