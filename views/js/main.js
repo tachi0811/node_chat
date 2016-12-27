@@ -1,16 +1,19 @@
-// ******************************
-// jquery windows.ready と同じ
-// ******************************
+
+// private membar
 var sio;
+var timer = false;
 
-
+// ----------------------------------------
+// load 時、resize 時に高さ変更
+// ----------------------------------------
 function chatResize(){
   var h = $(window).height();
   $(".panel-body").height(h- 170);
 }
 
-var timer = false;
-
+// ******************************
+// jquery windows.ready
+// ******************************
 $(function(){
 
   // --------------------
