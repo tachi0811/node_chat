@@ -171,9 +171,18 @@ router.post('/updateChat', function(req, res, next) {
       group_id: req.body.group_id,
     }
   }).then(function(data) {
-    res.send({result: "0", data: data});
+    db.chat.findOne({
+      where: {
+        id: req.body.chat_id,
+        group_id: req.body.group_id
+      }
+    }).then(function(data){
+      res.send({result: "0", data: data.dataValues});
+    }).catch(function(err){
+      res.send({ result: "1", message: err.message});
+    });
   }).catch(function(err) {
-    res.send({ result: "1", message: "0"});
+    res.send({ result: "1", message: err.message});
   });
 });
 

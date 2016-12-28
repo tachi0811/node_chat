@@ -58,12 +58,23 @@ function createChat(data) {
  chat の作成
 ****************************** */
 function addChat(d) {
-  // 0 : 削除／編集タグ 
-  // 1 : ユーザー名（1文字）
-  // 2 : ユーザー名
-  // 3 : 時間
-  // 4 : チャット本文
-  var chatText = "<li uid='{5}' gid='{6}' cid='{7}' class='left clearfix'>{0}<span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text={1}' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'><strong class='primary-font'>{2}</strong> <small class='pull-right text-muted'><span class='glyphicon glyphicon-time'></span>{3}</small></div><p>{4}</p></div></li>";
+  var tag = getChatTag(d);
+  $("#chat").append($(tag));
+}
+
+/* ******************************
+ chat tag 作成
+******************************　*/
+function getChatTag(d){
+  // 0 : user_id
+  // 1 : group_id
+  // 2 : chat_id
+  // 4 : 削除／編集タグ 
+  // 5 : ユーザー名（1文字）
+  // 6 : ユーザー名
+  // 7 : 時間
+  // 8 : チャット本文
+  var chatText = "<li uid='{0}' gid='{1}' cid='{2}' class='left clearfix'>{3}<span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'><strong class='primary-font'>{5}</strong> <small class='pull-right text-muted'><span class='glyphicon glyphicon-time'></span>{6}</small></div><p>{7}</p></div></li>";
   
   // 0 : チャットID
   // 1 : チャット
@@ -74,8 +85,8 @@ function addChat(d) {
     editText = $.sprintf(editText, d["id"], d["chat"]);
   }
   var usereName = $("#user_name").text();
-  chatText = $.sprintf(chatText, editText, usereName.substr(0, 1), usereName, d["createdAt"], d["chat"], d["user_id"], d["group_id"], d["id"]);
-  $("#chat").append($(chatText));
+  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], editText, usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
+  return chatText;
 }
 
 /* ******************************
@@ -88,8 +99,9 @@ function delChat(chat_id) {
 /* ******************************
  タグの更新
 ****************************** */
-function updChat(chat_id, chat){
-  $("li[uid='" + user_id + "'][gid='" + group_id + "'][cid='" + chat_id + "'] .chat-body p").text(chat);
+function updChat(d){
+  var tag = getChatTag(d);
+  $("li[uid='" + user_id + "'][gid='" + group_id + "'][cid='" + chat_id + "']").replaceWith(tag);
 }
 
 /* ****************************************
@@ -177,7 +189,7 @@ function sendChatUpdate() {
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
         clearChat();
-        sio.emit('send_updChat', data );
+        sio.emit('send_updChat', res.data );
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";
