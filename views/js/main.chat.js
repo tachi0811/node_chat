@@ -183,15 +183,19 @@ function deleteClick(chat_id) {
 }
 
 /* ****************************************
-chat 情報更新
+chat 情報
 params
-  user_id
-  group_id
   chat_id
   chat
 **************************************** */
-function editClick(user_id, group_id, chat_id, chat) {
+function editClick(chat_id, chat) {
   edit_chat_id =  chat_id;
   $("#chatText").val(chat);
   $("#cancel").show();
+}
+
+function cancelClick() {
+  edit_chat_id =  "";
+  $("#chatText").val();
+  $("#cancel").hide();
 }
