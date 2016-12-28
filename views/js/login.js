@@ -9,10 +9,11 @@ $(function(){
   // create button click
   // ******************************
   $("#createAccount").click(function(e) {
-
-    $("#logindiv").hide();
-    $("#creatediv").show();
-
+    // メッセージ表示中は操作不可
+    if ($('#messageDialog').dialog('isOpen') == false) {
+      $("#logindiv").hide();
+      $("#creatediv").show();
+    }
   });
 
   // ******************************
