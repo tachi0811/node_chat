@@ -146,6 +146,7 @@ function sendChatInsert() {
     // timeout: 3000,
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
+        clearChat();
         sio.emit('send_insChat', res.data );
       }
       else if (res.result == "1") {

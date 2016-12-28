@@ -8,7 +8,6 @@ $(function(){
     if (e.shiftKey) {
       if (e.keyCode == 13) {
         $('#send').click();
-        clearChat();
         return false;
       }
     }
