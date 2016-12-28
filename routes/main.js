@@ -33,15 +33,14 @@ router.get('/groups', function(req, res, next) {
     attributes: ['id', 'group_name'],
     where : {
       user_id : req.session.user.id,
-    }})
-  .then(function(data){
+    }
+  }).then(function(data){
     if (data.length != 0) {
       res.send({ result: "0", data: JSON.stringify(data) });
     } else {
       res.send({ result: "1", message : "goto login" });
     }
-  })
-  .catch(function(err){
+  }).catch(function(err){
     res.send({ result: "1", message : err.message });
   });
 });
@@ -60,11 +59,11 @@ router.get('/chats', function(req, res, next) {
   db.chat.findAll({
     where : {
       group_id : req.query.group_id,
-  }})
-  .then(function(data){
+    }
+  , order: ['createdAt']
+  }).then(function(data){
     res.send({ result: "0", data: JSON.stringify(data) });
-  })
-  .catch(function(err){
+  }).catch(function(err){
     res.send({ result: "1", message : err.message });
   });
 });
@@ -165,10 +164,11 @@ req
 ****************************** */
 router.post('/updateChat', function(req, res, next) {
   db.chat.update({
-    where: {
-      id: req.body.chat.id,
-      group_id: req.body.group_id,
       chat: req.body.chat
+    },{
+    where: {
+      id: req.body.chat_id,
+      group_id: req.body.group_id,
     }
   }).then(function(data) {
     res.send({result: "0", data: data});

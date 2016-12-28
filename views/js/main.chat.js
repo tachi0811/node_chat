@@ -1,3 +1,49 @@
+$(function(){
+
+  // --------------------
+  // ローディング画面表示
+  // --------------------
+  showLoading();
+  // --------------------
+  // socket.io 
+  // --------------------
+  sio = io.connect()
+  sio.on('connect', function() {
+    console.log("connected");
+  });
+  // 登録
+  sio.on("recv_insChat", function(res) {
+    addChat(res.data);
+  });
+  // 削除
+  sio.on("recv_delChat", function(res) {
+    delChat(res.data.chat_id);
+  });
+  // 更新
+  sio.on("recv_updChat", function(res) {
+    updChat(res.data.chat_id, res.data.chat);
+  });
+
+  // --------------------
+  // 送信ボタンクリック
+  // --------------------
+  $("#send").click(function(e) {
+    if (mode == 0) {
+      sendChatInsert();
+    } else {
+      sendChatUpdate();
+    }
+  });
+
+  // --------------------
+  // Cancelボタンクリック
+  // --------------------
+  $("#cancel").click(function(e) {
+    clearChat();
+  });
+
+});
+
 /* ******************************
  chat List の作成
 ****************************** */
@@ -35,15 +81,15 @@ function addChat(d) {
 /* ******************************
  タグの削除
 ****************************** */
-function delChat(user_id, group_id, chat_id) {
+function delChat(chat_id) {
   $("li[uid='" + user_id + "'][gid='" + group_id + "'][cid='" + chat_id + "']").remove();
 }
 
 /* ******************************
  タグの更新
 ****************************** */
-function updChat(){
-
+function updChat(chat_id, chat){
+  $("li[uid='" + user_id + "'][gid='" + group_id + "'][cid='" + chat_id + "'] .chat-body p").text(chat);
 }
 
 /* ****************************************
@@ -129,7 +175,8 @@ function sendChatUpdate() {
     // timeout: 3000,
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
-        sio.emit('send_updChat', res.data );
+        clearChat();
+        sio.emit('send_updChat', data );
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";
@@ -183,19 +230,24 @@ function deleteClick(chat_id) {
 }
 
 /* ****************************************
-chat 情報
+chat を編集モードへ
 params
   chat_id
   chat
 **************************************** */
 function editClick(chat_id, chat) {
   edit_chat_id =  chat_id;
+  mode = 1; // 編集モードへ
   $("#chatText").val(chat);
   $("#cancel").show();
 }
 
-function cancelClick() {
+/* ****************************************
+chat を一回クリア（初期状態へ）
+**************************************** */
+function clearChat() {
   edit_chat_id =  "";
-  $("#chatText").val();
+  mode = 0;
+  $("#chatText").val("");
   $("#cancel").hide();
 }

@@ -25,25 +25,6 @@ $(function(){
   // ローディング画面表示
   // --------------------
   showLoading();
-  // --------------------
-  // socket.io 
-  // --------------------
-  sio = io.connect()
-  sio.on('connect', function() {
-    console.log("connected");
-  });
-  // 登録
-  sio.on("recv_insChat", function(res) {
-    addChat(res.data);
-  });
-  // 削除
-  sio.on("recv_delChat", function(res) {
-    delChat(res.data.user_id, res.data.group_id, res.data.chat_id);
-  });
-  // 更新
-  sio.on("recv_updChat", function(res) {
-    updChat(res.data.user_id, res.data.group_id, res.data.chat_id);
-  });
 
   // --------------------
   // 複数の非同期を制御
@@ -59,12 +40,7 @@ $(function(){
     hideLoading();
   });
 
-  // --------------------
-  // 送信ボタンクリック
-  // --------------------
-  $("#send").click(function(e) {
-    sendChatInsert();
-  });
+  
 
   // チャットの高さのリサイズ
   chatResize();

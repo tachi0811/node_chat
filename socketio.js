@@ -7,7 +7,7 @@ function sio(server) {
 
 	// 接続時
 	sio.on('connection', function(socket) {
-		// 通知受信
+		// 通知受信(チャット登録)
 		socket.on('send_insChat', function(data) {
 			console.log(data);
 			sio.emit('recv_insChat', {
@@ -15,10 +15,18 @@ function sio(server) {
 			});
 		});
 
-		// 通知受信
+		// 通知受信(チャット削除)
 		socket.on('send_delChat', function(data) {
 			console.log(data);
 			sio.emit('recv_delChat', {
+				data : data
+			});
+		});
+
+		// 通知受信(チャット更新)
+		socket.on('send_updChat', function(data) {
+			console.log(data);
+			sio.emit('recv_updChat', {
 				data : data
 			});
 		});
