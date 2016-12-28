@@ -75,7 +75,8 @@ router.post('/createAccount', function(req, res, next) {
           return db.group.create({
             user_id: user.id,
             group_name: "myChat",
-            permission: 1,
+            permission: 1,  // 管理者
+            approval: 2,    // 承認済
             chat_type: 0,
           },{ transaction: t });
         });
@@ -86,22 +87,6 @@ router.post('/createAccount', function(req, res, next) {
       .catch(function(err){
         res.send({ result : "1", message : err.message });
       });
-
-      // ------------------------------
-      // トランザクションなしの登録
-      // ------------------------------
-      // db.User.create({
-      //   email: req.body.email,
-      //   name: req.body.name,
-      //   password: req.body.password
-      // })
-      // .then(function(data){
-      //   res.send({result: "0", message: "success"});
-      // })
-      // .catch(function(err){
-      //   res.send({ result : "1", message : err.message});
-      // });
-
     }
   })
   .catch(function(err){

@@ -16,9 +16,12 @@
     <script type="text/javascript" src="js/lib/jquery/jquery.validationEngine.js"></script>
     <script type="text/javascript" src="js/lib/jquery/jquery.validationEngine-ja.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/group.js"></script>
-    <script type="text/javascript" src="js/chat.js"></script>
+    
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/main.group.js"></script>
+    <script type="text/javascript" src="js/main.chat.js"></script>
+    <script type="text/javascript" src="js/main.user.js"></script>
+    
     <!--
       <script type="text/javascript" src="js/lib/socket.io.js"></script>
     -->
@@ -27,48 +30,52 @@
     </script>
   </head>
   <body>
-    <input type="hidden" id="user_id" value="">
-    <input type="hidden" id="group_id" value="">
     <div class="navbar navbar-default navbar-fixed-top">
-      <div class="navbar-header">
-        <a href="#" class="navbar-brand">SimpleChat</a>
-        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="navbar-collapse collapse" id="navbar-main">
-        <ul class="nav navbar-nav">
-          <li>
-            <a id="user_name" href="#"></a>
-          </li>
-          <li>
-            <a id="group_name" href="#"></a>
-          </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="groups">Groups<span class="caret"></span></a>
-            <ul id="groupListItems" class="dropdown-menu" aria-labelledby="groups">
-              
-            </ul>
-          </li>
-        <!--</ul>
+      <div class="">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">SimpleChat</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+              <a id="user_name" href="#"></a>
+            </li>
+            <li>
+              <a id="group_name" href="#"></a>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="groups">Groups<span class="caret"></span></a>
+              <ul id="groupListItems" class="dropdown-menu" aria-labelledby="groups">
+                
+              </ul>
+            </li>
+          <!--</ul>
 
-        <ul class="nav navbar-nav navbar-right"> -->
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="settings">Settings<span class="caret"></span></a>
-            <ul id="groupListItems" class="dropdown-menu" aria-labelledby="settings">
-              <li><a href="#" id="">add Contact</a></li>
-              <li><a href="#" id="">add Group</a></li>
-            </ul>
-          </li>
-        </ul>
+          <ul class="nav navbar-nav navbar-right"> -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="settings">Settings<span class="caret"></span></a>
+              <ul id="groupListItems" class="dropdown-menu" aria-labelledby="settings">
+                <li><a href="#" id="">add Contact</a></li>
+                <li><a href="#" id="">add Group</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <div class="page-header">
     </div>
 
+    <!-- ==============================
+    chat aria
+    ============================== -->
+    <div id="chat-main">
       <div class="panel-body">
         <ul id="chat" class="chat">
           <!-- ここにchatが追加される追加される-->
@@ -78,36 +85,23 @@
         <div class="input-group">
             <input id="chatText" type="text" class="form-control input-sm" placeholder="Type your message here..." />
             <span class="input-group-btn">
-                <button class="btn btn-warning btn-sm" id="send">
-                    Send</button>
+              <button class="btn btn-warning btn-sm" id="cancel" style="display:none;">
+                  Cancel
+              </button>
+              <button class="btn btn-warning btn-sm" id="send">
+                Send
+              </button>
             </span>
         </div>
       </footer>
-    <!-- input items -->
-    <!--
-    <div id="creatediv" class="container">
-      <div class="well bs-component">
-        <div id="chat">
-          <div id="chatlist">
+    </div>
 
-          </div>
-          <div class="col-lg-6">
-            <div class="well bs-component">
-              <div class="form-horizontal">
-                <div class="form-group chat-area">
-                  <textarea class="form-control" id="chatText"></textarea>
-                </div>
-                <div class="form-group">
-                  <input class="btn btn-default" type="button" id="send" value="送信" />
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- ==============================
+    approval eria
+    ============================== -->
+    <div id="approval-main" style="display:none;">
 
-          </div>
 
-        </div>
-      </div>
     </div>
 
 

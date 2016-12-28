@@ -22,6 +22,9 @@ module.exports = {
       permission: {
         type: Sequelize.INTEGER
       },
+      approval: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

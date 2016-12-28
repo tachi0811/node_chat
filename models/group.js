@@ -4,7 +4,17 @@ module.exports = function(sequelize, DataTypes) {
     user_id: DataTypes.INTEGER,
     group_name: DataTypes.STRING,
     chat_type: DataTypes.INTEGER,
-    permission: DataTypes.INTEGER
+    /*
+    - 0 : メンバ
+    - 1 : 管理者
+    */
+    permission: DataTypes.INTEGER,
+    /*
+    - 0 : 申請中
+    - 1 : 未承認
+    - 2 : 承認済
+    */
+    approval: DataTypes.INTEGER,
   }, {
     classMethods: {
       associate: function(models) {
