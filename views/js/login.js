@@ -50,14 +50,6 @@ $(function(){
       if (res.result == "0") {
         // main 画面へ
         window.location.href = "./main.html";
-        //$("#messageDialog span").text("登録しました");
-        //$("#messageDialog").dialog({
-        //  title: "Success",
-        //  modal: true,
-        //  close: function() {
-        //    clickCancel(null);
-        //  }
-        //});
       } else if (res.result == "1") {
         $("#messageDialog span").text(res.message);
         $("#messageDialog").dialog({
@@ -84,7 +76,6 @@ $(function(){
     // その他
     // ===============
     }).always(function(xhr, status){
-      
       hideLoading();
     });
 
@@ -151,6 +142,9 @@ $(function(){
   });
 });
 
+// ******************************
+// キャンセルボタンクリック
+// ******************************
 function clickCancel(e) {
   $("#createform .input").val("");
   $("#logindiv").show();

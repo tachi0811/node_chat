@@ -13,7 +13,7 @@ var timer = false;  // resize flg
 // ----------------------------------------
 function chatResize(){
   var h = $(window).height();
-  $(".panel-body").height(h- 170);
+  $("#chat-main").height(h- 170);
 }
 
 // ******************************
