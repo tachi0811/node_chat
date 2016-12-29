@@ -21,7 +21,7 @@ $(function(){
   });
   // 更新
   sio.on("recv_updChat", function(res) {
-    updChat(res.data.chat_id, res.data.chat);
+    updChat(res.data);
   });
 
   // --------------------
@@ -101,7 +101,7 @@ function delChat(chat_id) {
 ****************************** */
 function updChat(d){
   var tag = getChatTag(d);
-  $("li[uid='" + user_id + "'][gid='" + group_id + "'][cid='" + chat_id + "']").replaceWith(tag);
+  $("li[uid='" + d["user_id"] + "'][gid='" + d["group_id"] + "'][cid='" + d["id"] + "']").replaceWith(tag);
 }
 
 /* ****************************************
@@ -142,7 +142,7 @@ function setChat(group_id) {
 }
 
 /* ******************************
- Chat Send
+ Chat Send ins
 ****************************** */
 function sendChatInsert() {
   var chat = $("#chatText").val().trim();
@@ -173,7 +173,7 @@ function sendChatInsert() {
 }
 
 /* ******************************
- Chat Send
+ Chat Send upd
 ****************************** */
 function sendChatUpdate() {
   var chat = $("#chatText").val().trim();
