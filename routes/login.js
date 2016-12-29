@@ -76,7 +76,6 @@ router.post('/createAccount', function(req, res, next) {
             user_id: user.id,
             group_name: "myChat",
             permission: 1,  // 管理者
-            approval: 2,    // 承認済
             chat_type: 0,
           },{ transaction: t });
         });

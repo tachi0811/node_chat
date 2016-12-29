@@ -72,6 +72,64 @@ router.get('/chats', function(req, res, next) {
 GET session listing.
 res
   query
+    search
+req
+  user json
+****************************** */
+router.get('/applyUsers', function(req, res, next) {
+  // 検索条件を作成（区切り）
+  var temp = req.query.search.replace(/　/g, ' ').split(' ');
+  var search = [];
+  for(var i = 0; i < temp.length; i++) {
+    var s = temp[i];
+    if (s != "") {
+      search.push("%" + s + "%");
+    }
+  }
+  var user_id = req.session.user.id;
+
+  // 既に申請／承認／自ユーザーは除く
+  db.friend.findAll({
+    where : {
+      id : user_id
+    }
+  }).then(function(data) {
+    // 取得データを配列に格納
+    var f_user_ids = [];
+    f_user_ids.push(user_id);
+    for (var i = 0; i < data.length; i++) {
+      var d = data[i];
+      f_user_ids.push(d["f_user_id"]);
+    }
+    // 実際の申請対象ユーザーを検索
+    db.user.findAll({
+      where: {
+        id: {
+          $notIn: f_user_ids
+        },
+        $or: {
+          email: {
+            $like: {$any: search}
+          },
+          user_name: {
+            $like: {$any: search}
+          }
+        },
+      }
+    }).then(function(data) {
+      res.send({result: "0", data: data});
+    }).catch(function(err){
+      res.send({ result: "1", message: err.message});
+    });
+  }).catch(function(data) {
+
+  });
+});
+
+/* ******************************
+GET session listing.
+res
+  query
     id
 ,   name
 req

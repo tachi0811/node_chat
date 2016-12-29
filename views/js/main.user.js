@@ -1,3 +1,38 @@
+$(function(){
+  $("#searchContact").change(function(e){
+    var searchText = $("#searchContact").val();
+    if (searchText == "") {
+      return;
+    }
+    getApplyUsers(searchText);
+  });
+});
+
+/* ****************************************
+ 申請ユーザー 情報取得
+**************************************** */
+function getApplyUsers(searchText) {
+  $.ajax({
+    type: "GET",
+    charset: "UTF-8",
+    data: {"search": searchText},
+    dataType: "JSON",
+    contentType: "application/JSON",
+    url: "/main/applyUsers",
+    // timeout: 3000,
+  }).done(function(res, status, xhr){
+    if (res.result == "0") {
+
+    } else if (res.result == "1"){
+
+    }
+  }).fail(function(xhr, status, thrown){
+
+  }).always(function(xhr, status){
+
+  });
+}
+
 /* ****************************************
  login 情報取得
 **************************************** */

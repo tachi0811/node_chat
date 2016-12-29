@@ -9,12 +9,6 @@ module.exports = function(sequelize, DataTypes) {
     - 1 : 管理者
     */
     permission: DataTypes.INTEGER,
-    /*
-    - 0 : 申請中
-    - 1 : 未承認
-    - 2 : 承認済
-    */
-    approval: DataTypes.INTEGER,
   }, {
     classMethods: {
       associate: function(models) {
