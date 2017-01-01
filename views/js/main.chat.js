@@ -74,7 +74,7 @@ function getChatTag(d){
   // 6 : ユーザー名
   // 7 : 時間
   // 8 : チャット本文
-  var chatText = "<li uid='{0}' gid='{1}' cid='{2}' class='left clearfix'>{3}<span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'><strong class='primary-font'>{5}</strong> <small class='pull-right text-muted'><span class='glyphicon glyphicon-time'></span>{6}</small></div><p>{7}</p></div></li>";
+  var chatText = "<li uid='{0}' gid='{1}' cid='{2}' class='left clearfix'>{3}<span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'><strong class='primary-font'>{5}</strong> <small class='pull-right text-muted'><span class='glyphicon glyphicon-time'></span>{6}</small></div><pre>{7}</pre></div></li>";
   
   // 0 : チャットID
   // 1 : チャット
