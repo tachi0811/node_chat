@@ -111,6 +111,8 @@ params
 **************************************** */
 function setChat(group_id) {
 
+  $("#chat").empty();
+  
   $.ajax({
     type: "GET",
     charset: "UTF-8",
@@ -126,7 +128,7 @@ function setChat(group_id) {
     if (res.result == "0") {
       createChat(JSON.parse(res.data));
     } else if (res.result == "1") {
-      // window.location.href = "./sample.html";
+      
     }
   // --------------------
   // 通信失敗

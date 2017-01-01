@@ -44,7 +44,7 @@
               <a id="user_name" href="#"></a>
             </li>
             <li>
-              <a id="group_name" href="#"></a>
+              <a id="group_name" onclick="nowChatClick()" href="#"></a>
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="groups">Groups<span class="caret"></span></a>
@@ -58,8 +58,8 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="settings">Settings<span class="caret"></span></a>
               <ul id="groupListItems" class="dropdown-menu" aria-labelledby="settings">
-                <li><a href="#" id="">add Contact</a></li>
-                <li><a href="#" id="">add Group</a></li>
+                <li><a href="#" id="addContact" onclick="addContactClick()">add Contact</a></li>
+                <li><a href="#" id="addGroup">add Group</a></li>
               </ul>
             </li>
           </ul>
@@ -73,7 +73,7 @@
     <!-- ==============================
     chat aria
     ============================== -->
-    <div id="chat-main" >
+    <div id="chat-main" class="main">
       <div class="chat-body">
         <ul id="chat" class="chat">
           <!-- ここにchatが追加される-->
@@ -98,37 +98,39 @@
     <!-- ==============================
     approval eria
     ============================== -->
-    <div id="approval-main" class="container panel panel-default" style="">
+    <div id="apply-main" class="container panel panel-default main" style="display:none;">
       <div class="panel-heading">
         <h3 class="panel-title">add Contact</h3>
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <input type="text" id="searchContact" class="form-control" value="" placeholder="ユーザー名 メールアドレスメールアドレス を入力">
+          <input type="text" id="searchContact" class="form-control" value="" placeholder="Type user name or email here...">
+        </div>
+        <div id="apply-friend-loading" class="form-group" style="text-align: center;display:none;">
+          <img src="./img/load.mini.gif">
         </div>
         <div class="form-group">
-          <ui class="list-group">
-            <li class="list-group-item">
-              <input type="button" class="btn btn-primary" value="申請" style="float:right !important;">
-              <div class="approval-info">
-                
-                  <span class="text-muted">Email</span>
-                  <h5>
-                    <span class="">立川陽介</span>
-                  </h3>
-                
-              </div>
-            </li>
-            <li class="list-group-item">あいうえお</li>
-            <li class="list-group-item">あいうえお</li>
-            <li class="list-group-item">あいうえお</li>
-            <li class="list-group-item">あいうえお</li>
+          <ui id="apply-friend-list" class="list-group">
+           <!-- add friend approval user -->
           </ui>
+        </div>
       </div>
+      <hr>
+      <div class="panel-heading">
+        <h3 class="panel-title">approval Contact</h3>
+      </div>
+      <div class="panel-body">
+        <div id="applying-loading" class="form-group" style="text-align: center;display:none;">
+          <img src="./img/load.mini.gif">
+        </div>
+        <div class="form-group">
+          <ui di="applying-list" clasS="list-group">
+            <!-- applocal-list -->
+          </ui>
+        </div>
       </div>
     </div>
-
-
+    
     <!-- loading -->
     <div id="loader" style="display:none;">  
     </div>
