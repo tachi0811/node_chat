@@ -3,13 +3,21 @@
 // ******************************
 $(function(){
 
-  // Shift + Enterで送信
+  
   $("#chatText").keydown(function(e) {
+
+    // Shift + Enterで送信
     if (e.shiftKey) {
       if (e.keyCode == 13) {
-        $('#send').click();
+        sendChat();
         return false;
       }
+    }
+
+    // Escapeでキャンセル
+    else if (e.keyCode == 27) {
+      clearChat();
+      return false;
     }
   });
 

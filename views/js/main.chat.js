@@ -28,11 +28,7 @@ $(function(){
   // 送信ボタンクリック
   // --------------------
   $("#send").click(function(e) {
-    if (mode == 0) {
-      sendChatInsert();
-    } else {
-      sendChatUpdate();
-    }
+    sendChat();
   });
 
   // --------------------
@@ -141,6 +137,17 @@ function setChat(group_id) {
   }).always(function(xhr, status){
     hideLoading();
   });
+}
+
+/* ******************************
+ Chat Send
+****************************** */
+function sendChat() {
+  if (mode == 0) {
+    sendChatInsert();
+  } else {
+    sendChatUpdate();
+  }
 }
 
 /* ******************************
