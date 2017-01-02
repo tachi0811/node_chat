@@ -3,7 +3,6 @@
 // ******************************
 $(function(){
 
-  
   $("#chatText").keydown(function(e) {
 
     // Shift + Enterで送信

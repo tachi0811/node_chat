@@ -136,6 +136,7 @@ function setChat(group_id) {
   // --------------------
   }).always(function(xhr, status){
     hideLoading();
+    clearChat();
   });
 }
 
@@ -272,4 +273,5 @@ function clearChat() {
   mode = 0;
   $("#chatText").val("");
   $("#cancel").hide();
+  $("#chatText").focus();
 }
