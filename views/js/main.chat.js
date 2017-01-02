@@ -263,6 +263,7 @@ function editClick(chat_id, chat) {
   mode = 1; // 編集モードへ
   $("#chatText").val(chat);
   $("#cancel").show();
+  $("#chatText").focus();
 }
 
 /* ****************************************
