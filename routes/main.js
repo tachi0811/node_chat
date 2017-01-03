@@ -91,7 +91,10 @@ router.get('/applyUsers', function(req, res, next) {
   // 既に申請／承認／自ユーザーは除く
   db.friend.findAll({
     where : {
-      id : user_id
+      id : user_id,
+      approval : {
+        $in : [1, 2]
+      }
     }
   }).then(function(data) {
     // 取得データを配列に格納
@@ -121,8 +124,50 @@ router.get('/applyUsers', function(req, res, next) {
     }).catch(function(err){
       res.send({ result: "1", message: err.message});
     });
-  }).catch(function(data) {
+  }).catch(function(err) {
+    res.send({ result: "1", message: err.message});
+  });
+});
 
+/* ******************************
+GET session listing.
+res
+  query
+    search
+req
+  user json
+****************************** */
+router.get('/applyingUsers', function(req, res, next) {
+
+  var user_id = req.session.user.id;
+
+  // 既に申請／承認／自ユーザーは除く
+  db.friend.findAll({
+    where : {
+      id : user_id,
+      approval : 0,
+    }
+  }).then(function(data) {
+    // 取得データを配列に格納
+    var f_user_ids = [];
+    for (var i = 0; i < data.length; i++) {
+      var d = data[i];
+      f_user_ids.push(d["f_user_id"]);
+    }
+    // 実際の申請対象ユーザーを検索
+    db.user.findAll({
+      where: {
+        id: {
+          $in: f_user_ids
+        },
+      }
+    }).then(function(data) {
+      res.send({result: "0", data: data});
+    }).catch(function(err){
+      res.send({ result: "1", message: err.message});
+    });
+  }).catch(function(err) {
+    res.send({ result: "1", message: err.message});
   });
 });
 

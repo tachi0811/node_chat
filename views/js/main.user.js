@@ -49,6 +49,7 @@ function setApplyList(data, isApplying) {
   var dataLength = data.length;
   var listText = "";
   var buttonText = "";
+  var tag = "";
   //
   // 0 : id -- 申請前 user_id
   // 1 : button tag
@@ -78,17 +79,20 @@ function setApplyList(data, isApplying) {
       } else {
         buttonText = $.sprintf(buttonText, d["id"]);
       }
-      listText = $.sprintf(listText, d["id"], buttonText, d["email"], d["user_name"]);
+      tag += $.sprintf(listText, d["id"], buttonText, d["email"], d["user_name"]);
     }
   } else {
-    listText = $.sprintf(listText, "", "", "", "User DATA Not Found");
+    tag += $.sprintf(listText, "", "", "", "User DATA Not Found"); 
   }
-  if (isApplying) {
-    $("#applying-list").append($(listText));
-  } else {
-    $("#apply-list").append($(listText));
-  }
+  setApply(isApplying, tag);
+}
 
+function setApply(isApplying, tag) {
+  if (isApplying) {
+    $("#applying-list").append($(tag));
+  } else {
+    $("#apply-list").append($(tag));
+  }
 }
 
 /* ****************************************
@@ -133,7 +137,7 @@ function getApplyingUsers() {
   $.ajax({
     type: "GET",
     charset: "UTF-8",
-    data: {"search": searchText},
+    // data: {"search": searchText},
     dataType: "JSON",
     contentType: "application/JSON",
     url: "/main/applyingUsers",
@@ -141,7 +145,7 @@ function getApplyingUsers() {
   }).done(function(res, status, xhr){
     if (res.result == "0") {
       // 申請リスト
-      setApprovalList(res.data, true);
+      setApplyList(res.data, true);
     } else if (res.result == "1"){
       // 
     }
