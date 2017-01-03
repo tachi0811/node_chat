@@ -4,6 +4,10 @@ $(function(){
     申請中ユーザーの表示
   */
   getApplyingUsers();
+  /*
+    承認待ちユーザーの表示
+  */
+  getApprovalWaitUsers();
 
   /*
     申請ユーザー Text Changed 
@@ -35,17 +39,36 @@ function nowChatClick() {
 
 /*
  Apply Click
- data : user_id
+ data : f_user_id
 */
-function applyClick(user_f_id) {
-
+function applyClick(f_user_id) {
+  $.ajax({
+    type: "POST",
+    charset: "UTF-8",
+    data: {"f_user_id": f_user_id},
+    dataType: "JSON",
+    // contentType: "application/JSON",
+    url: "/main/insertFriend",
+    // timeout: 3000,
+  }).done(function(res, status, xhr){
+    if (res.result == "0") {
+      // 申請リストの更新
+      
+    } else if (res.result == "1"){
+      // 
+    }
+  }).fail(function(xhr, status, thrown){
+    // 
+  }).always(function(xhr, status){
+    //
+  });
 }
 
 /*
  申請するユーザーリストを作成
  data : users
 */
-function setApplyList(data, isApplying) {
+function setApplyList(data, approval) {
   var dataLength = data.length;
   var listText = "";
   var buttonText = "";
@@ -69,28 +92,34 @@ function setApplyList(data, isApplying) {
   listText += "</h3>";
   listText += "</div>";
   listText += "</li>"
-  buttonText = "<input type='button' onclick='applyClick({0})' class='btn btn-primary' value='申請' style='float:right !important;'>";
+  buttonText = "<input type='button' onclick='{0}Click({1})' class='btn btn-primary' value='{2}' style='float:right !important;'>";
   // List All Delete
   if (dataLength > 0) {
     for(var i = 0; i < dataLength; i++) {
       var d = data[i];
-      if (isApplying) {
+      if (approval == 0) {
         buttonText = "";
+      } else if(approval == 1) {
+        // 承認ボタン
+        buttonText = $.sprintf(buttonText,'approval', d["id"], '承認');
       } else {
-        buttonText = $.sprintf(buttonText, d["id"]);
+        // 申請ボタン
+        buttonText = $.sprintf(buttonText,'apply', d["id"], '申請');
       }
       tag += $.sprintf(listText, d["id"], buttonText, d["email"], d["user_name"]);
     }
   } else {
     tag += $.sprintf(listText, "", "", "", "User DATA Not Found"); 
   }
-  setApply(isApplying, tag);
+  setApply(approval, tag);
 }
 
-function setApply(isApplying, tag) {
-  if (isApplying) {
+function setApply(approval, tag) {
+  if (approval == 0) {
     $("#applying-list").append($(tag));
-  } else {
+  } else if(approval == 1) {
+    $("#approval-wait-list").append($(tag));
+  } else { 
     $("#apply-list").append($(tag));
   }
 }
@@ -114,7 +143,7 @@ function getApplyUsers(searchText) {
   }).done(function(res, status, xhr){
     if (res.result == "0") {
       // 申請リスト
-      setApplyList(res.data, false);
+      setApplyList(res.data, 9);
     } else if (res.result == "1"){
       // 
     }
@@ -126,34 +155,62 @@ function getApplyUsers(searchText) {
   });
 }
 
-/* ****************************************
- 申請中ユーザー 情報取得
-**************************************** */
 function getApplyingUsers() {
-  // リストをクリアして、loading 画面を表示する
   $("#applying-list").hide();
   $("#applying-list").empty();
   $("#applying-loading").show();
+  $.when(
+    getApprovalUsers('0')
+  ).done (function(){
+    
+  }).fail(function(){
+    
+  }).always(function(){
+    $("#applying-list").show();
+    $("#applying-loading").hide();
+  });
+}
+
+function getApprovalWaitUsers() {
+  $("#approval-wait-list").hide();
+  $("#approval-wait-list").empty();
+  $("#approval-wait-loading").show();
+  $.when(
+    getApprovalUsers('1')
+  ).done (function(){
+    
+  }).fail(function(){
+    
+  }).always(function(){
+    $("#approval-wait-list").show();
+    $("#approval-wait-loading").hide();
+  });
+}
+
+/* ****************************************
+ 申請中ユーザー 情報取得
+**************************************** */
+function getApprovalUsers(approval) {
+  
   $.ajax({
     type: "GET",
     charset: "UTF-8",
-    // data: {"search": searchText},
+    data: {"approval": approval},
     dataType: "JSON",
     contentType: "application/JSON",
-    url: "/main/applyingUsers",
+    url: "/main/approvalUsers",
     // timeout: 3000,
   }).done(function(res, status, xhr){
     if (res.result == "0") {
       // 申請リスト
-      setApplyList(res.data, true);
+      setApplyList(res.data, approval);
     } else if (res.result == "1"){
       // 
     }
   }).fail(function(xhr, status, thrown){
-
+    throw(thrown);
   }).always(function(xhr, status){
-    $("#applying-list").show();
-    $("#applying-loading").hide();
+
   });
 }
 

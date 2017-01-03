@@ -92,9 +92,6 @@ router.get('/applyUsers', function(req, res, next) {
   db.friend.findAll({
     where : {
       id : user_id,
-      approval : {
-        $in : [1, 2]
-      }
     }
   }).then(function(data) {
     // 取得データを配列に格納
@@ -137,7 +134,7 @@ res
 req
   user json
 ****************************** */
-router.get('/applyingUsers', function(req, res, next) {
+router.get('/approvalUsers', function(req, res, next) {
 
   var user_id = req.session.user.id;
 
@@ -145,7 +142,7 @@ router.get('/applyingUsers', function(req, res, next) {
   db.friend.findAll({
     where : {
       id : user_id,
-      approval : 0,
+      approval : req.query.approval,
     }
   }).then(function(data) {
     // 取得データを配列に格納
@@ -168,6 +165,41 @@ router.get('/applyingUsers', function(req, res, next) {
     });
   }).catch(function(err) {
     res.send({ result: "1", message: err.message});
+  });
+});
+
+/* ******************************
+POST session listing.
+res
+  body
+    id
+req
+  group json
+****************************** */
+router.post('/insertFriend', function(req, res, next){
+  /*
+  // データの登録
+  user & group myChat
+  */
+  db.sequelize.transaction(function(t){
+    return db.friend.create({
+      id: req.session.user.id,
+      f_user_id: req.body.f_user_id,
+      approval: 0
+    }, {transaction: t })
+    .then(function(friend){
+      return db.friend.create({
+        id: req.body.f_user_id,
+        f_user_id: req.session.user.id,
+        approval: 1
+      },{ transaction: t });
+    });
+  })
+  .then(function(result){
+    res.send( {result : "0", message : "success"});
+  })
+  .catch(function(err){
+    res.send({ result : "1", message : err.message });
   });
 });
 
