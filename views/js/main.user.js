@@ -47,8 +47,28 @@ function applyClick(f_user_id) {
     charset: "UTF-8",
     data: {"f_user_id": f_user_id},
     dataType: "JSON",
-    // contentType: "application/JSON",
     url: "/main/insertFriend",
+    // timeout: 3000,
+  }).done(function(res, status, xhr){
+    if (res.result == "0") {
+      // 申請リストの更新
+    } else if (res.result == "1"){
+      // 
+    }
+  }).fail(function(xhr, status, thrown){
+    // 
+  }).always(function(xhr, status){
+    //
+  });
+}
+
+function approvalClick(f_user_id, f_user_name) {
+  $.ajax({
+    type: "POST",
+    charset: "UTF-8",
+    data: {"f_user_id": f_user_id, "f_user_name": f_user_name},
+    dataType: "JSON",
+    url: "/main/updateApproval",
     // timeout: 3000,
   }).done(function(res, status, xhr){
     if (res.result == "0") {
@@ -92,7 +112,7 @@ function setApplyList(data, approval) {
   listText += "</h3>";
   listText += "</div>";
   listText += "</li>"
-  buttonText = "<input type='button' onclick='{0}Click({1})' class='btn btn-primary' value='{2}' style='float:right !important;'>";
+  buttonText = "<input type='button' onclick=\"{0}Click('{1}', '{2}')\" class='btn btn-primary' value='{3}' style='float:right !important;'>";
   // List All Delete
   if (dataLength > 0) {
     for(var i = 0; i < dataLength; i++) {
@@ -101,10 +121,10 @@ function setApplyList(data, approval) {
         buttonText = "";
       } else if(approval == 1) {
         // 承認ボタン
-        buttonText = $.sprintf(buttonText,'approval', d["id"], '承認');
+        buttonText = $.sprintf(buttonText,'approval', d["id"], d["user_name"], '承認');
       } else {
         // 申請ボタン
-        buttonText = $.sprintf(buttonText,'apply', d["id"], '申請');
+        buttonText = $.sprintf(buttonText,'apply', d["id"], d["user_name"], '申請');
       }
       tag += $.sprintf(listText, d["id"], buttonText, d["email"], d["user_name"]);
     }

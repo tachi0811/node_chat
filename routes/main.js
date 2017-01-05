@@ -138,7 +138,7 @@ router.get('/approvalUsers', function(req, res, next) {
 
   var user_id = req.session.user.id;
 
-  // 既に申請／承認／自ユーザーは除く
+  // 自分の申請中ユーザー or 承認中ユーザーを取得
   db.friend.findAll({
     where : {
       id : user_id,
@@ -178,8 +178,9 @@ req
 ****************************** */
 router.post('/insertFriend', function(req, res, next){
   /*
-  // データの登録
-  user & group myChat
+   データの登録
+     自ユーザは、申請中
+     相手ユーザは、未承認
   */
   db.sequelize.transaction(function(t){
     return db.friend.create({
@@ -200,6 +201,70 @@ router.post('/insertFriend', function(req, res, next){
   })
   .catch(function(err){
     res.send({ result : "1", message : err.message });
+  });
+});
+
+/* ******************************
+POST session listing.
+res
+  body
+    f_user_id
+,   f_user_name
+req
+  group json
+****************************** */
+router.post('/updateApproval', function(req, res, next){
+  /*
+  データの登録
+    承認中にする
+  */
+  db.group.max('id').then(function(max){
+    if (isNaN(max)) {
+      max = 0;
+    }
+    db.sequelize.transaction(function(t){
+      // 自分、相手の承認状態を承認済にする
+      return db.friend.update({
+        approval: 2
+        }, { where: {
+          $or: [{
+              id: req.session.user.id,
+              f_user_id: req.body.f_user_id
+            },{
+              id: req.body.f_user_id,
+              f_user_id: req.session.user.id
+            }]
+        }
+      }, { transaction : t }
+      ).then(function(data){
+        // 自分のチャット
+        return db.group.create({
+          id: max + 1,
+          user_id : req.session.user.id,
+          group_name : req.body.f_user_name,
+          chat_type : 1,
+          permission : 1,
+        });
+      }, {transaction : t }
+      ).then(function(data) {
+        // 相手のチャット
+        return db.group.create({
+          id: max + 1,
+          user_id : req.body.f_user_id,
+          group_name : req.session.user.user_name,
+          chat_type : 1,
+          permission : 1,
+        });
+      }, { transaction : t });
+    })
+    .then(function(result) {
+      res.send({ result: "0", result: result });
+    })
+    .catch(function(err) {
+      res.send( { result: "1", message: err.message } );
+    });
+  }).catch(function(err){
+
   });
 });
 

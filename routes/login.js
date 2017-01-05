@@ -64,28 +64,38 @@ router.post('/createAccount', function(req, res, next) {
       // 
       // データの登録
       // user & group myChat
-      db.sequelize.transaction(function(t){
-        return db.user.create({
-          email: req.body.email,
-          user_name: req.body.name,
-          password: req.body.password
-        }, {transaction: t })
-        .then(function(user){
-          req.session.user = { user_name: user.dataValues.user_name, id:user.dataValues.id };
-          return db.group.create({
-            user_id: user.id,
-            group_name: "myChat",
-            permission: 1,  // 管理者
-            chat_type: 0,
-          },{ transaction: t });
+      db.group.max('id')
+      .then(function(max){
+        if (isNaN(max)) {
+          max = 0;
+        }
+        db.sequelize.transaction(function(t){
+          return db.user.create({
+            email: req.body.email,
+            user_name: req.body.name,
+            password: req.body.password
+          }, {transaction: t })
+          .then(function(user){
+            req.session.user = { user_name: user.dataValues.user_name, id:user.dataValues.id };
+            return db.group.create({
+              id: max + 1,
+              user_id: user.id,
+              group_name: "myChat",
+              permission: 1,  // 管理者
+              chat_type: 0,
+            },{ transaction: t });
+          });
+        })
+        .then(function(result){
+          res.send( {result : "0", message : "success"});
+        })
+        .catch(function(err){
+          res.send({ result : "1", message : err.message });
         });
-      })
-      .then(function(result){
-        res.send( {result : "0", message : "success"});
-      })
-      .catch(function(err){
+      }).catch(function(err) {
         res.send({ result : "1", message : err.message });
       });
+
     }
   })
   .catch(function(err){
