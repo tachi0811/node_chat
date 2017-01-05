@@ -186,8 +186,8 @@ router.post('/insertFriend', function(req, res, next){
       id: req.session.user.id,
       f_user_id: req.body.f_user_id,
       approval: 0
-    }, {transaction: t })
-    .then(function(friend){
+    }, { transaction: t }
+    ).then(function(friend){
       return db.friend.create({
         id: req.body.f_user_id,
         f_user_id: req.session.user.id,
@@ -196,7 +196,7 @@ router.post('/insertFriend', function(req, res, next){
     });
   })
   .then(function(result){
-    res.send( {result : "0", message : "success"});
+    res.send( {result : "0", data: result.values });
   })
   .catch(function(err){
     res.send({ result : "1", message : err.message });
