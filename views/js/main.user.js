@@ -252,12 +252,10 @@ function setUser() {
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
       $("#user_name").text(res.data.user_name);
-      $("#group_name").text(res.data.my_chat_group_name);
       // 変数に格納
       user_id = res.data.user_id;
-      group_id = res.data.my_chat_group_id;
       // 初期表示はMyChat を表示
-      setChat(res.data.my_chat_group_id);
+      setChat(res.data.my_chat_group_id, res.data.my_chat_group_name);
     } else if (res.result == "1") {
       window.location.href = "./sample.html";
     }

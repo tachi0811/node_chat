@@ -9,11 +9,18 @@ function createSideBar(data) {
   var targetSideBar = $("#groupListItems");
   for (i = 0; i < dataLength; i++) {
     var d = data[i];
-    var groupText = "<li><a herf='#' gid='{0}' onclick='groupClick('{0}')' class='groupItem'>{1}</a></li>";
+    var groupText = "<li><a herf='#' gid='{0}' onclick=\"groupClick('{0}', '{1}')\" class='groupItem'>{1}</a></li>";
     groupText = $.sprintf(groupText, d["id"], d["group_name"]);
     targetSideBar.append($(groupText));
 
   }
+}
+
+/* ****************************************
+  chat change
+**************************************** */
+function groupClick(group_id, group_name) {
+  setChat(group_id, group_name);
 }
 
 /* ****************************************

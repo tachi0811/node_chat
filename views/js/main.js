@@ -1,8 +1,8 @@
 
 // private membar
-var sio;            // socket.io
-var usr_id;         // login_user_id
-var group_id;       // select group_id
+var sio;              // socket.io
+var usr_id;           // login_user_id
+var select_group_id;  // select group_id
 
 var mode = 0;       // 0: 追加, 1: 更新
 var edit_chat_id;   // edit chat_id

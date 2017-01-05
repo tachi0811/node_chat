@@ -65,22 +65,55 @@ function getChatTag(d){
   // 0 : user_id
   // 1 : group_id
   // 2 : chat_id
+  // 3 : chat
   // 4 : 削除／編集タグ 
   // 5 : ユーザー名（1文字）
   // 6 : ユーザー名
   // 7 : 時間
   // 8 : チャット本文
-  var chatText = "<li uid='{0}' gid='{1}' cid='{2}' class='left clearfix'>{3}<span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'><strong class='primary-font'>{5}</strong> <small class='pull-right text-muted'><span class='glyphicon glyphicon-time'></span>{6}</small></div><pre>{7}</pre></div></li>";
+  var chatText = "";
+  chatText += "<li uid='{0}' gid='{1}' cid='{2}' class='left clearfix'>";
+  chatText += "{3}";
+  chatText += "<span class='chat-img pull-left'>";
+  chatText += "<img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' />";
+  chatText += "</span>";
+  chatText += "<div class='chat-body clearfix'>";
+  chatText += "<div class='header'>";
+  chatText += "<strong class='primary-font'>";
+  chatText += "{5}";
+  chatText += "</strong>";
+  chatText += "<small class='pull-right text-muted'>";
+  chatText += "<span class='glyphicon glyphicon-time'>";
+  chatText += "</span>";
+  chatText += "{6}";
+  chatText += "</small>";
+  chatText += "</div>";
+  chatText += "<pre>";
+  chatText += "{7}";
+  chatText += "</pre>";
+  chatText += "</div>";
+  chatText += "</li>";
   
   // 0 : チャットID
   // 1 : チャット
-  var editText = "<span class='chat-img edit_img pull-right'><a onclick=\"editClick('{0}', '{1}')\"><image src='./img/edit.svg' height='40px' width='40px' ></a><a  onclick=\"deleteClick('{0}')\"></image><image src='./img/del.svg' height='40px' width='40px' ></image></a></span>";
+  var editText = "";
+  editText += "<span class='chat-img edit_img pull-right'>";
+  editText += "<a onclick=\"editClick('{0}', '{1}')\">";
+  editText += "<image src='./img/edit.svg' height='40px' width='40px' >";
+  editText += "</a>";
+  editText += "<a onclick=\"deleteClick('{0}')\">";
+  editText += "</image>";
+  editText += "<image src='./img/del.svg' height='40px' width='40px' >";
+  editText += "</image>";
+  editText += "</a>";
+  editText += "</span>";
+
   if (user_id != d["user_id"]) {
     editText = "";
   } else {
     editText = $.sprintf(editText, d["id"], d["chat"]);
   }
-  var usereName = $("#user_name").text();
+  var usereName = d.user.user_name;
   var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], editText, usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
   return chatText;
 }
@@ -104,11 +137,13 @@ function updChat(d){
 chat 情報取得
 params
   group_id
+  group_name
 **************************************** */
-function setChat(group_id) {
+function setChat(group_id, group_name) {
 
   $("#chat").empty();
-  
+  $("#group_name").text(group_name);
+
   $.ajax({
     type: "GET",
     charset: "UTF-8",
@@ -123,6 +158,7 @@ function setChat(group_id) {
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
       createChat(JSON.parse(res.data));
+      select_group_id = group_id;
     } else if (res.result == "1") {
       
     }
@@ -157,7 +193,7 @@ function sendChat() {
 function sendChatInsert() {
   var chat = $("#chatText").val().trim();
   if (chat != "") {
-    var data = { "group_id" : group_id, "chat" : chat };
+    var data = { "group_id" : select_group_id, "chat" : chat };
     $.ajax({
       type: "POST",
       charset: "UTF-8",
@@ -188,7 +224,7 @@ function sendChatInsert() {
 function sendChatUpdate() {
   var chat = $("#chatText").val().trim();
   if (chat != "") {
-    var data = { "group_id" : group_id, "chat_id" : edit_chat_id, "chat" : chat };
+    var data = { "group_id" : select_group_id, "chat_id" : edit_chat_id, "chat" : chat };
     $.ajax({
       type: "POST",
       charset: "UTF-8",
@@ -215,12 +251,10 @@ function sendChatUpdate() {
 /* ****************************************
 chat Delete
 params
-  user_id
-  group_id
   chat_id
 **************************************** */
 function deleteClick(chat_id) {
-  var data = {"chat_id": chat_id, "group_id": group_id, "user_id": user_id};
+  var data = {"chat_id": chat_id, "group_id": select_group_id, "user_id": user_id};
   $.ajax({
     type: "POST",
     charset: "UTF-8",

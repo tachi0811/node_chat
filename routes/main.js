@@ -56,11 +56,14 @@ req
   group_id : string
  ****************************** */
 router.get('/chats', function(req, res, next) {
+  db.user.hasMany(db.chat, {foreignKey : "user_id"});
+  db.chat.belongsTo(db.user, {foreignKey : "id"});
   db.chat.findAll({
     where : {
       group_id : req.query.group_id,
     }
-  , order: ['createdAt']
+    , include: [db.user]
+    , order: ['createdAt']
   }).then(function(data){
     res.send({ result: "0", data: JSON.stringify(data) });
   }).catch(function(err){
@@ -371,11 +374,14 @@ router.post('/updateChat', function(req, res, next) {
       group_id: req.body.group_id,
     }
   }).then(function(data) {
+    db.user.hasMany(db.chat, {foreignKey : "user_id"});
+    db.chat.belongsTo(db.user, {foreignKey : "id"});
     db.chat.findOne({
       where: {
         id: req.body.chat_id,
         group_id: req.body.group_id
       }
+      , include: [db.user]
     }).then(function(data){
       res.send({result: "0", data: data.dataValues});
     }).catch(function(err){
