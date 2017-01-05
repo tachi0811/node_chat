@@ -65,15 +65,13 @@ function getChatTag(d){
   // 0 : user_id
   // 1 : group_id
   // 2 : chat_id
-  // 3 : chat
-  // 4 : 削除／編集タグ 
-  // 5 : ユーザー名（1文字）
-  // 6 : ユーザー名
-  // 7 : 時間
-  // 8 : チャット本文
+  // 3 : 削除／編集タグ 
+  // 4 : ユーザー名（1文字）
+  // 5 : ユーザー名
+  // 6 : 時間
+  // 7 : チャット本文
   var chatText = "";
   chatText += "<li uid='{0}' gid='{1}' cid='{2}' class='left clearfix'>";
-  chatText += "{3}";
   chatText += "<span class='chat-img pull-left'>";
   chatText += "<img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' />";
   chatText += "</span>";
@@ -88,6 +86,7 @@ function getChatTag(d){
   chatText += "{6}";
   chatText += "</small>";
   chatText += "</div>";
+  chatText += "{3}";
   chatText += "<pre>";
   chatText += "{7}";
   chatText += "</pre>";
