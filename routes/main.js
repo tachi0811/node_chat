@@ -56,8 +56,8 @@ req
   group_id : string
  ****************************** */
 router.get('/chats', function(req, res, next) {
-  db.user.hasMany(db.chat, {foreignKey : "user_id"});
-  db.chat.belongsTo(db.user, {foreignKey : "id"});
+  db.user.hasMany(db.chat, { foreignKey : "user_id" });
+  db.chat.belongsTo(db.user, { foreignKey : "user_id" });
   db.chat.findAll({
     where : {
       group_id : req.query.group_id,
@@ -200,7 +200,7 @@ router.post('/insertFriend', function(req, res, next){
     });
   })
   .then(function(result){
-    res.send( {result : "0", data: result.values });
+    res.send( {result : "0", data: result.dataValues });
   })
   .catch(function(err){
     res.send({ result : "1", message : err.message });
@@ -261,7 +261,7 @@ router.post('/updateApproval', function(req, res, next){
       }, { transaction : t });
     })
     .then(function(result) {
-      res.send({ result: "0", result: result });
+      res.send({ result: "0", data: result });
     })
     .catch(function(err) {
       res.send( { result: "1", message: err.message } );
@@ -320,7 +320,19 @@ router.post('/insertChat', function(req, res, next) {
       user_id: req.session.user.id,
       chat: req.body.chat
     }).then(function(result){
-      res.send({ result: "0", data: result.dataValues });
+      db.user.hasMany(db.chat, {foreignKey : "user_id"});
+      db.chat.belongsTo(db.user, { foreignKey : "user_id" });
+      db.chat.findOne({
+        where: {
+          id: max + 1,
+          group_id: req.body.group_id
+        }
+        , include: [db.user]
+      }).then(function(data){
+        res.send({result: "0", data: data});
+      }).catch(function(err){
+        res.send({ result: "1", message: err.message});
+      });
     }).catch(function(err){
       res.send({ result: "1", message: err.message});
     });
@@ -375,7 +387,7 @@ router.post('/updateChat', function(req, res, next) {
     }
   }).then(function(data) {
     db.user.hasMany(db.chat, {foreignKey : "user_id"});
-    db.chat.belongsTo(db.user, {foreignKey : "id"});
+    db.chat.belongsTo(db.user, { foreignKey : "user_id" });
     db.chat.findOne({
       where: {
         id: req.body.chat_id,
@@ -383,7 +395,7 @@ router.post('/updateChat', function(req, res, next) {
       }
       , include: [db.user]
     }).then(function(data){
-      res.send({result: "0", data: data.dataValues});
+      res.send({result: "0", data: data});
     }).catch(function(err){
       res.send({ result: "1", message: err.message});
     });

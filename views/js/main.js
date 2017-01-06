@@ -22,6 +22,52 @@ function chatResize(){
 $(function(){
 
   // --------------------
+  // socket.io 
+  // --------------------
+  sio = io.connect()
+
+  sio.on('connect', function() {
+    console.log("connected");
+  });
+
+  /* **********
+    chat
+  ********** */ 
+  // 登録
+  sio.on("recv_insChat", function(res) {
+    addChat(res.data);
+  });
+  // 削除
+  sio.on("recv_delChat", function(res) {
+    delChat(res.data.chat_id);
+  });
+  // 更新
+  sio.on("recv_updChat", function(res) {
+    updChat(res.data);
+  });
+
+  /* **********
+    user
+  ********** */
+  // 申請
+  sio.on("recv_apply", function(res) {
+    if (res.data.f_user_id == user_id) {
+      // 承認待ちユーザーの情報を更新
+      getApprovalWaitUsers();
+    }
+  });
+
+  // 承認
+  sio.on("recv_approval", function(res) {
+    if (res.data.f_user_id == user_id) {
+      // 承認待ちユーザーの情報を更新
+      getApplyingUsers();
+      // チャット一覧の再描画
+      
+    }
+  });
+
+  // --------------------
   // ローディング画面表示
   // --------------------
   showLoading();
@@ -39,8 +85,6 @@ $(function(){
   }).always(function(){
     hideLoading();
   });
-
-  
 
   // チャットの高さのリサイズ
   chatResize();

@@ -4,26 +4,7 @@ $(function(){
   // ローディング画面表示
   // --------------------
   showLoading();
-  // --------------------
-  // socket.io 
-  // --------------------
-  sio = io.connect()
-  sio.on('connect', function() {
-    console.log("connected");
-  });
-  // 登録
-  sio.on("recv_insChat", function(res) {
-    addChat(res.data);
-  });
-  // 削除
-  sio.on("recv_delChat", function(res) {
-    delChat(res.data.chat_id);
-  });
-  // 更新
-  sio.on("recv_updChat", function(res) {
-    updChat(res.data);
-  });
-
+  
   // --------------------
   // 送信ボタンクリック
   // --------------------
@@ -121,7 +102,7 @@ function getChatTag(d){
  タグの削除
 ****************************** */
 function delChat(chat_id) {
-  $("li[uid='" + user_id + "'][gid='" + group_id + "'][cid='" + chat_id + "']").remove();
+  $("li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "']").remove();
 }
 
 /* ******************************

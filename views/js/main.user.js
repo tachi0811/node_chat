@@ -8,16 +8,11 @@ $(function(){
     承認待ちユーザーの表示
   */
   getApprovalWaitUsers();
-
   /*
     申請ユーザー Text Changed 
   */
   $("#searchContact").change(function(e){
-    var searchText = $("#searchContact").val();
-    if (searchText == "") {
-      return;
-    }
-    getApplyUsers(searchText);
+    getApplyUsers();
   });
 });
 
@@ -38,22 +33,27 @@ function nowChatClick() {
 }
 
 /*
- Apply Click
+ Apply Click - 申請ボタンクリック
  data : f_user_id
 */
 function applyClick(f_user_id) {
+  var data = {"f_user_id": f_user_id, "user_id" : user_id}; 
   $.ajax({
     type: "POST",
     charset: "UTF-8",
-    data: {"f_user_id": f_user_id},
+    data: data,
     dataType: "JSON",
     url: "/main/insertFriend",
     // timeout: 3000,
   }).done(function(res, status, xhr){
     if (res.result == "0") {
       // 申請リストの更新
+      getApplyUsers();
+      getApplyingUsers();
+      // 承認待ちのユーザー情報を送信
+      sio.emit('send_apply', data );
     } else if (res.result == "1"){
-      // 
+      // エラーメッセージ
     }
   }).fail(function(xhr, status, thrown){
     // 
@@ -62,20 +62,27 @@ function applyClick(f_user_id) {
   });
 }
 
+/*
+ approval Click - 承認ボタンクリック
+ data : f_user_id, f_user_name
+*/
 function approvalClick(f_user_id, f_user_name) {
+  var data = { "f_user_id" : f_user_id, "f_user_name" : f_user_name };
   $.ajax({
     type: "POST",
     charset: "UTF-8",
-    data: {"f_user_id": f_user_id, "f_user_name": f_user_name},
+    data: data,
     dataType: "JSON",
     url: "/main/updateApproval",
     // timeout: 3000,
   }).done(function(res, status, xhr){
     if (res.result == "0") {
-      // 申請リストの更新
-      
+      // 承認待ちリストの更新
+      getApprovalWaitUsers();
+      // 申請中ユーザー情報を送信
+      sio.emit('send_approval', data );
     } else if (res.result == "1"){
-      // 
+      // エラー処理
     }
   }).fail(function(xhr, status, thrown){
     // 
@@ -112,7 +119,7 @@ function setApplyList(data, approval) {
   listText += "</h3>";
   listText += "</div>";
   listText += "</li>"
-  buttonText = "<input type='button' onclick=\"{0}Click('{1}', '{2}')\" class='btn btn-primary' value='{3}' style='float:right !important;'>";
+  buttonText = "<input type='button' onclick=\"{0}Click('{1}', '{2}')\" class='btn btn-primary btn-sm' value='{3}' style='float:right !important;'>";
   // List All Delete
   if (dataLength > 0) {
     for(var i = 0; i < dataLength; i++) {
@@ -147,7 +154,12 @@ function setApply(approval, tag) {
 /* ****************************************
  申請ユーザー 情報取得
 **************************************** */
-function getApplyUsers(searchText) {
+function getApplyUsers() {
+  var searchText = $("#searchContact").val();
+  if (searchText == "") {
+    return;
+  }
+
   // リストをクリアして、loading 画面を表示する
   $("#apply-list").hide();
   $("#apply-list").empty();
@@ -175,6 +187,9 @@ function getApplyUsers(searchText) {
   });
 }
 
+/* ****************************************
+ 申請ユーザー 情報取得
+**************************************** */
 function getApplyingUsers() {
   $("#applying-list").hide();
   $("#applying-list").empty();
@@ -191,6 +206,9 @@ function getApplyingUsers() {
   });
 }
 
+/* ****************************************
+ 承認待ちユーザー 情報取得
+**************************************** */
 function getApprovalWaitUsers() {
   $("#approval-wait-list").hide();
   $("#approval-wait-list").empty();
@@ -198,9 +216,9 @@ function getApprovalWaitUsers() {
   $.when(
     getApprovalUsers('1')
   ).done (function(){
-    
+    // 成功時の処理
   }).fail(function(){
-    
+    // 失敗時の処理
   }).always(function(){
     $("#approval-wait-list").show();
     $("#approval-wait-loading").hide();

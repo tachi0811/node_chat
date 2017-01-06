@@ -31,6 +31,22 @@ function sio(server) {
 			});
 		});
 
+		// 申請通知
+		socket.on('send_apply', function(data) {
+			console.log(data);
+			sio.emit('recv_apply', {
+				data: data
+			});
+		});
+
+		// 承認通知
+		socket.on('send_approval', function(data) {
+			console.log(data);
+			sio.emit('recv_approval', {
+				data: data
+			});
+		});
+
 		// 切断時
 		socket.on("disconnect", function() {
 		});
