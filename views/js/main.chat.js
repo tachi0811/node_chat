@@ -78,7 +78,7 @@ function getChatTag(d){
   // 1 : チャット
   var editText = "";
   editText += "<span class='chat-img edit_img pull-right'>";
-  editText += "<a onclick=\"editClick('{0}', '{1}')\">";
+  editText += "<a onclick=\"editClick('{0}')\">";
   editText += "<image src='./img/edit.svg' height='40px' width='40px' >";
   editText += "</a>";
   editText += "<a onclick=\"deleteClick('{0}')\">";
@@ -91,7 +91,7 @@ function getChatTag(d){
   if (user_id != d["user_id"]) {
     editText = "";
   } else {
-    editText = $.sprintf(editText, d["id"], d["chat"]);
+    editText = $.sprintf(editText, d["id"]);
   }
   var usereName = d.user.user_name;
   var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], editText, usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
@@ -102,7 +102,7 @@ function getChatTag(d){
  タグの削除
 ****************************** */
 function delChat(chat_id) {
-  $("li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "']").remove();
+  $("#chat li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "']").remove();
 }
 
 /* ******************************
@@ -110,7 +110,7 @@ function delChat(chat_id) {
 ****************************** */
 function updChat(d){
   var tag = getChatTag(d);
-  $("li[uid='" + d["user_id"] + "'][gid='" + d["group_id"] + "'][cid='" + d["id"] + "']").replaceWith(tag);
+  $("#chat li[uid='" + d["user_id"] + "'][gid='" + d["group_id"] + "'][cid='" + d["id"] + "']").replaceWith(tag);
 }
 
 /* ****************************************
@@ -272,9 +272,10 @@ params
   chat_id
   chat
 **************************************** */
-function editClick(chat_id, chat) {
+function editClick(chat_id) {
   edit_chat_id =  chat_id;
   mode = 1; // 編集モードへ
+  var chat = $("#chat li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "'] pre").text();
   $("#chatText").val(chat);
   $("#cancel").show();
   $("#chatText").focus();
