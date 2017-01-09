@@ -63,7 +63,7 @@ $(function(){
       // 承認待ちユーザーの情報を更新
       getApplyingUsers();
       // チャット一覧の再描画
-      
+      setGroup();
     }
   });
 

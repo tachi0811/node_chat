@@ -6,6 +6,22 @@ function groupClick(group_id, group_name) {
 }
 
 /* ****************************************
+ groups tag create
+**************************************** */
+function createGroup(data) {
+
+  var dataLength = data.length;
+  $("#groupListItems").empty();
+
+  for (i = 0; i < dataLength; i++) {
+    var d = data[i];
+    var groupText = "<li><a herf='#' gid='{0}' class=\"nav-action\" onclick=\"groupClick('{0}', '{1}')\" class='groupItem'>{1}</a></li>";
+    groupText = $.sprintf(groupText, d["id"], d["group_name"]);
+    $("#groupListItems").append($(groupText));
+  }
+}
+
+/* ****************************************
  get groups
 **************************************** */
 function setGroup() {
@@ -22,7 +38,7 @@ function setGroup() {
   // --------------------
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
-      createSideBar(JSON.parse(res.data));
+      createGroup(JSON.parse(res.data));
     } else if (res.result == "1") {
       window.location.href = "./sample.html";
     }

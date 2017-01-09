@@ -63,6 +63,8 @@ function approvalClick(f_user_id, f_user_name) {
     if (res.result == "0") {
       // 承認待ちリストの更新
       getApprovalWaitUsers();
+      // group 情報の更新
+      setGroup();
       // 申請中ユーザー情報を送信
       sio.emit('send_approval', data );
     } else if (res.result == "1"){
