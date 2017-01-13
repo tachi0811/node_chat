@@ -7,6 +7,14 @@ function sio(server) {
 
 	// 接続時
 	sio.on('connection', function(socket) {
+
+		socket.on('send_login', function(data) {
+			console.log(data);
+			sio.emit('recv_login', { 
+				data: data 
+			});
+		});
+
 		// 通知受信(チャット登録)
 		socket.on('send_insChat', function(data) {
 			console.log(data);

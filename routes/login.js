@@ -123,8 +123,13 @@ router.post('/', function(req, res, next){
   }})
   .then(function(data){
     if (data != null) {
+      var session_user = req.session.user;
       req.session.user = { user_name: data.user_name, id:data.id };
-      res.send({ result: "0", data: JSON.stringify(data) });
+      if (session_user != undefined && session_user.id != data.id) {
+        res.send({ result: "0", data: JSON.stringify(data), before_user_id: session_user.id, is_diff_user: true });
+      } else {
+        res.send({ result: "0", data: JSON.stringify(data), is_diff_user: false });
+      }
     } else {
       res.send({ result: "1", message : "ユーザーが存在しません" });
     }

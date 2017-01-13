@@ -1,7 +1,21 @@
 // ******************************
 // jquery windows.ready と同じ
 // ******************************
+var sio;              // socket.io
+
 $(function(){
+
+  // --------------------
+  // socket.io 
+  // --------------------
+  sio = io.connect()
+
+  sio.on('connect', function() {
+    console.log("connected");
+  });
+
+
+
   $("#loginform").validationEngine();
   $("#createform").validationEngine();
 
@@ -107,7 +121,11 @@ $(function(){
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
         // main 画面へ
+        if (res.is_diff_user) {
+           sio.emit("send_login", { "before_user_id": res.before_user_id } ); 
+        }
         window.location.href = "./main.html";
+        
       } else {
         $("#messageDialog span").text(res.message);
         $("#messageDialog").dialog({

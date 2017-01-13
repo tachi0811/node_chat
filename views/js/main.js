@@ -3,6 +3,7 @@
 var sio;              // socket.io
 var usr_id;           // login_user_id
 var select_group_id;  // select group_id
+var session_id;       // session_id
 
 var mode = 0;       // 0: 追加, 1: 更新
 var edit_chat_id;   // edit chat_id
@@ -28,6 +29,17 @@ $(function(){
 
   sio.on('connect', function() {
     console.log("connected");
+  });
+
+  /* **********
+    login
+  ********** */ 
+  sio.on('recv_login', function(res) {
+    if (user_id == res.before_user_id) {
+      // 画面を閉じる
+      window.close();
+      return false;
+    }
   });
 
   /* **********

@@ -258,6 +258,7 @@ function setUser() {
       $("#user_name").text(res.data.user_name);
       // 変数に格納
       user_id = res.data.user_id;
+      session_id = res.data.session_id;
       // 初期表示はMyChat を表示
       setChat(res.data.my_chat_group_id, res.data.my_chat_group_name);
     } else if (res.result == "1") {
