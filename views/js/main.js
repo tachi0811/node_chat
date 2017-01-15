@@ -35,9 +35,10 @@ $(function(){
     login
   ********** */ 
   sio.on('recv_login', function(res) {
-    if (user_id == res.before_user_id) {
+    // 同じSessionIDで違うユーザーでログインした場合は、リロードする 
+    if (user_id == res.data.before_user_id) {
       // 画面を閉じる
-      window.close();
+      location.reload();
       return false;
     }
   });
