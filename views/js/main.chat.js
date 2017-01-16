@@ -31,6 +31,7 @@ function createChat(data) {
     addChat(d);
   }
 }
+
 /* ******************************
  chat の作成
 ****************************** */
@@ -52,7 +53,8 @@ function getChatTag(d) {
   // 6 : 時間
   // 7 : チャット本文
   var chatText = "";
-  chatText += "<li uid='{0}' gid='{1}' cid='{2}' class='left clearfix'>";
+  chatText += "<div class='dropdown'>";
+  chatText += "<li id='chat-body' uid='{0}' gid='{1}' cid='{2}' class='left clearfix' data-toggle='dropdown'>";
   chatText += "<span class='chat-img pull-left'>";
   chatText += "<img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' />";
   chatText += "</span>";
@@ -74,6 +76,10 @@ function getChatTag(d) {
   chatText += "</div>";
   chatText += "</li>";
 
+  chatText += "<ul class='dropdown-menu'>";
+  chatText += "<li><a onclick=\"deleteClick('{2}')\">Delete</a></li>";
+  chatText += "</ul>";
+
   // 0 : チャットID
   // 1 : チャット
   var editText = "";
@@ -81,12 +87,9 @@ function getChatTag(d) {
   editText += "<a onclick=\"editClick('{0}')\">";
   editText += "<image src='./img/edit.svg' height='40px' width='40px' >";
   editText += "</a>";
-  editText += "<a onclick=\"deleteClick('{0}')\">";
-  editText += "</image>";
-  editText += "<image src='./img/del.svg' height='40px' width='40px' >";
-  editText += "</image>";
-  editText += "</a>";
+
   editText += "</span>";
+  chatText += "</div>";
 
   if (user_id != d["user_id"]) {
     editText = "";

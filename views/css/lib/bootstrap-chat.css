@@ -4,15 +4,29 @@
     margin: 0;
     padding: 0;
 }
+
 .edit_img img
 {
     cursor: pointer;
-} 
+}
+
 .chat li
 {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
+}
+
+.dropdown-menu
+{
+  margin: 0px;
+  z-index: 1;
+}
+
+.dropdown-menu li
+{
+  border:none;
+  height:20px;
 }
 
 .chat li.left .chat-body
@@ -33,6 +47,9 @@
     color: #777777;
     background-color:transparent;
     border: none;
+}
+.dropdown:hover > .dropdown-menu{
+  display: block;
 }
 
 #chat-main
