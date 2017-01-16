@@ -55,38 +55,25 @@ $(function(){
       charset: "UTF-8",
       url: "/login/createAccount",
       // timeout: 3000,
-    // ===============
-    // 通信成功
-    // ===============
+      // ===============
+      // 通信成功
+      // ===============
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
         // main 画面へ
         window.location.href = "./main.html";
       } else if (res.result == "1") {
-        $("#messageDialog span").text(res.message);
-        $("#messageDialog").dialog({
-          title: "Error",
-          modal: true,
-          close: function() {
-            // 処理なし(処理がある時のために敢えて記述する)
-          }
-        });
+        showDialog('Error', res.message)
       }
-    // ===============
-    // 通信失敗
-    // ===============
+      // ===============
+      // 通信失敗
+      // ===============
     }).fail(function(xhr, status, thrown) {
-      $("#messageDialog span").text("error");
-      $("#messageDialog").dialog({
-        title: "メッセージ",
-        modal: true,
-        close: function() {
-          // 処理なし(処理がある時のために敢えて記述する)
-        }
-      });
-    // ===============
-    // その他
-    // ===============
+      // TODO:暫定でメッセージをxhr.messageとする
+      showDialog('Error', xhr.message)
+      // ===============
+      // その他
+      // ===============
     }).always(function(xhr, status){
       hideLoading();
     });
@@ -97,7 +84,7 @@ $(function(){
   // login button click
   // ******************************
   $("#login").click(function(e){
-    
+
     // jquery.ValidationEngin
     if (!$("#loginform").validationEngine('validate')) {
       return false;
@@ -115,43 +102,28 @@ $(function(){
       // contentType: "application/JSON",
       url: "/login/",
       // timeout: 3000,
-    // ===============
-    // 通信成功
-    // ===============
+      // ===============
+      // 通信成功
+      // ===============
     }).done(function(res, status, xhr) {
       if (res.result == "0") {
         // main 画面へ
         if (res.is_diff_user) {
-           sio.emit("send_login", { "before_user_id": res.before_user_id } ); 
+          sio.emit("send_login", { "before_user_id": res.before_user_id } );
         }
         window.location.href = "./main.html";
-        
+
       } else {
-        $("#messageDialog span").text(res.message);
-        $("#messageDialog").dialog({
-          title: "Success",
-          modal: true,
-          close: function() {
-            // 処理なし(処理がある時のために敢えて記述する)
-          }
-        });
+        showDialog('Success', res.message);
       }
-      
-    // ===============
-    // 通信失敗
-    // ===============
+      // ===============
+      // 通信失敗
+      // ===============
     }).fail(function(xhr, status, thrown) {
-      $("#messageDialog span").text("error");
-      $("#messageDialog").dialog({
-        title: "Error",
-        modal: true,
-        close: function() {
-          /// 処理なし(処理がある時のために敢えて記述する)
-        }
-      });
-    // ********************
-    // その他
-    // ********************
+        showDialog('Error', res.message);
+      // ********************
+      // その他
+      // ********************
     }).always(function(xhr, status){
       hideLoading();
     });

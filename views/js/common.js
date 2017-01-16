@@ -2,9 +2,17 @@ function showLoading() {
   $("#loader").show();
   $("#loader_animation").show();
 }
+
 function hideLoading () {
   $("#loader").hide();
   $("#loader_animation").hide();
+}
+
+function showDialog(title, msg){
+  var modalDialog = $('#messageDialog')
+  modalDialog.find('.modal-title').text(title)
+  modalDialog.find('.modal-body p').text(msg)
+  modalDialog.modal()
 }
 
 // jQueryに静的メソッドを追加
