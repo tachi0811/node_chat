@@ -75,15 +75,15 @@ function getChatTag(d) {
   chatText += "</pre>";
   chatText += "</div>";
   chatText += "</li>";
-  chatText += allowDelete(d);
+  chatText += addDropdownMenu(d);
   chatText += "</div>";
 
   var usereName = d.user.user_name;
-  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], allowEdit(d), usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
+  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], addRightsideMenu(d), usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
   return chatText;
 }
 
-function allowEdit(d) {
+function addRightsideMenu(d) {
   if (user_id != d["user_id"]) {
     return "";
   }
@@ -102,7 +102,7 @@ function allowEdit(d) {
   return editText;
 }
 
-function allowDelete(d) {
+function addDropdownMenu(d) {
 
   if (user_id != d["user_id"]) {
     return "";
@@ -110,7 +110,7 @@ function allowDelete(d) {
 
   var delMenu = "";
   delMenu += "<ul class='dropdown-menu'>";
-  delMenu += "<li><a onclick=\"deleteClick('{2}')\">Delete</a></li>";
+  delMenu += "<li><a onclick=\"deleteClick('{2}')\"><image src='./img/del.svg' height='20px' width='20px' >Delete</a></li>";
   delMenu += "</ul>";
   return delMenu;
 }
