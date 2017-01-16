@@ -1,21 +1,21 @@
-$(function(){
+$(function () {
 
   // --------------------
   // ローディング画面表示
   // --------------------
   showLoading();
-  
+
   // --------------------
   // 送信ボタンクリック
   // --------------------
-  $("#send").click(function(e) {
+  $("#send").click(function (e) {
     sendChat();
   });
 
   // --------------------
   // Cancelボタンクリック
   // --------------------
-  $("#cancel").click(function(e) {
+  $("#cancel").click(function (e) {
     clearChat();
   });
 
@@ -42,7 +42,7 @@ function addChat(d) {
 /* ******************************
  chat tag 作成
 ******************************　*/
-function getChatTag(d){
+function getChatTag(d) {
   // 0 : user_id
   // 1 : group_id
   // 2 : chat_id
@@ -73,7 +73,7 @@ function getChatTag(d){
   chatText += "</pre>";
   chatText += "</div>";
   chatText += "</li>";
-  
+
   // 0 : チャットID
   // 1 : チャット
   var editText = "";
@@ -108,7 +108,7 @@ function delChat(chat_id) {
 /* ******************************
  タグの更新
 ****************************** */
-function updChat(d){
+function updChat(d) {
   var tag = getChatTag(d);
   $("#chat li[uid='" + d["user_id"] + "'][gid='" + d["group_id"] + "'][cid='" + d["id"] + "']").replaceWith(tag);
 }
@@ -127,30 +127,30 @@ function setChat(group_id, group_name) {
   $.ajax({
     type: "GET",
     charset: "UTF-8",
-    data: {"group_id": group_id},
+    data: { "group_id": group_id },
     dataType: "JSON",
     contentType: "application/JSON",
     url: "/main/chats",
     // timeout: 3000,
-  // --------------------
-  // 通信成功
-  // --------------------
-  }).done(function(res, status, xhr) {
+    // --------------------
+    // 通信成功
+    // --------------------
+  }).done(function (res, status, xhr) {
     if (res.result == "0") {
       createChat(JSON.parse(res.data));
       select_group_id = group_id;
     } else if (res.result == "1") {
-      
+
     }
-  // --------------------
-  // 通信失敗
-  // --------------------
-  }).fail(function(xhr, status, thrown) {
+    // --------------------
+    // 通信失敗
+    // --------------------
+  }).fail(function (xhr, status, thrown) {
     window.location.href = "./sample.html";
-  // --------------------
-  // その他
-  // --------------------
-  }).always(function(xhr, status){
+    // --------------------
+    // その他
+    // --------------------
+  }).always(function (xhr, status) {
     hideLoading();
     clearChat();
   });
@@ -173,7 +173,7 @@ function sendChat() {
 function sendChatInsert() {
   var chat = $("#chatText").val().trim();
   if (chat != "") {
-    var data = { "group_id" : select_group_id, "chat" : chat };
+    var data = { "group_id": select_group_id, "chat": chat };
     $.ajax({
       type: "POST",
       charset: "UTF-8",
@@ -181,18 +181,18 @@ function sendChatInsert() {
       dataType: "JSON",
       // contentType: "application/JSON",
       url: "/main/insertChat/",
-    // timeout: 3000,
-    }).done(function(res, status, xhr) {
+      // timeout: 3000,
+    }).done(function (res, status, xhr) {
       if (res.result == "0") {
         clearChat();
-        sio.emit('send_insChat', res.data );
+        sio.emit('send_insChat', res.data);
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";
       }
-    }).fail(function(xhr, status, thrown) {
+    }).fail(function (xhr, status, thrown) {
       // error
-    }).always(function(xhr, status) {
+    }).always(function (xhr, status) {
       // 
     });
   }
@@ -204,25 +204,25 @@ function sendChatInsert() {
 function sendChatUpdate() {
   var chat = $("#chatText").val().trim();
   if (chat != "") {
-    var data = { "group_id" : select_group_id, "chat_id" : edit_chat_id, "chat" : chat };
+    var data = { "group_id": select_group_id, "chat_id": edit_chat_id, "chat": chat };
     $.ajax({
       type: "POST",
       charset: "UTF-8",
       data: data,
       dataType: "JSON",
       url: "/main/updateChat/",
-    // timeout: 3000,
-    }).done(function(res, status, xhr) {
+      // timeout: 3000,
+    }).done(function (res, status, xhr) {
       if (res.result == "0") {
         clearChat();
-        sio.emit('send_updChat', res.data );
+        sio.emit('send_updChat', res.data);
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";
       }
-    }).fail(function(xhr, status, thrown) {
+    }).fail(function (xhr, status, thrown) {
       // error
-    }).always(function(xhr, status) {
+    }).always(function (xhr, status) {
       // 
     });
   }
@@ -234,7 +234,7 @@ params
   chat_id
 **************************************** */
 function deleteClick(chat_id) {
-  var data = {"chat_id": chat_id, "group_id": select_group_id, "user_id": user_id};
+  var data = { "chat_id": chat_id, "group_id": select_group_id, "user_id": user_id };
   $.ajax({
     type: "POST",
     charset: "UTF-8",
@@ -242,10 +242,10 @@ function deleteClick(chat_id) {
     dataType: "JSON",
     url: "/main/deleteChat",
     // timeout: 3000,
-  // --------------------
-  // 通信成功
-  // --------------------
-  }).done(function(res, status, xhr) {
+    // --------------------
+    // 通信成功
+    // --------------------
+  }).done(function (res, status, xhr) {
     if (res.result == "0") {
       // 削除成功
       sio.emit('send_delChat', data);
@@ -253,16 +253,16 @@ function deleteClick(chat_id) {
       // 削除失敗
 
     }
-  // --------------------
-  // 通信失敗
-  // --------------------
-  }).fail(function(xhr, status, thrown) {
+    // --------------------
+    // 通信失敗
+    // --------------------
+  }).fail(function (xhr, status, thrown) {
     window.location.href = "./sample.html";
-  // --------------------
-  // その他
-  // --------------------
-  }).always(function(xhr, status){
-    
+    // --------------------
+    // その他
+    // --------------------
+  }).always(function (xhr, status) {
+
   });
 }
 
@@ -273,7 +273,7 @@ params
   chat
 **************************************** */
 function editClick(chat_id) {
-  edit_chat_id =  chat_id;
+  edit_chat_id = chat_id;
   mode = 1; // 編集モードへ
   var chat = $("#chat li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "'] pre").text();
   $("#chatText").val(chat);
@@ -285,7 +285,7 @@ function editClick(chat_id) {
 chat を一回クリア（初期状態へ）
 **************************************** */
 function clearChat() {
-  edit_chat_id =  "";
+  edit_chat_id = "";
   mode = 0;
   $("#chatText").val("");
   $("#cancel").hide();
