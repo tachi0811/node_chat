@@ -83,6 +83,9 @@ function getChatTag(d) {
   return chatText;
 }
 
+/* ******************************
+ chat List（右サイドメニュー） の作成
+****************************** */
 function addRightsideMenu(d) {
   if (user_id != d["user_id"]) {
     return "";
@@ -102,6 +105,9 @@ function addRightsideMenu(d) {
   return editText;
 }
 
+/* ******************************
+ chat List（ドロップダウンメニュー） の作成
+****************************** */
 function addDropdownMenu(d) {
 
   if (user_id != d["user_id"]) {
