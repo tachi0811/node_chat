@@ -75,10 +75,18 @@ function getChatTag(d) {
   chatText += "</pre>";
   chatText += "</div>";
   chatText += "</li>";
+  chatText += allowDelete(d);
+  chatText += "</div>";
 
-  chatText += "<ul class='dropdown-menu'>";
-  chatText += "<li><a onclick=\"deleteClick('{2}')\">Delete</a></li>";
-  chatText += "</ul>";
+  var usereName = d.user.user_name;
+  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], allowEdit(d), usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
+  return chatText;
+}
+
+function allowEdit(d) {
+  if (user_id != d["user_id"]) {
+    return "";
+  }
 
   // 0 : チャットID
   // 1 : チャット
@@ -87,18 +95,24 @@ function getChatTag(d) {
   editText += "<a onclick=\"editClick('{0}')\">";
   editText += "<image src='./img/edit.svg' height='40px' width='40px' >";
   editText += "</a>";
-
   editText += "</span>";
-  chatText += "</div>";
+
+  editText = $.sprintf(editText, d["id"]);
+
+  return editText;
+}
+
+function allowDelete(d) {
 
   if (user_id != d["user_id"]) {
-    editText = "";
-  } else {
-    editText = $.sprintf(editText, d["id"]);
+    return "";
   }
-  var usereName = d.user.user_name;
-  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], editText, usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
-  return chatText;
+
+  var delMenu = "";
+  delMenu += "<ul class='dropdown-menu'>";
+  delMenu += "<li><a onclick=\"deleteClick('{2}')\">Delete</a></li>";
+  delMenu += "</ul>";
+  return delMenu;
 }
 
 /* ******************************
