@@ -18,7 +18,6 @@ $(function () {
   $("#cancel").click(function (e) {
     clearChat();
   });
-
 });
 
 /* ******************************
@@ -74,8 +73,11 @@ function getChatTag(d) {
   chatText += "{7}";
   chatText += "</pre>";
   chatText += "</div>";
+   
   chatText += "</li>";
+
   chatText += addDropdownMenu(d);
+
   chatText += "</div>";
 
   var usereName = d.user.user_name;
@@ -87,22 +89,23 @@ function getChatTag(d) {
  chat List（右サイドメニュー） の作成
 ****************************** */
 function addRightsideMenu(d) {
+
   if (user_id != d["user_id"]) {
     return "";
   }
 
   // 0 : チャットID
   // 1 : チャット
-  var editText = "";
-  editText += "<span class='chat-img edit_img pull-right'>";
-  editText += "<a onclick=\"editClick('{0}')\">";
-  editText += "<image src='./img/edit.svg' height='40px' width='40px' >";
-  editText += "</a>";
-  editText += "</span>";
+  var menu = "";
+  menu += "<span class='chat-img edit_img pull-right'>";
+  menu += "<a onclick=\"editClick('{0}')\">";
+  menu += "<image src='./img/edit.svg' height='40px' width='40px' >";
+  menu += "</a>";
+  menu += "</span>";
 
-  editText = $.sprintf(editText, d["id"]);
+  menu = $.sprintf(menu, d["id"]);
 
-  return editText;
+  return menu;
 }
 
 /* ******************************
@@ -110,15 +113,31 @@ function addRightsideMenu(d) {
 ****************************** */
 function addDropdownMenu(d) {
 
-  if (user_id != d["user_id"]) {
-    return "";
+  var menu = "";
+  menu += "<ul role='toolbar' id='bottomMenu' class='dropdown-menu'>";
+
+  // 自分のみ削除
+  if (user_id == d["user_id"]) {
+
+    menu += "<li>"
+    menu += "<a onclick=\"editClick('{2}')\"><image src='./img/edit.svg' height='20px' width='20px' >Edit</a>";
+    menu += "</li>";
+    menu += "<li>"
+    menu += "<a onclick=\"deleteClick('{2}')\"><image src='./img/del.svg' height='20px' width='20px' >Delete</a>";
+    menu += "</li>";
+
+  } else {
+    //copyClick未実装
+    menu += "<li>"
+    //menu += "<li><a onclick=\"copyClick('{2}')\">Copy</a></li>";
+    menu += "<a>Copy</a>";
+    menu += "</li>";
+    
   }
 
-  var delMenu = "";
-  delMenu += "<ul class='dropdown-menu'>";
-  delMenu += "<li><a onclick=\"deleteClick('{2}')\"><image src='./img/del.svg' height='20px' width='20px' >Delete</a></li>";
-  delMenu += "</ul>";
-  return delMenu;
+  menu += "</ul>";
+
+  return menu;
 }
 
 /* ******************************
@@ -126,6 +145,8 @@ function addDropdownMenu(d) {
 ****************************** */
 function delChat(chat_id) {
   $("#chat li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "']").remove();
+  $('span').removeClass('selected');
+  $('.dropdown-menu').slideUp('fast');
 }
 
 /* ******************************
