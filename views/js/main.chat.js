@@ -141,8 +141,9 @@ chat 情報取得
 params
   group_id
   group_name
+  chat_type
 **************************************** */
-function setChat(group_id, group_name) {
+function setChat(group_id, group_name, chat_type) {
 
   $("#chat").empty();
   $("#group_name").text(group_name);
@@ -208,7 +209,7 @@ function sendChatInsert() {
     }).done(function (res, status, xhr) {
       if (res.result == "0") {
         clearChat();
-        sio.emit('send_insChat', res.data);
+        sio.emit('send_insChat', JSON.parse(res.data));
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";

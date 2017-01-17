@@ -56,6 +56,7 @@ req
   group_id : string
  ****************************** */
 router.get('/chats', function(req, res, next) {
+  res.contentType("application/JSON");
   db.user.hasMany(db.chat, { foreignKey : "user_id" });
   db.chat.belongsTo(db.user, { foreignKey : "user_id" });
   db.chat.findAll({
@@ -80,6 +81,7 @@ req
   user json
 ****************************** */
 router.get('/applyUsers', function(req, res, next) {
+  res.contentType("application/JSON");
   // 検索条件を作成（区切り）
   var temp = req.query.search.replace(/　/g, ' ').split(' ');
   var search = [];
@@ -120,7 +122,7 @@ router.get('/applyUsers', function(req, res, next) {
         },
       }
     }).then(function(data) {
-      res.send({result: "0", data: data});
+      res.send({result: "0", data: JSON.stringify(data) });
     }).catch(function(err){
       res.send({ result: "1", message: err.message});
     });
@@ -138,7 +140,7 @@ req
   user json
 ****************************** */
 router.get('/approvalUsers', function(req, res, next) {
-
+  res.contentType("application/JSON");
   var user_id = req.session.user.id;
 
   // 自分の申請中ユーザー or 承認中ユーザーを取得
@@ -162,7 +164,7 @@ router.get('/approvalUsers', function(req, res, next) {
         },
       }
     }).then(function(data) {
-      res.send({result: "0", data: data});
+      res.send({result: "0", data: JSON.stringify(data) });
     }).catch(function(err){
       res.send({ result: "1", message: err.message});
     });
@@ -200,7 +202,7 @@ router.post('/insertFriend', function(req, res, next){
     });
   })
   .then(function(result){
-    res.send( {result : "0", data: result.dataValues });
+    res.send( {result : "0", data: JSON.stringify(result) });
   })
   .catch(function(err){
     res.send({ result : "1", message : err.message });
@@ -261,7 +263,7 @@ router.post('/updateApproval', function(req, res, next){
       }, { transaction : t });
     })
     .then(function(result) {
-      res.send({ result: "0", data: result });
+      res.send({ result: "0", data: JSON.stringify(result) });
     })
     .catch(function(err) {
       res.send( { result: "1", message: err.message } );
@@ -287,13 +289,13 @@ router.get('/loginUser', function(req, res, next){
       chat_type: 0,
     }
   }).then(function(data) {
-    res.send({ result: "0", data: { 
+    res.send({ result: "0", data: JSON.stringify({ 
       user_id: req.session.user.id, 
       user_name: req.session.user.user_name, 
       my_chat_group_id: data.dataValues.id, 
       my_chat_group_name: data.dataValues.group_name,
       session_id: req.sessionID 
-     }})
+    })})
   }).catch(function(err) {
     res.send({ result: "1", message: err.message })
   }); 
@@ -335,7 +337,7 @@ router.post('/insertChat', function(req, res, next) {
         }
         , include: [db.user]
       }).then(function(data){
-        res.send({result: "0", data: data});
+        res.send({result: "0", data: JSON.stringify(data) });
       }).catch(function(err){
         res.send({ result: "1", message: err.message});
       });
@@ -365,7 +367,7 @@ router.post('/deleteChat', function(req, res, next) {
       id : req.body.chat_id 
     }
   }).then(function(data){
-    res.send({result: "0", data: data});
+    res.send({result: "0", data: JSON.stringify(data) });
   }).catch(function(err){
     res.send({result: "1", message: err.message});
   });
@@ -401,13 +403,72 @@ router.post('/updateChat', function(req, res, next) {
       }
       , include: [db.user]
     }).then(function(data){
-      res.send({result: "0", data: data});
+      res.send({result: "0", data: JSON.stringify(data) });
     }).catch(function(err){
       res.send({ result: "1", message: err.message});
     });
   }).catch(function(err) {
     res.send({ result: "1", message: err.message});
   });
+});
+
+/* ******************************
+GET
+res
+req
+  resut = 0 : success
+        = 1 : error
+  message   : string
+****************************** */
+router.get('/friends', function(req, res, next) {
+  res.contentType("application/JSON");
+  db.user.hasMany(db.friend, {foreignKey : "f_user_id"});
+  db.friend.belongsTo(db.user, { foreignKey : "f_user_id" });
+
+  db.friend.findAll({
+    where: {
+      id: req.session.user.id,
+      approval: 2
+    }, include: [db.user]
+  }).then(function(data){
+    res.send({ result: "0", data: JSON.stringify(data) });
+  }).catch(function(err){
+    res.send({ result: "1", message: err.message });
+  });
+});
+
+/* ******************************
+POST
+res
+req
+  resut = 0 : success
+        = 1 : error
+  message   : string
+****************************** */
+router.post('/insertGroup', function(req, res, next) {
+  
+  db.group.max('id').then(function(max){
+    if (isNaN(max)) {
+      max = 0;
+    }
+    db.sequelize.transaction((t) => {
+      return db.sequelize.Promise.each(req.body.user_list, (data) => {
+        return db.group.create({
+          id: max + 1,
+          user_id : data.user_id,
+          group_name : req.body.group_name,
+          chat_type : 1,
+          permission : 1,
+        });
+      });
+  }).then((result) => {
+    res.send( { result: "0", data: result } );
+  }).catch((err) => {
+    res.send( { result: "1", message: err.message } );
+  });
+  }).catch(function(err) {
+    res.send( { result: "1", message: err.message } );
+  }); 
 });
 
 module.exports = router;

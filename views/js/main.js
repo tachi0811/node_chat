@@ -77,6 +77,8 @@ $(function(){
       getApplyingUsers();
       // チャット一覧の再描画
       setGroup();
+      // 友人リストの再描画
+      setFriends();
     }
   });
 
@@ -90,7 +92,8 @@ $(function(){
   // --------------------
   $.when(
     setUser(),
-    setGroup()
+    setGroup(),
+    setFriends()
   ).done (function(){
     
   }).fail(function(){

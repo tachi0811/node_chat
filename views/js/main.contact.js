@@ -35,7 +35,7 @@ function applyClick(f_user_id) {
       getApplyUsers();
       getApplyingUsers();
       // 承認待ちのユーザー情報を送信
-      sio.emit('send_apply', data );
+      sio.emit('send_apply', JSON.parse(data) );
     } else if (res.result == "1"){
       // エラーメッセージ
     }
@@ -66,7 +66,7 @@ function approvalClick(f_user_id, f_user_name) {
       // group 情報の更新
       setGroup();
       // 申請中ユーザー情報を送信
-      sio.emit('send_approval', data );
+      sio.emit('send_approval', JSON.parse(data) );
     } else if (res.result == "1"){
       // エラー処理
     }
@@ -102,24 +102,25 @@ function setApplyList(data, approval) {
   listText += "<span class=''>";
   listText += "{3}"; // name
   listText += "</span>";
-  listText += "</h3>";
+  listText += "</h5>";
   listText += "</div>";
   listText += "</li>"
   buttonText = "<input type='button' onclick=\"{0}Click('{1}', '{2}')\" class='btn btn-primary btn-sm' value='{3}' style='float:right !important;'>";
   // List All Delete
   if (dataLength > 0) {
     for(var i = 0; i < dataLength; i++) {
+      var btnTag = "";
       var d = data[i];
       if (approval == 0) {
-        buttonText = "";
+        btnTag = "";
       } else if(approval == 1) {
         // 承認ボタン
-        buttonText = $.sprintf(buttonText,'approval', d["id"], d["user_name"], '承認');
+        btnTag = $.sprintf(buttonText,'approval', d["id"], d["user_name"], '承認');
       } else {
         // 申請ボタン
-        buttonText = $.sprintf(buttonText,'apply', d["id"], d["user_name"], '申請');
+        btnTag = $.sprintf(buttonText,'apply', d["id"], d["user_name"], '申請');
       }
-      tag += $.sprintf(listText, d["id"], buttonText, d["email"], d["user_name"]);
+      tag += $.sprintf(listText, d["id"], btnTag, d["email"], d["user_name"]);
     }
   } else {
     tag += $.sprintf(listText, "", "", "", "User DATA Not Found"); 
@@ -161,7 +162,7 @@ function getApplyUsers() {
   }).done(function(res, status, xhr){
     if (res.result == "0") {
       // 申請リスト
-      setApplyList(res.data, 9);
+      setApplyList(JSON.parse(res.data), 9);
     } else if (res.result == "1"){
       // 
     }
@@ -227,7 +228,7 @@ function getApprovalUsers(approval) {
   }).done(function(res, status, xhr){
     if (res.result == "0") {
       // 申請リスト
-      setApplyList(res.data, approval);
+      setApplyList(JSON.parse(res.data), approval);
     } else if (res.result == "1"){
       // 
     }
@@ -255,12 +256,13 @@ function setUser() {
   // --------------------
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
-      $("#user_name").text(res.data.user_name);
+      var data = JSON.parse(res.data);
+      $("#user_name").text(data.user_name);
       // 変数に格納
-      user_id = res.data.user_id;
-      session_id = res.data.session_id;
+      user_id = data.user_id;
+      session_id = data.session_id;
       // 初期表示はMyChat を表示
-      setChat(res.data.my_chat_group_id, res.data.my_chat_group_name);
+      setChat(data.my_chat_group_id, data.my_chat_group_name);
     } else if (res.result == "1") {
       window.location.href = "./sample.html";
     }
