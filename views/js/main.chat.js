@@ -260,7 +260,7 @@ function sendChatUpdate() {
     }).done(function (res, status, xhr) {
       if (res.result == "0") {
         clearChat();
-        sio.emit('send_updChat', res.data);
+        sio.emit('send_updChat', JSON.parse(res.data));
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";
@@ -279,6 +279,7 @@ params
   chat_id
 **************************************** */
 function deleteClick(chat_id) {
+  
   var data = { "chat_id": chat_id, "group_id": select_group_id, "user_id": user_id };
   $.ajax({
     type: "POST",
@@ -292,6 +293,7 @@ function deleteClick(chat_id) {
     // --------------------
   }).done(function (res, status, xhr) {
     if (res.result == "0") {
+      clearChat();
       // 削除成功
       sio.emit('send_delChat', data);
     } else if (res.result == "1") {
