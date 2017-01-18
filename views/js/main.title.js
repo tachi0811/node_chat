@@ -18,6 +18,7 @@ function nowChatClick() {
   chat change
 **************************************** */
 function groupClick(group_id, group_name, chat_type) {
+  nowChatClick();
   setChat(group_id, group_name, chat_type);
 }
 

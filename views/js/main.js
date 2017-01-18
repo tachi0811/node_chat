@@ -51,6 +51,7 @@ $(function(){
   sio.on("recv_insChat", function(res) {
     var data = JSON.parse(res.data);
     addChat(data);
+    endChatScroll();
   });
   // 削除
   sio.on("recv_delChat", function(res) {

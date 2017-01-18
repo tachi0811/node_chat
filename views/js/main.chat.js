@@ -29,6 +29,7 @@ function createChat(data) {
     var d = data[i];
     addChat(d);
   }
+  endChatScroll();
 }
 
 /* ******************************
@@ -39,6 +40,9 @@ function addChat(d) {
   $("#chat").append($(tag));
 }
 
+function endChatScroll() {
+  $('#chat-main').animate({scrollTop: $('#chat-main')[0].scrollHeight}, 'fast');
+}
 /* ******************************
  chat tag 作成
 ******************************　*/
