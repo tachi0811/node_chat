@@ -109,7 +109,7 @@ $(function(){
       if (res.result == "0") {
         // main 画面へ
         if (res.is_diff_user) {
-          sio.emit("send_login", { "before_user_id": res.before_user_id } );
+          sio.emit("send_login", JSON.stringify({ "before_user_id": res.before_user_id }));
         }
         window.location.href = "./main.html";
 

@@ -5,9 +5,9 @@ var usr_id;           // login_user_id
 var select_group_id;  // select group_id
 var session_id;       // session_id
 
-var mode = 0;       // 0: 追加, 1: 更新
-var edit_chat_id;   // edit chat_id
-var timer = false;  // resize flg
+var mode = 0;         // 0: 追加, 1: 更新
+var edit_chat_id;     // edit chat_id
+var timer = false;    // resize flg
 
 // ----------------------------------------
 // load 時、resize 時に高さ変更
@@ -35,8 +35,9 @@ $(function(){
     login
   ********** */ 
   sio.on('recv_login', function(res) {
+    var data = JSON.parse(res.data);
     // 同じSessionIDで違うユーザーでログインした場合は、リロードする 
-    if (user_id == res.data.before_user_id) {
+    if (user_id == data.before_user_id) {
       // 画面を閉じる
       location.reload();
       return false;
@@ -48,15 +49,19 @@ $(function(){
   ********** */ 
   // 登録
   sio.on("recv_insChat", function(res) {
-    addChat(res.data);
+    var data = JSON.parse(res.data);
+    addChat(data);
+    endChatScroll();
   });
   // 削除
   sio.on("recv_delChat", function(res) {
-    delChat(res.data.chat_id);
+    var data = JSON.parse(res.data);
+    delChat(data.chat_id);
   });
   // 更新
   sio.on("recv_updChat", function(res) {
-    updChat(res.data);
+    var data = JSON.parse(res.data);
+    updChat(data);
   });
 
   /* **********
@@ -64,7 +69,8 @@ $(function(){
   ********** */
   // 申請
   sio.on("recv_apply", function(res) {
-    if (res.data.f_user_id == user_id) {
+    var data = JSON.parse(res.data);
+    if (data.f_user_id == user_id) {
       // 承認待ちユーザーの情報を更新
       getApprovalWaitUsers();
     }
@@ -72,13 +78,29 @@ $(function(){
 
   // 承認
   sio.on("recv_approval", function(res) {
-    if (res.data.f_user_id == user_id) {
+    var data = JSON.parse(res.data);
+    if (data.f_user_id == user_id) {
       // 承認待ちユーザーの情報を更新
       getApplyingUsers();
       // チャット一覧の再描画
       setGroup();
       // 友人リストの再描画
       setFriends();
+    }
+  });
+
+  /* **********
+    group
+  ********** */
+  sio.on("recv_insGroup", function(res) {
+    var data = JSON.parse(res.data);
+    var length = data.user_list.length;
+    for (var i = 0; i < length; i++) {
+      if (data.user_list[i].user_id == user_id) {
+        // チャット一覧の再描画
+        setGroup();
+        break;
+      }
     }
   });
 

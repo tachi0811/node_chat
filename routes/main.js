@@ -18,7 +18,7 @@ router.use(function(req, res, next) {
 });
 
 /* ******************************
-GET groups listing.
+GET select groups.
 res
   query
     id
@@ -33,7 +33,8 @@ router.get('/groups', function(req, res, next) {
     attributes: ['id', 'group_name'],
     where : {
       user_id : req.session.user.id,
-    }
+    },
+    order: ["chat_type", "id"]
   }).then(function(data){
     if (data.length != 0) {
       res.send({ result: "0", data: JSON.stringify(data) });
@@ -46,7 +47,7 @@ router.get('/groups', function(req, res, next) {
 });
 
 /* ******************************
-GET chats listing.
+GET select chats.
 res
   query
     id
@@ -73,7 +74,7 @@ router.get('/chats', function(req, res, next) {
 });
 
 /* ******************************
-GET session listing.
+GET select user apply.
 res
   query
     search
@@ -132,7 +133,7 @@ router.get('/applyUsers', function(req, res, next) {
 });
 
 /* ******************************
-GET session listing.
+GET select user approval.
 res
   query
     search
@@ -174,7 +175,7 @@ router.get('/approvalUsers', function(req, res, next) {
 });
 
 /* ******************************
-POST session listing.
+POST insert friend.
 res
   body
     id
@@ -210,7 +211,7 @@ router.post('/insertFriend', function(req, res, next){
 });
 
 /* ******************************
-POST session listing.
+POST update user approval.
 res
   body
     f_user_id
@@ -274,7 +275,7 @@ router.post('/updateApproval', function(req, res, next){
 });
 
 /* ******************************
-GET session listing.
+GET login user info.
 res
   query
     id
@@ -302,7 +303,7 @@ router.get('/loginUser', function(req, res, next){
 });
 
 /* ******************************
-POST
+POST insert chat
 res
   body
     group_id
@@ -350,7 +351,7 @@ router.post('/insertChat', function(req, res, next) {
 });
 
 /* ******************************
-POST
+POST delete chat
 res
   body
     group_id
@@ -374,7 +375,7 @@ router.post('/deleteChat', function(req, res, next) {
 });
 
 /* ******************************
-POST
+POST update chat
 res
   body
     group_id
@@ -413,7 +414,7 @@ router.post('/updateChat', function(req, res, next) {
 });
 
 /* ******************************
-GET
+GET select friends
 res
 req
   resut = 0 : success
@@ -453,13 +454,23 @@ router.post('/insertGroup', function(req, res, next) {
     }
     db.sequelize.transaction((t) => {
       return db.sequelize.Promise.each(req.body.user_list, (data) => {
-        return db.group.create({
-          id: max + 1,
-          user_id : data.user_id,
-          group_name : req.body.group_name,
-          chat_type : 1,
-          permission : 1,
-        });
+        if (data.user_id == req.session.user.id) {
+          return db.group.create({
+            id: max + 1,
+            user_id : data.user_id,
+            group_name : req.body.group_name,
+            chat_type : 2,
+            permission : 1,
+          });
+        } else {
+          return db.group.create({
+            id: max + 1,
+            user_id : data.user_id,
+            group_name : req.body.group_name,
+            chat_type : 2,
+            permission : 0,
+          });
+        }
       });
   }).then((result) => {
     res.send( { result: "0", data: result } );

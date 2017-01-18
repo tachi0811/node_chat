@@ -29,6 +29,7 @@ function createChat(data) {
     var d = data[i];
     addChat(d);
   }
+  endChatScroll();
 }
 
 /* ******************************
@@ -39,6 +40,9 @@ function addChat(d) {
   $("#chat").append($(tag));
 }
 
+function endChatScroll() {
+  $('#chat-main').animate({scrollTop: $('#chat-main')[0].scrollHeight}, 'fast');
+}
 /* ******************************
  chat tag 作成
 ******************************　*/
@@ -195,7 +199,7 @@ function sendChatInsert() {
     }).done(function (res, status, xhr) {
       if (res.result == "0") {
         clearChat();
-        sio.emit('send_insChat', JSON.parse(res.data));
+        sio.emit('send_insChat', res.data);
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";
@@ -225,7 +229,7 @@ function sendChatUpdate() {
     }).done(function (res, status, xhr) {
       if (res.result == "0") {
         clearChat();
-        sio.emit('send_updChat', JSON.parse(res.data));
+        sio.emit('send_updChat', res.data);
       }
       else if (res.result == "1") {
         window.location.href = "./sample.html";
@@ -260,7 +264,7 @@ function deleteClick(chat_id) {
     if (res.result == "0") {
       clearChat();
       // 削除成功
-      sio.emit('send_delChat', data);
+      sio.emit('send_delChat', JSON.stringify(data));
     } else if (res.result == "1") {
       // 削除失敗
 

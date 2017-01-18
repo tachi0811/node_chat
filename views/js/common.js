@@ -1,3 +1,10 @@
+/* ****************************************
+ 動的にDomを操作する場合のイベントを追加
+**************************************** */
+$(document).on("click", ".nav-action", (function(){
+  $(".navbar-collapse").collapse('hide');
+}));
+
 function showLoading() {
   $("#loader").show();
   $("#loader_animation").show();
