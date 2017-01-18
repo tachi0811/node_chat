@@ -56,7 +56,7 @@ function getChatTag(d) {
   // 6 : 時間
   // 7 : チャット本文
   var chatText = "";
-  chatText += "<div class='chatdropdown'>";
+  chatText += "<div class='dropdown'>";
   chatText += "<li id='chat-body' uid='{0}' gid='{1}' cid='{2}' class='left clearfix' data-toggle='dropdown'>";
   chatText += "<span class='chat-img pull-left'>";
   chatText += "<img src='http://placehold.it/50/55C1E7/fff&text={3}' alt='User Avatar' class='img-circle' />";
@@ -77,9 +77,7 @@ function getChatTag(d) {
   chatText += "</pre>";
   chatText += "</div>";
   chatText += "</li>";
-
   chatText += addDropdownMenu(d);
-
   chatText += "</div>";
 
   var usereName = d.user.user_name;
@@ -96,7 +94,7 @@ function addDropdownMenu(d) {
  
   // 自分のみ削除
   if (user_id == d["user_id"]) {
-    menu += "<ul role='toolbar' id='bottomMenu' class='chatdropdown-menu'>";
+    menu += "<ul role='toolbar' id='bottomMenu' class='dropdown-menu'>";
     menu += "<li>"
     menu += "<a onclick=\"editClick('{2}')\"><image src='./img/edit.svg' height='20px' width='20px' >Edit</a>";
     menu += "</li>";
@@ -115,7 +113,7 @@ function addDropdownMenu(d) {
 function delChat(chat_id) {
   $("#chat li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "']").remove();
   $('span').removeClass('selected');
-  $('.chatdropdown-menu').slideUp('fast');
+  $('.dropdown-menu').slideUp('fast');
 }
 
 /* ******************************

@@ -17,12 +17,12 @@
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.chatdropdown-menu
+.dropdown-menu
 {
     margin: 0px;
 }
 
-.chatdropdown-menu li
+.dropdown-menu li
 {
     border:none;
     height:20px;
@@ -48,7 +48,7 @@
     border: none;
 }
 
-.chatdropdown:hover > .chatdropdown-menu
+div.dropdown:hover > .dropdown-menu
 {
     display: block;
 }
