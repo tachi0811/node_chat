@@ -81,7 +81,9 @@ function getChatTag(d) {
   chatText += "</div>";
 
   var usereName = d.user.user_name;
-  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
+  var crAt = new Date(d["createdAt"]);
+  var date = crAt.getFullYear() + "/" + (crAt.getMonth() + 1) + "/" + crAt.getDay() + " " + crAt.getHours() + ":" + crAt.getMinutes()
+  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], usereName.substr(0, 1), usereName, date, d["chat"]);
   return chatText;
 }
 
