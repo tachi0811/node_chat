@@ -4,10 +4,14 @@ var sio;              // socket.io
 var usr_id;           // login_user_id
 var select_group_id;  // select group_id
 var session_id;       // session_id
+var timer = false;    // resize flg
 
+// edit chat
 var mode = 0;         // 0: 追加, 1: 更新
 var edit_chat_id;     // edit chat_id
-var timer = false;    // resize flg
+
+// edit group
+var mode_group = 0;   // 0: 追加、1: 更新
 
 // ----------------------------------------
 // load 時、resize 時に高さ変更

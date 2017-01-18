@@ -41,7 +41,7 @@ function addChat(d) {
 }
 
 function endChatScroll() {
-  $('#chat-main').animate({scrollTop: $('#chat-main')[0].scrollHeight}, 'fast');
+  $('#chat-main').animate({scrollTop: $('#chat-main').scrollHeight}, 'fast');
 }
 /* ******************************
  chat tag 作成
@@ -133,6 +133,19 @@ function setChat(group_id, group_name, chat_type) {
 
   $("#chat").empty();
   $("#group_name").text(group_name);
+
+
+  $("#editGroupTitle").hide();
+  $("#deleteContactTitle").hide();
+
+  // title の 表示設定
+  if (chat_type == "0") {
+    // myChat
+  } else if(chat_type == "1") {
+    $("#deleteContactTitle").show();
+  } else if(chat_type == "2") {
+    $("#editGroupTitle").show();
+  }
 
   $.ajax({
     type: "GET",

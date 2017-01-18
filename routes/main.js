@@ -30,7 +30,7 @@ req
 router.get('/groups', function(req, res, next) {
   res.contentType("application/JSON");
   db.group.findAll({
-    attributes: ['id', 'group_name'],
+    attributes: ['id', 'group_name', 'chat_type'],
     where : {
       user_id : req.session.user.id,
     },
@@ -293,8 +293,9 @@ router.get('/loginUser', function(req, res, next){
     res.send({ result: "0", data: JSON.stringify({ 
       user_id: req.session.user.id, 
       user_name: req.session.user.user_name, 
-      my_chat_group_id: data.dataValues.id, 
-      my_chat_group_name: data.dataValues.group_name,
+      my_chat_group_id: data.id, 
+      my_chat_group_name: data.group_name,
+      chat_type: data.chat_type,
       session_id: req.sessionID 
     })})
   }).catch(function(err) {
@@ -415,8 +416,9 @@ router.post('/updateChat', function(req, res, next) {
 
 /* ******************************
 GET select friends
-res
 req
+  
+res
   resut = 0 : success
         = 1 : error
   message   : string
@@ -439,7 +441,28 @@ router.get('/friends', function(req, res, next) {
 });
 
 /* ******************************
-POST
+GET select group friends
+req
+  group_id
+res
+
+****************************** */
+router.get('/groupFriends', function(req, res, next) {
+  res.contentType("application/JSON");
+  db.group.findAll({
+    where: {
+      id: req.query.group_id,
+      user_id: { $ne: req.session.user.id }
+    }
+  }).then(function(data){
+    res.send({ result: "0", data: JSON.stringify(data) });
+  }).catch(function(err){
+    res.send({ result: "1", message: err.message });
+  });
+});
+
+/* ******************************
+POST insert groups
 res
 req
   resut = 0 : success

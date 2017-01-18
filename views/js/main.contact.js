@@ -262,7 +262,7 @@ function setUser() {
       user_id = data.user_id;
       session_id = data.session_id;
       // 初期表示はMyChat を表示
-      setChat(data.my_chat_group_id, data.my_chat_group_name);
+      setChat(data.my_chat_group_id, data.my_chat_group_name, data.chat_type);
     } else if (res.result == "1") {
       window.location.href = "./sample.html";
     }
