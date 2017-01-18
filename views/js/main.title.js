@@ -1,11 +1,4 @@
 /* ****************************************
- 動的にDomを操作する場合のイベントを追加
-**************************************** */
-$(document).on("click", ".nav-action", (function(){
-  $(".navbar-collapse").collapse('hide');
-}));
-
-/* ****************************************
   add Contact show
 **************************************** */
 function addContactClick() {
@@ -19,4 +12,20 @@ function addContactClick() {
 function nowChatClick() {
   $(".main").hide();
   $("#chat-main").show();
+}
+
+/* ****************************************
+  chat change
+**************************************** */
+function groupClick(group_id, group_name, chat_type) {
+  setChat(group_id, group_name, chat_type);
+}
+
+/* ****************************************
+ add Group Click
+**************************************** */
+function addGroupClick() {
+  $("#createGroupName").val("");
+  $(".main").hide();
+  $("#group-create-main").show();
 }

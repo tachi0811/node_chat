@@ -35,7 +35,7 @@ function applyClick(f_user_id) {
       getApplyUsers();
       getApplyingUsers();
       // 承認待ちのユーザー情報を送信
-      sio.emit('send_apply', JSON.parse(data) );
+      sio.emit('send_apply', JSON.stringify(data) );
     } else if (res.result == "1"){
       // エラーメッセージ
     }
@@ -66,7 +66,7 @@ function approvalClick(f_user_id, f_user_name) {
       // group 情報の更新
       setGroup();
       // 申請中ユーザー情報を送信
-      sio.emit('send_approval', JSON.parse(data) );
+      sio.emit('send_approval', JSON.stringify(data));
     } else if (res.result == "1"){
       // エラー処理
     }

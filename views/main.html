@@ -48,21 +48,26 @@
               <a id="group_name" class="nav-action" onclick="nowChatClick()" href="#"></a>
             </li>
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="groups">ChatList<span class="caret"></span></a>
-              <ul id="groupListItems" class="dropdown-menu" aria-labelledby="groups">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="chatList">ChatList<span class="caret"></span></a>
+              <ul id="groupListItems" class="dropdown-menu" aria-labelledby="chatList">
                 
               </ul>
             </li>
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="settings">Settings<span class="caret"></span></a>
-              <ul id="groupListItems" class="dropdown-menu" aria-labelledby="settings">
-                <li><a href="#" id="addContact" class="nav-action" onclick="addContactClick()">add Contact</a></li>
-                <li><a href="#" id="addGroup" class="nav-action" onclick="addGroupClick()">add Group</a></li>
+              <a id="createChats" class="dropdown-toggle" data-toggle="dropdown" href="#">CreateChats<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="createChats">
+                <li><a href="#" class="nav-action" onclick="addContactClick()">add Contact</a></li>
+                <li><a href="#" class="nav-action" onclick="addGroupClick()">add Group</a></li>
               </ul>
             </li>
-            <li>
-              <a id="edit_group" class="nav-action" href="#">editGroup</a>
+            <li class="dropdown">
+              <a id="editGroup" class="dropdown-toggle" data-toggle="dropdown" href="#">EditGroup<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="editGroup">
+                <li><a href="#" class="nav-action" onclick="deleteGroupClick()">delete Group</a></li>
+                <li><a href="#" class="nav-action" onclick="editGroupClick()">edit Group</a></li>
+              </ul>
             </li>
+            <li><a href="#" class="nav-action" onclick="deleteContactClick()">delete Contact</a></li>
           </ul>
         </div>
       </div>

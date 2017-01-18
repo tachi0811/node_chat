@@ -8,11 +8,18 @@ function sio(server) {
 	// 接続時
 	sio.on('connection', function(socket) {
 
+		// ログインユーザーが、同じセッションIDで別ユーザーでログインする場合の対応
 		socket.on('send_login', function(data) {
 			console.log(data);
 			sio.emit('recv_login', { 
 				data: data 
 			});
+		});
+
+		// グループ作成
+		socket.on('send_insGroup', function(data) {
+			console.log(data);
+			sio.emit('recv_insGroup', { data: data });
 		});
 
 		// 通知受信(チャット登録)

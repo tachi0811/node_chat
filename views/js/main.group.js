@@ -1,17 +1,3 @@
-/* ****************************************
-  chat change
-**************************************** */
-function groupClick(group_id, group_name, chat_type) {
-  setChat(group_id, group_name, chat_type);
-}
-
-/* ****************************************
- add Group Click
-**************************************** */
-function addGroupClick() {
-  $(".main").hide();
-  $("#group-create-main").show();
-}
 
 /* ****************************************
  CreateFriends
@@ -162,12 +148,12 @@ function insertGroup() {
   }
 
   var ret = getInsertGroupUser();
-  var data = { "group_name": groupName, "user_list" : ret };
-  ret = 
+  var data = JSON.stringify({ "group_name": groupName, "user_list" : ret });
+  
   $.ajax({
     type: "POST",
     charset: "UTF-8",
-    data: JSON.stringify(data),
+    data: data,
     dataType: "JSON",
     contentType: "application/JSON",  // 文字列をJSONとして送るときに付ける
     url: "/main/insertGroup",
@@ -177,7 +163,11 @@ function insertGroup() {
   // --------------------
   }).done(function(res, status, xhr) {
     if (res.result == "0") {
+      // チャット一覧の再描画
+      setGroup();
+      nowChatClick();
       
+      sio.emit('send_insGroup', data);
     } else if (res.result == "1") {
       window.location.href = "./sample.html";
     }
