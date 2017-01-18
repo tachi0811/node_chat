@@ -63,14 +63,14 @@ $(function(){
         // main 画面へ
         window.location.href = "./main.html";
       } else if (res.result == "1") {
-        showDialog('Error', res.message)
+        showDialog('Error', 'Error', res.message)
       }
       // ===============
       // 通信失敗
       // ===============
     }).fail(function(xhr, status, thrown) {
       // TODO:暫定でメッセージをxhr.messageとする
-      showDialog('Error', xhr.message)
+      showDialog('Error', 'Error', xhr.message)
       // ===============
       // その他
       // ===============
@@ -114,13 +114,13 @@ $(function(){
         window.location.href = "./main.html";
 
       } else {
-        showDialog('Success', res.message);
+        showDialog('Information', 'Success', res.message);
       }
       // ===============
       // 通信失敗
       // ===============
     }).fail(function(xhr, status, thrown) {
-        showDialog('Error', res.message);
+        showDialog('Error', 'Error', res.message);
       // ********************
       // その他
       // ********************

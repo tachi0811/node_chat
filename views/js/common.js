@@ -15,11 +15,21 @@ function hideLoading () {
   $("#loader_animation").hide();
 }
 
-function showDialog(title, msg){
-  var modalDialog = $('#messageDialog')
-  modalDialog.find('.modal-title').text(title)
-  modalDialog.find('.modal-body p').text(msg)
-  modalDialog.modal()
+function showDialog(msgtype, title, msg){
+  var modalDialog = $('#messageDialog');
+  modalDialog.find('.modal-title').text(title);
+  modalDialog.find('.modal-body p').text(msg);
+
+　// 確認メッセージはYesNoボタンとする
+  if (msgtype.substring(0,1).toUpperCase() == "Q") {
+    $('#yesnobtn').css('display', 'block');
+    $('#closebtn').css('display', 'none');
+  } else {
+    $('#yesnobtn').css('display', 'none');
+    $('#closebtn').css('display', 'block');
+  }
+
+  modalDialog.modal();
 }
 
 // jQueryに静的メソッドを追加

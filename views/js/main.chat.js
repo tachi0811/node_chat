@@ -245,6 +245,10 @@ params
 **************************************** */
 function deleteClick(chat_id) {
   
+  // 確認メッセージを表示
+  // 今のままでは呼び出せない
+  //showDialog('Question', 'Confirm', 'Are you sure you want to delete?');
+
   var data = { "chat_id": chat_id, "group_id": select_group_id, "user_id": user_id };
   $.ajax({
     type: "POST",
