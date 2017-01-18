@@ -17,16 +17,15 @@
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.dropdown-menu
+.chatdropdown-menu
 {
-  margin: 0px;
-  z-index: 1;
+    margin: 0px;
 }
 
-.dropdown-menu li
+.chatdropdown-menu li
 {
-  border:none;
-  height:20px;
+    border:none;
+    height:20px;
 }
 
 .chat li.left .chat-body
@@ -48,8 +47,10 @@
     background-color:transparent;
     border: none;
 }
-.dropdown:hover > .dropdown-menu{
-  display: block;
+
+.chatdropdown:hover > .chatdropdown-menu
+{
+    display: block;
 }
 
 #chat-main

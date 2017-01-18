@@ -52,28 +52,26 @@ function getChatTag(d) {
   // 6 : 時間
   // 7 : チャット本文
   var chatText = "";
-  chatText += "<div class='dropdown'>";
+  chatText += "<div class='chatdropdown'>";
   chatText += "<li id='chat-body' uid='{0}' gid='{1}' cid='{2}' class='left clearfix' data-toggle='dropdown'>";
   chatText += "<span class='chat-img pull-left'>";
-  chatText += "<img src='http://placehold.it/50/55C1E7/fff&text={4}' alt='User Avatar' class='img-circle' />";
+  chatText += "<img src='http://placehold.it/50/55C1E7/fff&text={3}' alt='User Avatar' class='img-circle' />";
   chatText += "</span>";
   chatText += "<div class='chat-body clearfix'>";
   chatText += "<div class='header'>";
   chatText += "<strong class='primary-font'>";
-  chatText += "{5}";
+  chatText += "{4}";
   chatText += "</strong>";
   chatText += "<small class='pull-right text-muted'>";
   chatText += "<span class='glyphicon glyphicon-time'>";
   chatText += "</span>";
-  chatText += "{6}";
+  chatText += "{5}";
   chatText += "</small>";
   chatText += "</div>";
-  chatText += "{3}";
   chatText += "<pre>";
-  chatText += "{7}";
+  chatText += "{6}";
   chatText += "</pre>";
   chatText += "</div>";
-   
   chatText += "</li>";
 
   chatText += addDropdownMenu(d);
@@ -81,31 +79,8 @@ function getChatTag(d) {
   chatText += "</div>";
 
   var usereName = d.user.user_name;
-  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], addRightsideMenu(d), usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
+  var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], usereName.substr(0, 1), usereName, d["createdAt"], d["chat"]);
   return chatText;
-}
-
-/* ******************************
- chat List（右サイドメニュー） の作成
-****************************** */
-function addRightsideMenu(d) {
-
-  if (user_id != d["user_id"]) {
-    return "";
-  }
-
-  // 0 : チャットID
-  // 1 : チャット
-  var menu = "";
-  menu += "<span class='chat-img edit_img pull-right'>";
-  menu += "<a onclick=\"editClick('{0}')\">";
-  menu += "<image src='./img/edit.svg' height='40px' width='40px' >";
-  menu += "</a>";
-  menu += "</span>";
-
-  menu = $.sprintf(menu, d["id"]);
-
-  return menu;
 }
 
 /* ******************************
@@ -114,28 +89,18 @@ function addRightsideMenu(d) {
 function addDropdownMenu(d) {
 
   var menu = "";
-  menu += "<ul role='toolbar' id='bottomMenu' class='dropdown-menu'>";
-
+ 
   // 自分のみ削除
   if (user_id == d["user_id"]) {
-
+    menu += "<ul role='toolbar' id='bottomMenu' class='chatdropdown-menu'>";
     menu += "<li>"
     menu += "<a onclick=\"editClick('{2}')\"><image src='./img/edit.svg' height='20px' width='20px' >Edit</a>";
     menu += "</li>";
     menu += "<li>"
     menu += "<a onclick=\"deleteClick('{2}')\"><image src='./img/del.svg' height='20px' width='20px' >Delete</a>";
     menu += "</li>";
-
-  } else {
-    //copyClick未実装
-    menu += "<li>"
-    //menu += "<li><a onclick=\"copyClick('{2}')\">Copy</a></li>";
-    menu += "<a>Copy</a>";
-    menu += "</li>";
-    
+    menu += "</ul>";  
   }
-
-  menu += "</ul>";
 
   return menu;
 }
@@ -146,7 +111,7 @@ function addDropdownMenu(d) {
 function delChat(chat_id) {
   $("#chat li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "']").remove();
   $('span').removeClass('selected');
-  $('.dropdown-menu').slideUp('fast');
+  $('.chatdropdown-menu').slideUp('fast');
 }
 
 /* ******************************
