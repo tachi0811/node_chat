@@ -97,8 +97,6 @@ function addDropdownMenu(d) {
     menu += "<ul role='toolbar' id='bottomMenu' class='dropdown-menu'>";
     menu += "<li>"
     menu += "<a onclick=\"editClick('{2}')\"><image src='./img/edit.svg' height='20px' width='20px' >Edit</a>";
-    menu += "</li>";
-    menu += "<li>"
     menu += "<a onclick=\"deleteClick('{2}')\"><image src='./img/del.svg' height='20px' width='20px' >Delete</a>";
     menu += "</li>";
     menu += "</ul>";  
