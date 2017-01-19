@@ -1,8 +1,7 @@
-
 /* ****************************************
  CreateFriends
  params
-   data
+   data: records
 **************************************** */
 function CreateFriends(data) {
   $("#friends-list").empty();
@@ -10,11 +9,12 @@ function CreateFriends(data) {
   var listText = "";
   var checkboxText = "";
   var tag = "";
-  //
+
+  /* ****************************************
   // 0 : f_user_id
   // 1 : email
   // 2 : name
-  //
+  * ****************************************/
   listText += "<li class='list-group-item' fuid='{0}'>";
   listText += "<div class='approval-info'>";
   listText += "<span class='text-muted'>";
@@ -83,6 +83,8 @@ function setFriends() {
 
 /* ****************************************
  groups tag create
+ params
+   data: group 1 record
 **************************************** */
 function createGroup(data) {
 
@@ -93,13 +95,47 @@ function createGroup(data) {
     var d = data[i];
     var groupText = "";
     groupText += "<li>";
-    groupText += "<a herf='#' gid='{0}' ct='{2}' class=\"nav-action\" onclick=\"groupClick('{0}', '{1}', '{2}')\" class='groupItem'>";
+    groupText += "<a herf='#' gid='{0}' ct='{2}' class=\"nav-action\" onclick=\"groupClick('{0}', '{1}', '{2}', '{3}')\" class='groupItem'>";
     groupText += "{1}";
     groupText += "</a>";
     groupText += "</li>";
-    groupText = $.sprintf(groupText, d["id"], d["group_name"], d["chat_type"]);
+    groupText = $.sprintf(groupText, d["id"], d["group_name"], d["chat_type"], d["permission"]);
     $("#groupListItems").append($(groupText));
   }
+}
+
+/* ****************************************
+ delete contact
+**************************************** */
+function deleteContat() {
+  $.ajax({
+    type: "POST",
+    charset: "UTF-8",
+    data: JSON.stringify({ group_id: select_group_id }),
+    dataType: "JSON",
+    contentType: "application/JSON",
+    url: "/main/deleteGroup",
+    // timeout: 3000,
+  // --------------------
+  // 通信成功
+  // --------------------
+  }).done(function(res, status, xhr) {
+    if (res.result == "0") {
+      createGroup(JSON.parse(res.data));
+    } else if (res.result == "1") {
+      window.location.href = "./sample.html";
+    }
+  // --------------------
+  // 通信失敗
+  // --------------------
+  }).fail(function(xhr, status, thrown) {
+    window.location.href = "./sample.html";
+  // --------------------
+  // その他
+  // --------------------
+  }).always(function(xhr, status){
+    
+  });
 }
 
 /* ****************************************

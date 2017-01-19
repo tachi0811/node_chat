@@ -30,7 +30,6 @@ req
 router.get('/groups', function(req, res, next) {
   res.contentType("application/JSON");
   db.group.findAll({
-    attributes: ['id', 'group_name', 'chat_type'],
     where : {
       user_id : req.session.user.id,
     },
@@ -296,6 +295,7 @@ router.get('/loginUser', function(req, res, next){
       my_chat_group_id: data.id, 
       my_chat_group_name: data.group_name,
       chat_type: data.chat_type,
+      permission: data.permission,
       session_id: req.sessionID 
     })})
   }).catch(function(err) {

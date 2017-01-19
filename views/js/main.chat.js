@@ -20,9 +20,9 @@ $(function () {
   });
 });
 
-/* ******************************
+/* ****************************************
  chat List の作成
-****************************** */
+**************************************** */
 function createChat(data) {
   var dataLength = data.length;
   for (i = 0; i < dataLength; i++) {
@@ -32,9 +32,9 @@ function createChat(data) {
   endChatScroll();
 }
 
-/* ******************************
+/* ****************************************
  chat の作成
-****************************** */
+**************************************** */
 function addChat(d) {
   var tag = getChatTag(d);
   $("#chat").append($(tag));
@@ -43,9 +43,9 @@ function addChat(d) {
 function endChatScroll() {
   $('#chat-main').animate({scrollTop: $('#chat-main').scrollHeight}, 'fast');
 }
-/* ******************************
+/* ****************************************
  chat tag 作成
-******************************　*/
+**************************************** */
 function getChatTag(d) {
   // 0 : user_id
   // 1 : group_id
@@ -82,14 +82,16 @@ function getChatTag(d) {
 
   var usereName = d.user.user_name;
   var crAt = new Date(d["createdAt"]);
-  var date = crAt.getFullYear() + "/" + (crAt.getMonth() + 1) + "/" + crAt.getDay() + " " + crAt.getHours() + ":" + crAt.getMinutes()
+  var date = crAt.getFullYear() + "/" + (crAt.getMonth() + 1) + "/" + crAt.getDate() + " " + crAt.getHours() + ":" + crAt.getMinutes()
   var chatText = $.sprintf(chatText, d["user_id"], d["group_id"], d["id"], usereName.substr(0, 1), usereName, date, d["chat"]);
   return chatText;
 }
 
-/* ******************************
+/* ****************************************
  chat List（ドロップダウンメニュー） の作成
-****************************** */
+ params
+   d: chat 1 record
+**************************************** */
 function addDropdownMenu(d) {
 
   var menu = "";
@@ -107,46 +109,53 @@ function addDropdownMenu(d) {
   return menu;
 }
 
-/* ******************************
+/* **************************************** 
  タグの削除
-****************************** */
+ params
+   chat_id : チャット ID
+**************************************** */
 function delChat(chat_id) {
   $("#chat li[uid='" + user_id + "'][gid='" + select_group_id + "'][cid='" + chat_id + "']").remove();
   $('span').removeClass('selected');
   $('.dropdown-menu').slideUp('fast');
 }
 
-/* ******************************
+/* ****************************************
  タグの更新
-****************************** */
+  params
+    d : chat 1 record
+**************************************** */
 function updChat(d) {
   var tag = getChatTag(d);
   $("#chat li[uid='" + d["user_id"] + "'][gid='" + d["group_id"] + "'][cid='" + d["id"] + "']").replaceWith(tag);
 }
 
 /* ****************************************
-chat 情報取得
+chat 情報取得／表示
 params
-  group_id
-  group_name
-  chat_type
+  group_id   : グループID
+  group_name : グループ名
+  chat_type  : チャット種類
+  permission : 権限（1：管理者）
 **************************************** */
-function setChat(group_id, group_name, chat_type) {
+function setChat(group_id, group_name, chat_type, permission) {
 
   $("#chat").empty();
   $("#group_name").text(group_name);
 
-
   $("#editGroupTitle").hide();
   $("#deleteContactTitle").hide();
 
-  // title の 表示設定
-  if (chat_type == "0") {
-    // myChat
-  } else if(chat_type == "1") {
-    $("#deleteContactTitle").show();
-  } else if(chat_type == "2") {
-    $("#editGroupTitle").show();
+  // 管理者は、編集メニュー表示
+  if (permission == "1") {
+    // title の 表示設定
+    if (chat_type == "0") {
+      // myChat
+    } else if(chat_type == "1") {
+      $("#deleteContactTitle").show();
+    } else if(chat_type == "2") {
+      $("#editGroupTitle").show();
+    }
   }
 
   $.ajax({
@@ -181,9 +190,9 @@ function setChat(group_id, group_name, chat_type) {
   });
 }
 
-/* ******************************
+/* ****************************************
  Chat Send
-****************************** */
+**************************************** */
 function sendChat() {
   if (mode == 0) {
     sendChatInsert();
@@ -192,9 +201,9 @@ function sendChat() {
   }
 }
 
-/* ******************************
+/* ****************************************
  Chat Send ins
-****************************** */
+**************************************** */
 function sendChatInsert() {
   var chat = $("#chatText").val().trim();
   if (chat != "") {
@@ -223,9 +232,9 @@ function sendChatInsert() {
   }
 }
 
-/* ******************************
- Chat Send upd
-****************************** */
+/* ****************************************
+Chat Send upd
+**************************************** */
 function sendChatUpdate() {
   var chat = $("#chatText").val().trim();
   if (chat != "") {

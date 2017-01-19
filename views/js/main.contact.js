@@ -1,25 +1,28 @@
 $(function(){
 
-  /*
+  /* ******************************
     申請中ユーザーの表示
-  */
+  ****************************** */
   getApplyingUsers();
-  /*
+
+  /* ******************************
     承認待ちユーザーの表示
-  */
+  ****************************** */
   getApprovalWaitUsers();
-  /*
+
+  /* ******************************
     申請ユーザー Text Changed 
-  */
+  ****************************** */
   $("#searchContact").change(function(e){
     getApplyUsers();
   });
+
 });
 
-/*
+/* ******************************
  Apply Click - 申請ボタンクリック
  data : f_user_id
-*/
+****************************** */
 function applyClick(f_user_id) {
   var data = {"f_user_id": f_user_id, "user_id" : user_id}; 
   $.ajax({
@@ -46,10 +49,10 @@ function applyClick(f_user_id) {
   });
 }
 
-/*
+/* ******************************
  approval Click - 承認ボタンクリック
  data : f_user_id, f_user_name
-*/
+****************************** */
 function approvalClick(f_user_id, f_user_name) {
   var data = { "f_user_id" : f_user_id, "f_user_name" : f_user_name };
   $.ajax({
@@ -77,10 +80,10 @@ function approvalClick(f_user_id, f_user_name) {
   });
 }
 
-/*
+/* ******************************
  申請するユーザーリストを作成
  data : users
-*/
+****************************** */
 function setApplyList(data, approval) {
   var dataLength = data.length;
   var listText = "";
@@ -262,7 +265,7 @@ function setUser() {
       user_id = data.user_id;
       session_id = data.session_id;
       // 初期表示はMyChat を表示
-      setChat(data.my_chat_group_id, data.my_chat_group_name, data.chat_type);
+      setChat(data.my_chat_group_id, data.my_chat_group_name, data.chat_type, data.permission);
     } else if (res.result == "1") {
       window.location.href = "./sample.html";
     }
