@@ -17,15 +17,15 @@
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.dropdown-menu
+#chat-main .dropdown-menu
 {
     margin: 0px;
 }
 
-.dropdown-menu li
+#chat-main .dropdown .dropdown-menu li
 {
     border:none;
-    height:20px;
+    height:12px;
 }
 
 .chat li.left .chat-body
