@@ -77,7 +77,7 @@ function getChatTag(d) {
   chatText += "</pre>";
   chatText += "</div>";
   chatText += "</li>";
-  chatText += addDropdownMenu(d);
+  chatText += addDropdownMenu(d["user_id"]);
   chatText += "</div>";
 
   var usereName = d.user.user_name;
@@ -92,12 +92,12 @@ function getChatTag(d) {
  params
    d: chat 1 record
 **************************************** */
-function addDropdownMenu(d) {
+function addDropdownMenu(input_user_id) {
 
   var menu = "";
  
   // 自分のみ削除
-  if (user_id == d["user_id"]) {
+  if (input_user_id == user_id) {
     menu += "<ul role='toolbar' id='bottomMenu' class='dropdown-menu'>";
     menu += "<li>"
     menu += "<a onclick=\"editClick('{2}')\"><image src='./img/edit.svg' height='20px' width='20px' >Edit</a>";
