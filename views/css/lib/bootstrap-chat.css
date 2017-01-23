@@ -28,6 +28,12 @@
     height:12px;
 }
 
+.dropdown-menu-image
+{
+    width: 20px;
+    height: 20px;
+}
+
 .chat li.left .chat-body
 {
     margin-left: 60px;

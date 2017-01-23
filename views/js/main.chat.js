@@ -100,8 +100,8 @@ function addDropdownMenu(input_user_id) {
   if (input_user_id == user_id) {
     menu += "<ul role='toolbar' id='bottomMenu' class='dropdown-menu'>";
     menu += "<li>"
-    menu += "<a onclick=\"editClick('{2}')\"><image src='./img/edit.svg' height='20px' width='20px' >Edit</a>";
-    menu += "<a onclick=\"deleteClick('{2}')\"><image src='./img/del.svg' height='20px' width='20px' >Delete</a>";
+    menu += "<a onclick=\"editClick('{2}')\"><image src='./img/edit.svg' class='dropdown-menu-image' >Edit</a>";
+    menu += "<a onclick=\"deleteClick('{2}')\"><image src='./img/del.svg' class='dropdown-menu-image' >Delete</a>";
     menu += "</li>";
     menu += "</ul>";  
   }
